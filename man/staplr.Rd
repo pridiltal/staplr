@@ -10,7 +10,7 @@ This package provides function to manipulate PDF
 files: merging multiple PDF files into one.
 }
 \references{
-\url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
+https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 }
 \seealso{
 The core functions in this package: \code{\link{staple_pdf}}
