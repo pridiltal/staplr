@@ -14,6 +14,7 @@
 #' \dontrun{
 #' staple_pdf()
 #' }
+#' @export staple_pdf
 #' @export
 #' @importFrom utils choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
