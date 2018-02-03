@@ -13,7 +13,13 @@ This package is still under development and this repository contains a developme
 Installation
 ------------
 
-You can install oddstream from github with:
+#### Install pdftk
+
+download and install [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) NB: this is not an R package!
+
+#### Install staplr
+
+You can install staplr from github with:
 
 ``` r
 # install.packages("devtools")
