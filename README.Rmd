@@ -32,7 +32,7 @@ devtools::install_github("pridiltal/staplr")
 
 
 ## Example
-```{r dataset, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+```{r dataset, echo=TRUE, eval=FALSE}
 library(staplr)
 staple_pdf()
 ```
