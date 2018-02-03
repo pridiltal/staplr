@@ -1,6 +1,7 @@
 ---
 output: github_document
 ---
+#<img src="logo.png" align="right" height="150" />
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -29,6 +30,13 @@ You can install oddstream from github with:
 devtools::install_github("pridiltal/staplr")
 ```
 
+
+## Example
+```{r dataset, echo=TRUE, eval=FALSE, warning=FALSE, message=FALSE}
+library(staplr)
+staple_pdf()
+```
+
 ## References
 
-\url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
+- [https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/)

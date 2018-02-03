@@ -14,7 +14,7 @@ select the folder interactively.}
 
 \item{output_directory}{the name of the output directory}
 
-\item{output_filename}{the name of the output file}
+\item{output_filename}{the name of the output file.}
 }
 \value{
 this functin returns a combined PDF document
@@ -24,6 +24,11 @@ If the toolkit Pdftk is available in the
 system, it will be called to merge the PDF files.
 
 See the reference for detailed usage of \code{pdftk}.
+}
+\examples{
+\dontrun{
+staple_pdf()
+}
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

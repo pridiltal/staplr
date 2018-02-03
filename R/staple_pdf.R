@@ -8,8 +8,12 @@
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param output_directory the name of the output directory
-#' @param output_filename the name of the output file
+#' @param output_filename the name of the output file.
 #' @return this functin returns a combined PDF document
+#' @examples
+#' \dontrun{
+#' staple_pdf()
+#' }
 #' @export
 #' @importFrom utils choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
@@ -27,7 +31,7 @@ staple_pdf <- function(input_filepaths = NULL, output_directory = "output", outp
   if(!dir.exists(output_directory)){
     dir.create(output_directory)
   }
-  output_filepath<- file.path(output_directory, output_filename)
+  output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
   # Take the filepath arguments and format them for use in a system command
   quoted_names <- paste0('"', input_filepaths, '"')
