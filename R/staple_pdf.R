@@ -14,9 +14,8 @@
 #' \dontrun{
 #' staple_pdf()
 #' }
-#' @export staple_pdf
 #' @export
-#' @importFrom utils choose.dir
+#' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 staple_pdf <- function(input_filepaths = NULL, output_directory = "output", output_filename = "Full_pdf") {
 
