@@ -31,6 +31,8 @@ See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
 \dontrun{
+# This command promts the user to select the file interactively.
+# Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(3,6))
 }
 }

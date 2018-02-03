@@ -41,10 +41,10 @@ Example
 
 ``` r
 library(staplr)
-# merge multiple PDF files into one
+# Merge multiple PDF files into one
 staple_pdf()
 
-# remove selected pages from a file
+# This command promts the user to select the file interactively. Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(2,3))
 ```
 
