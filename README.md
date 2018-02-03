@@ -16,7 +16,7 @@ staplr <img src="logo.png" align="right" height="150" />
 staplr
 ======
 
-This package provides function to manipulate PDF files: merging multiple PDF files into one.
+This package provides function to manipulate PDF files: merge multiple PDF files into one; remove selected pages from a file.
 
 This package is still under development and this repository contains a development version of the R package *staplr*.
 
@@ -41,7 +41,11 @@ Example
 
 ``` r
 library(staplr)
+# merge multiple PDF files into one
 staple_pdf()
+
+# remove selected pages from a file
+remove_pages(rmpages = c(2,3))
 ```
 
 References
