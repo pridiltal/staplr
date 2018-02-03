@@ -1,0 +1,13 @@
+Package: staplr
+Type: Package
+Title: A Toolkit for PDF files
+Version: 0.1.0
+Author: Priyanga Dilini Talagala [aut, cre]
+Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
+Description: This package provides function to manipulate PDF files: 
+    merging multiple PDF files into one.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+Imports: utils
