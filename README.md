@@ -1,6 +1,6 @@
 
-<img src="logo.png" align="right" height="150" />
-=================================================
+staplr <img src="logo.png" align="right" height="150" />
+========================================================
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 staplr
