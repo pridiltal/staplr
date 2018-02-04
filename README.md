@@ -16,7 +16,12 @@ staplr <img src="logo.png" align="right" height="150" />
 staplr
 ======
 
-This package provides function to manipulate PDF files: merge multiple PDF files into one; remove selected pages from a file.
+This package provides function to manipulate PDF files:
+
+    - merge multiple PDF files into one 
+    - splits a single input PDF file into individual pages 
+    - remove selected pages from a file
+    - rename multiple files in a directory
 
 This package is still under development and this repository contains a development version of the R package *staplr*.
 
@@ -46,6 +51,13 @@ staple_pdf()
 
 # This command promts the user to select the file interactively. Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(2,3))
+
+# This function splits a single input PDF document into individual pages
+split_pdf()
+
+# This function writes renamed files back to directory
+#if the directory contains 3 PDF files
+rename_files(new_names = c("file 1", "file 2", "file 3"))
 ```
 
 References

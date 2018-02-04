@@ -7,7 +7,7 @@
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param new_names a vector of names for the output files.
-#' @return this function writes renamed files to a new directory
+#' @return this function writes renamed files back to directory
 #' @examples
 #' \dontrun{
 #' #if the directory contains 3 PDF files

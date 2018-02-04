@@ -64,6 +64,13 @@ staple_pdf()
 
 # This command promts the user to select the file interactively. Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(2,3))
+
+# This function splits a single input PDF document into individual pages
+split_pdf()
+
+# This function writes renamed files back to directory
+#if the directory contains 3 PDF files
+rename_files(new_names = c("file 1", "file 2", "file 3"))
 ```
 
 ## References
