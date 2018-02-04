@@ -12,6 +12,5 @@ Description: This package provides function to manipulate PDF files:
 License: GPL-3
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: utils,
-    pdftools
+Imports: utils
 Encoding: UTF-8

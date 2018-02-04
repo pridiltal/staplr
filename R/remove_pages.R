@@ -21,7 +21,6 @@
 #' }
 #' @export
 #' @import utils
-#' @import pdftools
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "trim", output_filename = "trimmed_pdf") {
 
@@ -38,8 +37,14 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
     setwd(path)
   }
 
-  pdfInfo <- pdftools::pdf_info(file)
-  total <- 1:pdfInfo$pages
+  readinteger <- function()
+  {
+    n <- readline(prompt="Enter total number of pages")
+    return(as.integer(n))
+  }
+
+  #pdfInfo <- pdftools::pdf_info(file)
+  total <- 1:readinteger()
   keep <- total[-rmpages]
   selected_pages <- split(keep, cumsum(seq_along(keep) %in%
                                       (which(diff(keep)>1)+1)))
@@ -69,5 +74,3 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
   system(command = system_command)
   setwd(pwd)
 }
-
-
