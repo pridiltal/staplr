@@ -25,6 +25,7 @@ split_pdf <- function(input_filepath = NULL, output_directory = "split_folder") 
     file <- file.choose(new = FALSE)
     path <- dirname(file)
     file_name <- basename(file)
+    pwd <- getwd()
     setwd(path)
   }
 
@@ -34,7 +35,7 @@ split_pdf <- function(input_filepath = NULL, output_directory = "split_folder") 
   }
 
   # Take the filepath arguments and format them for use in a system command
-  output_filepath <- file.path('"', output_directory,"/page_%04d.pdf", '"')
+  output_filepath <- paste0('"', output_directory,"/page_%04d.pdf", '"')
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
@@ -45,4 +46,5 @@ split_pdf <- function(input_filepath = NULL, output_directory = "split_folder") 
                           sep = " ")
   # Invoke the command
   system(command = system_command)
+  setwd(pwd)
 }

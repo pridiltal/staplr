@@ -4,7 +4,7 @@
 \alias{rename_files}
 \title{Rename multiple files}
 \usage{
-rename_files(input_filepaths = NULL, new_names, output_directory = "rename")
+rename_files(input_filepaths = NULL, new_names)
 }
 \arguments{
 \item{input_filepaths}{the path of the input PDF files.
@@ -12,15 +12,13 @@ The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
 \item{new_names}{a vector of names for the output files.}
-
-\item{output_directory}{the name of the output directory}
 }
 \value{
 this function writes renamed files to a new directory
 }
 \description{
 Rename multiple files in a directory and
-write renamed files to a new directory
+write renamed files back to directory
 }
 \examples{
 \dontrun{

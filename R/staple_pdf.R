@@ -22,6 +22,7 @@ staple_pdf <- function(input_filepaths = NULL, output_directory = "output", outp
   if(is.null(input_filepaths)){
     #Choose a folder interactively
     path<- utils::choose.dir(default = "", caption = "Select folder")
+    pwd <- getwd()
     setwd(path)
     # list all the pdf files in the selected folder
     input_filepaths <- (Sys.glob("*.pdf"))
@@ -47,4 +48,5 @@ staple_pdf <- function(input_filepaths = NULL, output_directory = "output", outp
                           sep = " ")
   # Invoke the command
   system(command = system_command)
+  setwd(pwd)
 }

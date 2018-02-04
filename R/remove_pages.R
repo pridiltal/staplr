@@ -34,6 +34,7 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
     file <- file.choose(new = FALSE)
     path <- dirname(file)
     file_name <- basename(file)
+    pwd <- getwd()
     setwd(path)
   }
 
@@ -66,7 +67,7 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
                           sep = " ")
   # Invoke the command
   system(command = system_command)
-
+  setwd(pwd)
 }
 
 
