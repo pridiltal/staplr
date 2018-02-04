@@ -39,11 +39,10 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
 
   readinteger <- function()
   {
-    n <- readline(prompt="Enter total number of pages")
+    n <- readline(prompt="Enter page count: ")
     return(as.integer(n))
   }
 
-  #pdfInfo <- pdftools::pdf_info(file)
   total <- 1:readinteger()
   keep <- total[-rmpages]
   selected_pages <- split(keep, cumsum(seq_along(keep) %in%
