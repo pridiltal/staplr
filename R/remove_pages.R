@@ -21,7 +21,7 @@
 #' }
 #' @export
 #' @import utils
-#' @importFrom pdftools pdf_info
+#' @import pdftools
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "trim", output_filename = "trimmed_pdf") {
 
