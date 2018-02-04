@@ -9,7 +9,7 @@
 #' select the folder interactively.
 #' @param output_directory the name of the output directory
 #' @param output_filename the name of the output file.
-#' @return this functin returns a combined PDF document
+#' @return this function returns a combined PDF document
 #' @examples
 #' \dontrun{
 #' staple_pdf()

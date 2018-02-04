@@ -6,12 +6,12 @@
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #' @param rmpages a vector of page numbers to be removed
-#' @param input_filepaths the path of the input PDF files.
+#' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param output_directory the name of the output directory
 #' @param output_filename the name of the output file.
-#' @return this functin returns a PDF document with the
+#' @return this function returns a PDF document with the
 #' remaining pages
 #' @examples
 #' \dontrun{
@@ -23,13 +23,13 @@
 #' @import utils
 #' @importFrom pdftools pdf_info
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepaths = NULL, output_directory = "trim", output_filename = "trimmed_pdf") {
+remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "trim", output_filename = "trimmed_pdf") {
 
   if(is.null(rmpages)){
     stop()
   }
 
-  if(is.null(input_filepaths)){
+  if(is.null(input_filepath)){
     #Choose the pdf file interactively
     file <- file.choose(new = FALSE)
     path <- dirname(file)

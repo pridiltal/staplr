@@ -31,8 +31,12 @@ knitr::opts_chunk$set(
 
 # staplr
 
-This package provides function to manipulate PDF files: 
-merge multiple PDF files into one; remove selected pages from a file.
+This package provides function to manipulate PDF files:
+
+    - merge multiple PDF files into one 
+    - splits a single input PDF file into individual pages 
+    - remove selected pages from a file
+    - rename multiple files in a directory
 
 
 This package is still under development and this repository contains a development version of the R package *staplr*.

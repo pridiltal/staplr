@@ -4,13 +4,13 @@
 \alias{remove_pages}
 \title{Remove selected pages from a file}
 \usage{
-remove_pages(rmpages, input_filepaths = NULL, output_directory = "trim",
+remove_pages(rmpages, input_filepath = NULL, output_directory = "trim",
   output_filename = "trimmed_pdf")
 }
 \arguments{
 \item{rmpages}{a vector of page numbers to be removed}
 
-\item{input_filepaths}{the path of the input PDF files.
+\item{input_filepath}{the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
@@ -19,7 +19,7 @@ select the folder interactively.}
 \item{output_filename}{the name of the output file.}
 }
 \value{
-this functin returns a PDF document with the
+this function returns a PDF document with the
 remaining pages
 }
 \description{
