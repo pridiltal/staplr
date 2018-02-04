@@ -17,8 +17,7 @@
 #' @export
 #' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-staple_pdf <- function(input_filepaths = NULL, output_directory = "output",
-                       output_filename = "Full_pdf") {
+staple_pdf <- function(input_filepaths = NULL, output_filename = "Full_pdf", output_directory = "output") {
 
   if(is.null(input_filepaths)){
     #Choose a folder interactively
