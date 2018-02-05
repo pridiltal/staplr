@@ -15,13 +15,13 @@
 #' staple_pdf()
 #' }
 #' @export
-#' @import utils
+#' @importFrom tcltk tk_choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 staple_pdf <- function(input_filepaths = NULL, output_filename = "Full_pdf", output_directory = "output") {
 
   if(is.null(input_filepaths)){
     #Choose a folder interactively
-    path<- utils::choose.dir(default = "", caption = "Select folder")
+    path<- tcltk::tk_choose.dir()
     pwd <- getwd()
     setwd(path)
     # list all the pdf files in the selected folder

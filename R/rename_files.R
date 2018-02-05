@@ -14,7 +14,7 @@
 #' rename_files(new_names = c("file 1", "file 2", "file 3"))
 #' }
 #' @export
-#' @import utils
+#' @importFrom tcltk tk_choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 rename_files <- function(input_filepaths = NULL, new_names) {
   if(is.null(new_names)){
@@ -22,7 +22,7 @@ rename_files <- function(input_filepaths = NULL, new_names) {
   }
   if(is.null(input_filepaths)){
     #Choose a folder interactively
-    path<- utils::choose.dir(default = "", caption = "Select folder")
+    path<- tcltk::tk_choose.dir()
     pwd <- getwd()
     setwd(path)
     # list all the pdf files in the selected folder
