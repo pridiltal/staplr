@@ -2,7 +2,9 @@
 staplr <img src="logo.png" align="right" height="150" />
 ========================================================
 
-[![Project Status: Active  The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Build Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travis-ci.org/pridiltal/staplr) ---
+[![Project Status: Active  The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Licence](https://img.shields.io/badge/licence-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html) [![Build Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travis-ci.org/pridiltal/staplr)
+
+------------------------------------------------------------------------
 
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.3-6666ff.svg)](https://cran.r-project.org/) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/package=staplr) [![packageversion](https://img.shields.io/badge/Package%20version-1.1.0-orange.svg?style=flat-square)](commits/master)
 
@@ -55,7 +57,7 @@ split_pdf()
 
 # This function writes renamed files back to directory
 #if the directory contains 3 PDF files
-rename_files(new_names = c("file 1", "file 2", "file 3"))
+rename_files(new_names = paste("file",1:3))
 ```
 
 References
