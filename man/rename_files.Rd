@@ -21,14 +21,20 @@ Rename multiple files in a directory and
 write renamed files back to directory
 }
 \examples{
-dir <- tempdir()
+\dontrun{
+#if the directory contains 3 PDF files
+rename_files(new_names = c("file 1", "file 2", "file 3"))
+}
+\dontshow{
+dir <- tempdir(check =TRUE)
 require(lattice)
 for(i in 1:3) {
-pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+pdf(file.path(dir1, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-rename_files(input_directory = dir, new_names = c("file 1", "file 2", "file 3"))
+rename_files(input_directory = dir, new_names = c("file_1", "file_2", "file_3"))
+}
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

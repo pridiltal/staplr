@@ -12,4 +12,5 @@ License: GPL-3
 LazyData: true
 RoxygenNote: 6.0.1
 Imports: tcltk
+Suggests: lattice
 Encoding: UTF-8

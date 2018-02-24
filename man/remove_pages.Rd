@@ -5,7 +5,7 @@
 \title{Remove selected pages from a file}
 \usage{
 remove_pages(rmpages, input_filepath = NULL, output_directory = NULL,
-  output_filename = "trimmed_pdf")
+  output_filename = "trimmed_pdf", page_length = NULL)
 }
 \arguments{
 \item{rmpages}{a vector of page numbers to be removed}
@@ -17,6 +17,8 @@ select the folder interactively.}
 \item{output_directory}{the path of the output directory}
 
 \item{output_filename}{the name of the output file.}
+
+\item{page_length}{page count of the original file}
 }
 \value{
 this function returns a PDF document with the
@@ -45,7 +47,7 @@ dev.off()
 }
 staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
- output_directory = dir)
+ output_directory = dir, page_length = 3)
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

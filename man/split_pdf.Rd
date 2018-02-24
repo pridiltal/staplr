@@ -4,12 +4,14 @@
 \alias{split_pdf}
 \title{Splits a single input PDF document into individual pages.}
 \usage{
-split_pdf(input_filepath = NULL)
+split_pdf(input_filepath = NULL, output_directory = NULL)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
+
+\item{output_directory}{the path of the output directory}
 }
 \value{
 this function splits a single input PDF document into
@@ -25,6 +27,18 @@ See the reference for detailed usage of \code{pdftk}.
 \examples{
 \dontrun{
 split_pdf()
+}
+
+\dontshow{
+dir <- tempdir()
+require(lattice)
+for(i in 1:3) {
+pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+print(xyplot(iris[,1] ~ iris[,i], data = iris))
+dev.off()
+}
+staple_pdf(input_directory = dir, output_directory = dir)
+split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),output_directory = dir )
 }
 }
 \references{

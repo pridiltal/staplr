@@ -11,6 +11,7 @@
 #' select the folder interactively.
 #' @param output_directory the path of the output directory
 #' @param output_filename the name of the output file.
+#' @param page_length page count of the original file
 #' @return this function returns a PDF document with the
 #' remaining pages
 #' @examples
@@ -29,11 +30,11 @@
 #' }
 #' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 #' remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
-#'  output_directory = dir)
+#'  output_directory = dir, page_length = 3)
 #' @export
 #' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf") {
+remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf", page_length = NULL) {
 
   if(is.null(rmpages)){
     stop()
@@ -44,13 +45,18 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
     input_filepath <- file.choose(new = FALSE)
   }
 
+
   readinteger <- function()
   {
     n <- readline(prompt="Enter page count: ")
     return(as.integer(n))
   }
 
-  total <- 1:readinteger()
+  if(is.null(page_length)){
+    total <- 1:readinteger()
+  } else {
+    total <- 1:page_length
+  }
   keep <- total[-rmpages]
   selected_pages <- split(keep, cumsum(seq_along(keep) %in%
                                       (which(diff(keep)>1)+1)))
