@@ -4,33 +4,43 @@
 #' system, it will be called to merge the PDF files.
 #'
 #' See the reference for detailed usage of \code{pdftk}.
-#' @param input_filepaths the path of the input PDF files.
+#' @param input_directory the path of the input PDF files.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the name of the output directory
+#' @param output_directory the path of the output directory
 #' @param output_filename the name of the output file.
 #' @return this function returns a combined PDF document
 #' @examples
 #' \dontrun{
 #' staple_pdf()
 #' }
+#'
+#' \dontshow{
+#' dir <- tempdir()
+#' require(lattice)
+#' for(i in 1:3) {
+#' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' dev.off()
+#' }
+#' staple_pdf(input_directory = dir, output_directory = dir)
+#' }
 #' @export
 #' @importFrom tcltk tk_choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-staple_pdf <- function(input_filepaths = NULL, output_filename = "Full_pdf", output_directory = "output") {
+staple_pdf <- function(input_directory = NULL, output_filename = "Full_pdf", output_directory = NULL) {
 
-  if(is.null(input_filepaths)){
+  if(is.null(input_directory)){
     #Choose a folder interactively
-    path<- tcltk::tk_choose.dir()
-    pwd <- getwd()
-    setwd(path)
-    # list all the pdf files in the selected folder
-    input_filepaths <- (Sys.glob("*.pdf"))
+    input_directory<- tcltk::tk_choose.dir(caption = "Select directory which contains PDF fies")
   }
 
-  #Create a folder to store output
-  if(!dir.exists(output_directory)){
-    dir.create(output_directory)
+  # list all the pdf files in the selected folder
+  input_filepaths <- (Sys.glob(file.path(input_directory,"*.pdf")))
+
+  if(is.null(output_directory)){
+    #Select a folder to store output
+    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
   output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
@@ -48,5 +58,5 @@ staple_pdf <- function(input_filepaths = NULL, output_filename = "Full_pdf", out
                           sep = " ")
   # Invoke the command
   system(command = system_command)
-  setwd(pwd)
+  #setwd(pwd)
 }

@@ -8,7 +8,6 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the name of the output directory
 #' @return this function splits a single input PDF document into
 #' individual pages
 #' @examples
@@ -18,7 +17,7 @@
 #' @export
 #' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-split_pdf <- function(input_filepath = NULL, output_directory = "split_folder") {
+split_pdf <- function(input_filepath = NULL) {
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -29,13 +28,11 @@ split_pdf <- function(input_filepath = NULL, output_directory = "split_folder") 
     setwd(path)
   }
 
-  #Create a folder to store output
-  if(!dir.exists(output_directory)){
-    dir.create(output_directory)
-  }
+  #Select a folder to store output
+  path_out<- tcltk::tk_choose.dir(caption = "Select directory to save output")
 
   # Take the filepath arguments and format them for use in a system command
-  output_filepath <- paste0('"', output_directory,"/page_%04d.pdf", '"')
+  output_filepath <- paste0('"', basename(path_out),"/page_%04d.pdf", '"')
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

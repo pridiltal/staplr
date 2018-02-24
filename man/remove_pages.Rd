@@ -4,7 +4,7 @@
 \alias{remove_pages}
 \title{Remove selected pages from a file}
 \usage{
-remove_pages(rmpages, input_filepath = NULL, output_directory = "trim",
+remove_pages(rmpages, input_filepath = NULL, output_directory = NULL,
   output_filename = "trimmed_pdf")
 }
 \arguments{
@@ -14,7 +14,7 @@ remove_pages(rmpages, input_filepath = NULL, output_directory = "trim",
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
-\item{output_directory}{the name of the output directory}
+\item{output_directory}{the path of the output directory}
 
 \item{output_filename}{the name of the output file.}
 }
@@ -35,6 +35,17 @@ See the reference for detailed usage of \code{pdftk}.
 # Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(3,6))
 }
+
+dir <- tempdir()
+require(lattice)
+for(i in 1:3) {
+pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+print(xyplot(iris[,1] ~ iris[,i], data = iris))
+dev.off()
+}
+staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
+remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
+ output_directory = dir)
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

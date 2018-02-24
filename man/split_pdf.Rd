@@ -4,14 +4,12 @@
 \alias{split_pdf}
 \title{Splits a single input PDF document into individual pages.}
 \usage{
-split_pdf(input_filepath = NULL, output_directory = "split_folder")
+split_pdf(input_filepath = NULL)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
-
-\item{output_directory}{the name of the output directory}
 }
 \value{
 this function splits a single input PDF document into

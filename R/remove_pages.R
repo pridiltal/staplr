@@ -9,7 +9,7 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the name of the output directory
+#' @param output_directory the path of the output directory
 #' @param output_filename the name of the output file.
 #' @return this function returns a PDF document with the
 #' remaining pages
@@ -19,10 +19,21 @@
 #' # Remove page 2 and 3 from the selected file.
 #' remove_pages(rmpages = c(3,6))
 #' }
+#'
+#' dir <- tempdir()
+#' require(lattice)
+#' for(i in 1:3) {
+#' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' dev.off()
+#' }
+#' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
+#' remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
+#'  output_directory = dir)
 #' @export
 #' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "trim", output_filename = "trimmed_pdf") {
+remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf") {
 
   if(is.null(rmpages)){
     stop()
@@ -30,11 +41,7 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
-    file <- file.choose(new = FALSE)
-    path <- dirname(file)
-    file_name <- basename(file)
-    pwd <- getwd()
-    setwd(path)
+    input_filepath <- file.choose(new = FALSE)
   }
 
   readinteger <- function()
@@ -50,9 +57,9 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   selected_pages <- lapply(selected_pages,f)
 
-  #Create a folder to store output
-  if(!dir.exists(output_directory)){
-    dir.create(output_directory)
+  if(is.null(output_directory)){
+    #Select a folder to store output
+    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
   output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
@@ -60,10 +67,11 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
   selected_pages <- (unlist(selected_pages))
   selected_pages <- paste(selected_pages,collapse=" ")
   output_filepath <- paste0('"', output_filepath, '"')
-
+  quoted_names <- paste0('"', input_filepath, '"')
+  input_filepath <- paste(quoted_names, collapse = " ")
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
-                          file_name,
+                          input_filepath,
                           "cat",
                           selected_pages,
                           "output",
@@ -71,5 +79,4 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = "tri
                           sep = " ")
   # Invoke the command
   system(command = system_command)
-  setwd(pwd)
 }

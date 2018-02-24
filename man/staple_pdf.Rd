@@ -4,17 +4,17 @@
 \alias{staple_pdf}
 \title{Merge multiple PDF files into one}
 \usage{
-staple_pdf(input_filepaths = NULL, output_filename = "Full_pdf",
-  output_directory = "output")
+staple_pdf(input_directory = NULL, output_filename = "Full_pdf",
+  output_directory = NULL)
 }
 \arguments{
-\item{input_filepaths}{the path of the input PDF files.
+\item{input_directory}{the path of the input PDF files.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
 \item{output_filename}{the name of the output file.}
 
-\item{output_directory}{the name of the output directory}
+\item{output_directory}{the path of the output directory}
 }
 \value{
 this function returns a combined PDF document
@@ -28,6 +28,17 @@ See the reference for detailed usage of \code{pdftk}.
 \examples{
 \dontrun{
 staple_pdf()
+}
+
+\dontshow{
+dir <- tempdir()
+require(lattice)
+for(i in 1:3) {
+pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+print(xyplot(iris[,1] ~ iris[,i], data = iris))
+dev.off()
+}
+staple_pdf(input_directory = dir, output_directory = dir)
 }
 }
 \references{
