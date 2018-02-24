@@ -2,7 +2,7 @@ Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
 Version: 1.1.0
-Depends: R (>= 3.4.3)
+Depends: R (>= 3.4.2)
 Authors@R: 
     person("Priyanga Dilini", "Talagala", , "dilini.talagala@monash.edu", c("aut", "cre"))
 Description: Provides function to manipulate PDF files: 
