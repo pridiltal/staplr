@@ -3,7 +3,6 @@ Type: Package
 Title: A Toolkit for PDF Files
 Version: 1.1.0
 Depends: R (>= 3.4.0)
-Authors@R: person("Priyanga Dilini", "Talagala", , "dilini.talagala@monash.edu", c("aut", "cre"))
 Author: Priyanga Dilini Talagala
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Description: Provides function to manipulate PDF files: 
