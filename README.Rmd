@@ -47,6 +47,13 @@ This package is still under development and this repository contains a developme
 download and install [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) NB: this is not an R package!
 
 #### Install staplr
+You can install the stable version from CRAN.
+
+```{r cran-installation, eval = FALSE}
+install.packages('staplr', dependencies = TRUE)
+```
+
+
 You can install staplr from github with:
 
 ```{r gh-installation, eval = FALSE}
