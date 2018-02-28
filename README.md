@@ -10,7 +10,7 @@ staplr <img src="logo.png" align="right" height="150" />
 
 ------------------------------------------------------------------------
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--02--27-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--01-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 staplr
@@ -28,11 +28,11 @@ This package is still under development and this repository contains a developme
 Installation
 ------------
 
-#### Install pdftk
+#### First Install pdftk
 
 download and install [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) NB: this is not an R package!
 
-#### Install staplr
+#### Then Install staplr
 
 You can install the stable version from CRAN.
 
