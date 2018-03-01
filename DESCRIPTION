@@ -5,7 +5,10 @@ Version: 1.1.0
 Depends: R (>= 3.4.0)
 Author: Priyanga Dilini Talagala
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
-Authors@R:person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre"))
+Authors@R:c(
+    person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
+    person("Ogan", "Mancarci", role='ctb')
+    )
 Description: Provides function to manipulate PDF files: 
     merge multiple PDF files into one; Splits a single input PDF document into
     individual pages; remove selected pages from a file;
