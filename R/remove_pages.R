@@ -72,8 +72,8 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
   # Take the filepath arguments and format them for use in a system command
   selected_pages <- (unlist(selected_pages))
   selected_pages <- paste(selected_pages,collapse=" ")
-  output_filepath <- paste0('"', output_filepath, '"')
-  quoted_names <- paste0('"', input_filepath, '"')
+  output_filepath <- shQuote(output_filepath)
+  quoted_names <- shQuote(input_filepath)
   input_filepath <- paste(quoted_names, collapse = " ")
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

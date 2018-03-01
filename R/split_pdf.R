@@ -43,8 +43,8 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL) {
   }
 
   # Take the filepath arguments and format them for use in a system command
-  output_filepath <- paste0('"', output_directory,"/page_%04d.pdf", '"')
-  quoted_names <- paste0('"', input_filepath, '"')
+  output_filepath <- shQuote(paste0(output_directory,"/page_%04d.pdf"))
+  quoted_names <- shQuote( input_filepath)
   input_filepath <- paste(quoted_names, collapse = " ")
 
   # Construct a system command to pdftk
