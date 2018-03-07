@@ -7,6 +7,18 @@ strExtract = function(x,regex){
   }
 }
 
+
+
+#' Get form fields from a pdf
+#'
+#' @param input_filepath the path of the input PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactively.
+#'
+#' @return A list of fields.
+#' @export
+#'
+#' @examples
 getFields <- function(input_filepath = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -49,6 +61,7 @@ getFields <- function(input_filepath = NULL){
 
 
 
-# setFields = function(rdf){
-#
-# }
+setFields = function(pdf, input_filepath, ){
+
+
+}
