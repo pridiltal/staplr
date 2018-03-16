@@ -1,3 +1,5 @@
+# this function can be replaced by stringr::str_extract with minimal work
+# but is added like this not to add a dependency
 strExtract = function(x,regex){
   match = gregexpr(regex,x, perl = TRUE)
   if(match[[1]][1]!=-1){
@@ -25,6 +27,7 @@ getFields <- function(input_filepath = NULL){
 
   fields <- paste0(readLines(fieldsTemp),
                    collapse = '\n')
+  file.remove(fieldsTemp)
   fields <- strsplit(fields, '---')[[1]][-1]
 
   fields <- lapply(fields,function(x){
@@ -49,6 +52,23 @@ getFields <- function(input_filepath = NULL){
 
 
 
-# setFields = function(rdf){
-#
-# }
+setFields = function(input_filepath = NULL, output_filepath = NULL, fields){
+  if(is.null(input_filepath)){
+    #Choose the pdf file interactively
+    input_filepath <- file.choose(new = FALSE)
+  }
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    input_filepath <-  tclvalue(tcltk::tkgetSaveFile())
+  }
+
+  tempFDF <- tempfile()
+
+  system_command <- paste('pdftk',
+                          shQuote(input_filepath),
+                          'dump_data_fields','output',
+                          shQuote(fieldsTemp))
+
+
+
+}
