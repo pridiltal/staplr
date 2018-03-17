@@ -1,6 +1,6 @@
 # this function can be replaced by stringr::str_extract with minimal work
 # but is added like this not to add a dependency
-strExtract = function(x,regex){
+strExtract <- function(x,regex){
   match = gregexpr(regex,x, perl = TRUE)
   if(match[[1]][1]!=-1){
     return(regmatches(x,gregexpr(regex,x, perl = TRUE))[[1]])
@@ -10,21 +10,26 @@ strExtract = function(x,regex){
 }
 
 # this is an internal function that edits an fdf string
-# fdfEdit = function(x, field,fdf){
-#   if(x == TRUE & is.logical(x)){
-#     x = '/Yes'
-#   } else if (x == FALSE & is.logical(x)){
-#     x = '/Off'
-#   } else {
-#     x %<>% gsub(x = ., pattern = '(',replacement = '\\\\(',fixed = TRUE) %>%
-#       gsub(x = ., pattern = ')',replacement = '\\\\)', fixed = TRUE)
-#     x = paste0('(',x,')')
-#   }
-#
-#   fdf = stringr::str_replace(string  = fdf,pattern = paste0('/V\\s.*\n/T\\s\\(',field,'\\)'),
-#                              replacement = paste0('/V ',x,'\n/T \\(',field,'\\)'))
-#   return(fdf)
-# }
+fdfEdit <- function(fieldToFill,fdf){
+  if(fieldToFill$type == 'Text'){
+    # this is necesarry because FDF file uses () to mark the beginning and end of text fields
+    # we need to escape them
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\\\(',fixed = TRUE)
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
+    fieldToFill$value = paste0('(',fieldToFill$value,')')
+  } else if(fieldToFill$type == 'Button'){
+    fieldToFill$value = paste0('/',fieldToFill$value)
+  } else{
+    # As far as I knot there are no other field types but just in case
+    warning("I don't know how to fill the field type \"",fieldToFill$type,
+            '". Please notify the dev.')
+  }
+
+  # place the field in the correct location
+  fdf <- stringi::stri_replace_first(str = fdf, regex = paste0('/V\\s.*\n/T\\s\\(',fieldToFill$name,'\\)'),
+              replacement = paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
+  return(fdf)
+}
 
 
 #' Get form fields from a pdf
@@ -33,18 +38,18 @@ strExtract = function(x,regex){
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #'
-#' @return A list of fields.
+#' @return A list of fields. With type, name and value components. To use with
+#' \code{\link{set_fields}} edit the value section of the fields you want to modify.
+#' If the field is a button, the value will be a factor. In this case the factor
+#' levels describe the possible values for the field.
 #' @export
-#'
-#' @examples
-getFields <- function(input_filepath = NULL){
+get_fields <- function(input_filepath = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
   }
 
   fieldsTemp <- tempfile()
-  on.exit(file.remove(fieldsTemp))
 
   # generate the data field dump in a temporary file
   system_command <- paste('pdftk',
@@ -73,14 +78,14 @@ getFields <- function(input_filepath = NULL){
                 value = value))
   })
 
-  names(fields) = sapply(fields,function(x){x$name})
+  names(fields) <- sapply(fields,function(x){x$name})
 
   return(fields)
 }
 
 
 
-setFields = function(input_filepath = NULL, output_filepath = NULL, fields){
+set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -98,23 +103,25 @@ setFields = function(input_filepath = NULL, output_filepath = NULL, fields){
                           'generate_fdf','output',
                           shQuote(tempFDF))
   system(system_command)
-  on.exit(file.remove(tempFDF))
+
 
   fdf <- paste(readLines(tempFDF),
               collapse= '\n')
 
 
   for(i in seq_along(fields)){
+    print(fdf %>% stringr::str_split('\n') %>% {.[[1]]} %>% length)
     fieldToFill <- fields[[i]]
     fdf <- fdfEdit(fieldToFill,fdf)
+    print(fieldToFill$name)
   }
 
   newFDF <- tempfile()
   writeLines(fdf, newFDF)
-  on.exit(file.remove(newFDF), add = TRUE)
 
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
                           'fill_form', shQuote(newFDF),
                           'output', shQuote(output_filepath))
+  system(system_command)
 }
