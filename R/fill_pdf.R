@@ -44,7 +44,6 @@ getFields <- function(input_filepath = NULL){
   }
 
   fieldsTemp <- tempfile()
-  fieldsTemp <- 'tempFDF'
   on.exit(file.remove(fieldsTemp))
 
   # generate the data field dump in a temporary file
