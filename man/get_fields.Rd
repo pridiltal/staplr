@@ -22,9 +22,10 @@ A list of fields. With type, name and value components. To use with
 Get form fields from a pdf form
 }
 \examples{
+\dontrun{
 pdfFile = system.file('testForm.pdf',package = 'staplr')
 fields = get_fields(pdfFile)
-
+}
 }
 \seealso{
 \code{link{set_fields}}

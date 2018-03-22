@@ -39,9 +39,10 @@ fdfEdit <- function(fieldToFill,fdf){
 #'   corresponding to non checked and checked states respectively.
 #' @seealso \code{link{set_fields}}
 #' @examples
+#' \dontrun{
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
 #' fields = get_fields(pdfFile)
-#'
+#' }
 #' @export
 get_fields <- function(input_filepath = NULL){
   if(is.null(input_filepath)){
@@ -105,6 +106,7 @@ get_fields <- function(input_filepath = NULL){
 #' @export
 #' @seealso \code{\link{get_fields}}
 #' @examples
+#' \dontrun{
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
 #' fields = get_fields(pdfFile)
 #'
@@ -114,6 +116,7 @@ get_fields <- function(input_filepath = NULL){
 #' fields$checkBox$value = 'Yes'
 #'
 #' set_fields(pdfFile,'filledPdf.pdf',fields)
+#' }
 #'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   if(is.null(input_filepath)){

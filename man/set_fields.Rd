@@ -21,6 +21,7 @@ this list}
 Set fields of a pdf form
 }
 \examples{
+\dontrun{
 pdfFile = system.file('testForm.pdf',package = 'staplr')
 fields = get_fields(pdfFile)
 
@@ -30,6 +31,7 @@ fields$RadioGroup$value = 2
 fields$checkBox$value = 'Yes'
 
 set_fields(pdfFile,'filledPdf.pdf',fields)
+}
 
 }
 \seealso{
