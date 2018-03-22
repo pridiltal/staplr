@@ -38,6 +38,7 @@ See the reference for detailed usage of \code{pdftk}.
 remove_pages(rmpages = c(3,6))
 }
 
+\dontshow{
 dir <- tempdir()
 require(lattice)
 for(i in 1:3) {
@@ -48,6 +49,7 @@ dev.off()
 staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
  output_directory = dir, page_length = 3)
+}
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
