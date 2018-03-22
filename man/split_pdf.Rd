@@ -2,7 +2,7 @@
 % Please edit documentation in R/split_pdf.R
 \name{split_pdf}
 \alias{split_pdf}
-\title{Splits a single input PDF document into individual pages.}
+\title{Splits single input PDF document into individual pages.}
 \usage{
 split_pdf(input_filepath = NULL, output_directory = NULL)
 }
@@ -43,4 +43,7 @@ split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),outp
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
+}
+\author{
+Priyanga Dilini Talagala
 }

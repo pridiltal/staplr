@@ -30,3 +30,6 @@ fields = get_fields(pdfFile)
 \seealso{
 \code{link{set_fields}}
 }
+\author{
+Ogan Mancarci
+}

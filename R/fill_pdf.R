@@ -37,6 +37,7 @@ fdfEdit <- function(fieldToFill,fdf){
 #'   case the factor levels describe the possible values for the field. For
 #'   example for a checkbox the typical level names would be "Off" and "Yes",
 #'   corresponding to non checked and checked states respectively.
+#' @author Ogan Mancarci
 #' @seealso \code{link{set_fields}}
 #' @examples
 #' \dontrun{
@@ -104,6 +105,7 @@ get_fields <- function(input_filepath = NULL){
 #'   this list
 #'
 #' @export
+#' @author Ogan Mancarci
 #' @seealso \code{\link{get_fields}}
 #' @examples
 #' \dontrun{

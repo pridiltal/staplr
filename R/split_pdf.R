@@ -1,4 +1,4 @@
-#' Splits a single input PDF document into individual pages.
+#' Splits single input PDF document into individual pages.
 #'
 #' @description If the toolkit Pdftk is available in the
 #' system, it will be called to Split a single input PDF document
@@ -11,6 +11,7 @@
 #' @param output_directory the path of the output directory
 #' @return this function splits a single input PDF document into
 #' individual pages
+#' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
 #' split_pdf()

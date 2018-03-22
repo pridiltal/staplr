@@ -10,6 +10,7 @@
 #' @param output_directory the path of the output directory
 #' @param output_filename the name of the output file.
 #' @return this function returns a combined PDF document
+#' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
 #' staple_pdf()

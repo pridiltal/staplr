@@ -8,6 +8,7 @@
 #' select the folder interactively.
 #' @param new_names a vector of names for the output files.
 #' @return this function writes renamed files back to directory
+#' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
 #' #if the directory contains 3 PDF files

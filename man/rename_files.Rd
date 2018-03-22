@@ -40,3 +40,6 @@ rename_files(input_directory = dir, new_names = paste("file",1:n))
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
+\author{
+Priyanga Dilini Talagala
+}

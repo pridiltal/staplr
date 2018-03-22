@@ -14,6 +14,7 @@
 #' @param page_length page count of the original file
 #' @return this function returns a PDF document with the
 #' remaining pages
+#' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
 #' # This command promts the user to select the file interactively.

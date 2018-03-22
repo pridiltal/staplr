@@ -44,3 +44,6 @@ staple_pdf(input_directory = dir, output_directory = dir)
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
+\author{
+Priyanga Dilini Talagala
+}

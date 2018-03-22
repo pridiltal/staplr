@@ -52,3 +52,6 @@ remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
+\author{
+Priyanga Dilini Talagala
+}
