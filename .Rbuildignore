@@ -6,3 +6,4 @@
 ^logo\.png$
 ^\.travis\.yml$
 ^docs
+^inst/testForm\.odt$

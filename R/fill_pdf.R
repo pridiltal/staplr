@@ -1,13 +1,3 @@
-# this function can be replaced by stringr::str_extract with minimal work
-# but is added like this not to add a dependency
-strExtract <- function(x,regex){
-  match = gregexpr(regex,x, perl = TRUE)
-  if(match[[1]][1]!=-1){
-    return(regmatches(x,gregexpr(regex,x, perl = TRUE))[[1]])
-  } else{
-    return(character(0))
-  }
-}
 
 # this is an internal function that edits an fdf string
 fdfEdit <- function(fieldToFill,fdf){
@@ -26,13 +16,14 @@ fdfEdit <- function(fieldToFill,fdf){
   }
 
   # place the field in the correct location
-  fdf <- stringi::stri_replace_first(str = fdf, regex = paste0('/V\\s.*\n/T\\s\\(',fieldToFill$name,'\\)'),
-              replacement = paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
+  fdf <- stringr::str_replace(fdf,
+                              paste0('/V\\s.*\n/T\\s\\(',fieldToFill$name,'\\)'),
+                              paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
   return(fdf)
 }
 
 
-#' Get form fields from a pdf
+#' Get form fields from a pdf form
 #'
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
@@ -42,6 +33,11 @@ fdfEdit <- function(fieldToFill,fdf){
 #' \code{\link{set_fields}} edit the value section of the fields you want to modify.
 #' If the field is a button, the value will be a factor. In this case the factor
 #' levels describe the possible values for the field.
+#' @seealso \code{link{set_fields}}
+#' @examples
+#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' fields = get_fields(pdfFile)
+#'
 #' @export
 get_fields <- function(input_filepath = NULL){
   if(is.null(input_filepath)){
@@ -60,14 +56,18 @@ get_fields <- function(input_filepath = NULL){
 
   fields <- paste0(readLines(fieldsTemp),
                    collapse = '\n')
-  file.remove(fieldsTemp)
   fields <- strsplit(fields, '---')[[1]][-1]
 
+  # parse the fields
   fields <- lapply(fields,function(x){
-    type <- strExtract(x,'(?<=FieldType: ).*?(?=\n)')
-    name <- strExtract(x,'(?<=FieldName: ).*?(?=\n)')
-    value <- strExtract(x,'(?<=FieldValue: ).*?(?=\n)')
-    stateOptions <- strExtract(x,'(?<=FieldStateOption: ).*?(?=\n)')
+    type <- stringr::str_extract(x,'(?<=FieldType: ).*?(?=\n|$)')
+    name <- stringr::str_extract(x,'(?<=FieldName: ).*?(?=\n|$)')
+    value <- stringr::str_extract(x,'(?<=FieldValue: ).*?(?=\n|$)')
+    if(is.na(value)){
+      # sometimes FieldValue is non populated
+      value = ''
+    }
+    stateOptions <- stringr::str_extract_all(x,'(?<=FieldStateOption: ).*?(?=\n|$)')[[1]]
 
     if(length(stateOptions)>0){
       value <- factor(value,levels = stateOptions)
@@ -85,6 +85,30 @@ get_fields <- function(input_filepath = NULL){
 
 
 
+#' Set fields of a pdf form
+#'
+#' @param input_filepath the path of the input PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactively.
+#' @param output_filepath the path of the output PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
+#' @param fields Fields returned from \code{\link{get_fields}} function. To make
+#' changes in a PDF, edit the \code{values} component of an element within this
+#' list
+#'
+#' @export
+#' @seealso \code{\link{get_fields}}
+#' @examples
+#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' fields = get_fields(pdfFile)
+#'
+#' fields$TextField1$value = 'this is text'
+#' fields$TextField2$value = 'more text'
+#' fields$RadioGroup$value = 2
+#' fields$checkBox$value = 'Yes'
+#'
+#' set_fields(pdfFile,'filledPdf.pdf',fields)
+#'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -96,7 +120,7 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   }
 
   tempFDF <- tempfile()
-
+  tempFDF = 'fdf'
   # create the fdf file to fill
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
@@ -108,12 +132,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   fdf <- paste(readLines(tempFDF),
               collapse= '\n')
 
-
   for(i in seq_along(fields)){
-    print(fdf %>% stringr::str_split('\n') %>% {.[[1]]} %>% length)
     fieldToFill <- fields[[i]]
     fdf <- fdfEdit(fieldToFill,fdf)
-    print(fieldToFill$name)
   }
 
   newFDF <- tempfile()
