@@ -120,7 +120,6 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   }
 
   tempFDF <- tempfile()
-  tempFDF = 'fdf'
   # create the fdf file to fill
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
