@@ -1,7 +1,5 @@
-staplr
-================
 
-<img src="logo.png" align="right" height="150"/>
+# staplr <img src="logo.png" align="right" height="150"/>
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
