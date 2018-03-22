@@ -1,13 +1,12 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 1.1.0
+Version: 2.1.0
 Depends: R (>= 3.4.0)
-Author: Priyanga Dilini Talagala
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Authors@R:c(
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
-    person("Ogan", "Mancarci", role='ctb')
+    person("Ogan", "Mancarci", role='aut')
     )
 Description: Provides function to manipulate PDF files: 
     merge multiple PDF files into one; Splits a single input PDF document into

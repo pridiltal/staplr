@@ -122,7 +122,7 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   }
   if(is.null(output_filepath)){
     #Choose output file interactively
-    input_filepath <-  tclvalue(tcltk::tkgetSaveFile())
+    input_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile())
   }
 
   tempFDF <- tempfile()
