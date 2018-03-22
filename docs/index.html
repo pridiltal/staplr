@@ -65,26 +65,22 @@
     
     
 <div class="contents">
-<div id="staplr" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#staplr" class="anchor"></a>staplr <img src="../../R%20packages/staplr/logo.png" align="right" height="150">
-</h1></div>
-
+<p><img src="../../R%20packages/staplr/logo.png" align="right" height="150"></p>
+<p><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a> <a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a> <a href="https://travis-ci.org/pridiltal/staplr"><img src="https://travis-ci.org/pridiltal/staplr.svg?branch=master" alt="Build Status"></a></p>
 <hr>
 <p><a href="https://cran.r-project.org/package=staplr"><img src="http://www.r-pkg.org/badges/version/staplr" alt="CRAN_Status_Badge"></a> <a href="commits/master"><img src="https://img.shields.io/badge/Package%20version-1.1.0-orange.svg?style=flat-square" alt="packageversion"></a></p>
 <hr>
-<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--03--22-yellowgreen.svg" alt="Last-changedate"></a></p>
+<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--03--23-yellowgreen.svg" alt="Last-changedate"></a></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-</div>
-<div id="staplr-1" class="section level1">
-<h1 class="hasAnchor">
-<a href="#staplr-1" class="anchor"></a>staplr</h1>
-<p>This package provides function to manipulate PDF files:</p>
-<pre><code>- merge multiple PDF files 
-- splits single input PDF file into individual pages 
-- remove selected pages from a file
-- rename multiple files in a directory
-- fill out PDF forms</code></pre>
+<div id="staplr" class="section level1">
+<div class="page-header"><h1 class="hasAnchor">
+<a href="#staplr" class="anchor"></a>staplr</h1></div>
+<p>This package provides functions to manipulate PDF files:</p>
+<pre><code>- merge multiple PDF files: staple_pdf()
+- splits single input PDF file into individual pages: split_pdf()
+- remove selected pages from a file: remove_pages()
+- rename multiple files in a directory: rename_files()
+- fill out PDF forms: get_fields() and set_fields()</code></pre>
 <p>This package is still under development and this repository contains a development version of the R package <em>staplr</em>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -122,7 +118,9 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <span class="co">#if the directory contains 3 PDF files</span>
 <span class="kw"><a href="reference/rename_files.html">rename_files</a></span>(<span class="dt">new_names =</span> <span class="kw">paste</span>(<span class="st">"file"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))
 
-<span class="co"># This function is to fill out pdf forms</span>
+<span class="co"># These functions are to fill out pdf forms</span>
+<span class="kw"><a href="reference/get_fields.html">get_fields</a></span>() 
+<span class="kw"><a href="reference/set_fields.html">set_fields</a></span>()
 <span class="co"># This includes 2 external functions `get_fields` and `set_fields` </span>
 <span class="co"># and files to use as examples.</span>
 <span class="co"># This is what the example file looks like</span></code></pre></div>
@@ -181,15 +179,7 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 </ul>
 </div>
 
-      <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a></li>
-<li><a href="https://www.gnu.org/licenses/gpl-3.0.en.html"><img src="https://img.shields.io/badge/licence-GPL--3-blue.svg" alt="Licence"></a></li>
-<li><a href="https://travis-ci.org/pridiltal/staplr"><img src="https://travis-ci.org/pridiltal/staplr.svg?branch=master" alt="Build Status"></a></li>
-</ul>
-</div>
-</div>
+      </div>
 
 </div>
 

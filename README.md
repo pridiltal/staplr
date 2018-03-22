@@ -1,5 +1,7 @@
+staplr
+================
 
-# staplr <img src="logo.png" align="right" height="150"/>
+<img src="logo.png" align="right" height="150"/>
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -15,19 +17,19 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--22-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--23-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # staplr
 
-This package provides function to manipulate PDF files:
+This package provides functions to manipulate PDF files:
 
-    - merge multiple PDF files 
-    - splits single input PDF file into individual pages 
-    - remove selected pages from a file
-    - rename multiple files in a directory
-    - fill out PDF forms
+    - merge multiple PDF files: staple_pdf()
+    - splits single input PDF file into individual pages: split_pdf()
+    - remove selected pages from a file: remove_pages()
+    - rename multiple files in a directory: rename_files()
+    - fill out PDF forms: get_fields() and set_fields()
 
 This package is still under development and this repository contains a
 development version of the R package *staplr*.
@@ -73,7 +75,9 @@ split_pdf()
 #if the directory contains 3 PDF files
 rename_files(new_names = paste("file",1:3))
 
-# This function is to fill out pdf forms
+# These functions are to fill out pdf forms
+get_fields() 
+set_fields()
 # This includes 2 external functions `get_fields` and `set_fields` 
 # and files to use as examples.
 # This is what the example file looks like
