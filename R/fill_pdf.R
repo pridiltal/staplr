@@ -10,7 +10,7 @@ fdfEdit <- function(fieldToFill,fdf){
   } else if(fieldToFill$type == 'Button'){
     fieldToFill$value = paste0('/',fieldToFill$value)
   } else{
-    # As far as I knot there are no other field types but just in case
+    # As far as I know there are no other field types but just in case
     warning("I don't know how to fill the field type \"",fieldToFill$type,
             '". Please notify the dev.')
   }
