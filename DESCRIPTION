@@ -16,6 +16,8 @@ Description: Provides function to manipulate PDF files:
 License: GPL-3
 LazyData: true
 RoxygenNote: 6.0.1
-Imports: tcltk
+Imports: 
+  tcltk,
+  stringr
 Suggests: lattice
 Encoding: UTF-8
