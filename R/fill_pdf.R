@@ -1,6 +1,9 @@
 
 # this is an internal function that edits an fdf string
 fdfEdit <- function(fieldToFill,fdf){
+  if(is.na(fieldToFill$value)){
+    fieldToFill$value=''
+  }
   if(fieldToFill$type == 'Text'){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
@@ -8,9 +11,6 @@ fdfEdit <- function(fieldToFill,fdf){
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
     fieldToFill$value = paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
-    if(is.na(fieldToFill$value)){
-      fieldToFill$value=''
-    }
     fieldToFill$value = paste0('/',fieldToFill$value)
   } else{
     # As far as I know there are no other field types but just in case
@@ -69,6 +69,9 @@ get_fields <- function(input_filepath = NULL){
     value <- stringr::str_extract(x,'(?<=FieldValue: ).*?(?=\n|$)')
     if(is.na(value)){
       # sometimes FieldValue is non populated
+      # note the field is a button, this will cause it to be returned as an NA.
+      # this is later handled by fdfEdit function which replaces the NA with
+      # an empty string when filling the fdf file.
       value = ''
     }
     stateOptions <- stringr::str_extract_all(x,'(?<=FieldStateOption: ).*?(?=\n|$)')[[1]]
