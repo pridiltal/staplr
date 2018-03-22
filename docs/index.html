@@ -130,12 +130,14 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <img src="https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png" alt="image"><p class="caption">image</p>
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># If you get path to this file by</span>
-pdfFile =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">'testForm.pdf'</span>,<span class="dt">package =</span> <span class="st">'staplr'</span>)</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># And do</span>
+pdfFile =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">'testForm.pdf'</span>,<span class="dt">package =</span> <span class="st">'staplr'</span>)
+
+<span class="co"># And do</span>
 fields =<span class="st"> </span><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>(pdfFile)
 <span class="co"># You'll get a list of fields that the pdf contains </span>
-<span class="co"># along with some additional information about the fields.</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># You make modifications in any of the fields by</span>
+<span class="co"># along with some additional information about the fields.</span>
+
+<span class="co"># You make modifications in any of the fields by</span>
 fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span class="st"> 'this is text'</span>
 <span class="kw"><a href="reference/set_fields.html">set_fields</a></span>(pdfPath, <span class="st">'newFile.pdf'</span>, fields)
 
@@ -161,7 +163,7 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=staplr">https://​cloud.r-project.org/​package=staplr</a>
 </li>
-<li>Report a bug at <br><a href="NA">NA</a>
+<li>Report a bug at <br><a href="https://github.com/pridiltal/staplr/issues">https://​github.com/​pridiltal/​staplr/​issues</a>
 </li>
 </ul>
 </div>

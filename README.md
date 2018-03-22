@@ -1,5 +1,5 @@
 
-\#staplr <img src="logo.png" align="right" height="150" />
+# staplr <img src="logo.png" align="right" height="150"/>
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -84,16 +84,12 @@ rename_files(new_names = paste("file",1:3))
 ``` r
 # If you get path to this file by
 pdfFile = system.file('testForm.pdf',package = 'staplr')
-```
 
-``` r
 # And do
 fields = get_fields(pdfFile)
 # You'll get a list of fields that the pdf contains 
 # along with some additional information about the fields.
-```
 
-``` r
 # You make modifications in any of the fields by
 fields$TextField1$value = 'this is text'
 set_fields(pdfPath, 'newFile.pdf', fields)

@@ -20,3 +20,5 @@ Imports:
   stringr
 Suggests: lattice
 Encoding: UTF-8
+BugReports: https://github.com/pridiltal/staplr/issues
+
