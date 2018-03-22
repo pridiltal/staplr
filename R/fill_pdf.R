@@ -8,6 +8,9 @@ fdfEdit <- function(fieldToFill,fdf){
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
     fieldToFill$value = paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
+    if(is.na(fieldToFill$value)){
+      fieldToFill$value=''
+    }
     fieldToFill$value = paste0('/',fieldToFill$value)
   } else{
     # As far as I know there are no other field types but just in case
@@ -25,14 +28,15 @@ fdfEdit <- function(fieldToFill,fdf){
 
 #' Get form fields from a pdf form
 #'
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
+#' @param input_filepath the path of the input PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #'
 #' @return A list of fields. With type, name and value components. To use with
-#' \code{\link{set_fields}} edit the value section of the fields you want to modify.
-#' If the field is a button, the value will be a factor. In this case the factor
-#' levels describe the possible values for the field.
+#'   \code{\link{set_fields}} edit the value element of the fields you want to
+#'   modify. If the field of type "button", the value will be a factor. In this
+#'   case the factor levels describe the possible values for the field. For
+#'   example for a checkbox the typical level names would be "Off" and "Yes",
+#'   corresponding to non checked and checked states respectively.
 #' @seealso \code{link{set_fields}}
 #' @examples
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
@@ -87,14 +91,13 @@ get_fields <- function(input_filepath = NULL){
 
 #' Set fields of a pdf form
 #'
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
+#' @param input_filepath the path of the input PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #' @param output_filepath the path of the output PDF file. The default is set to
 #'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #' @param fields Fields returned from \code{\link{get_fields}} function. To make
-#' changes in a PDF, edit the \code{values} component of an element within this
-#' list
+#'   changes in a PDF, edit the \code{values} component of an element within
+#'   this list
 #'
 #' @export
 #' @seealso \code{\link{get_fields}}
