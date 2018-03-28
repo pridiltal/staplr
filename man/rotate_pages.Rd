@@ -2,13 +2,17 @@
 % Please edit documentation in R/rotate_pages.R
 \name{rotate_pages}
 \alias{rotate_pages}
-\title{Rotate selected pages of a file to 90 degrees clockwise}
+\title{Rotate selected pages of a pdf file}
 \usage{
-rotate_pages(rotatepages, input_filepath = NULL, output_directory = NULL,
-  output_filename = "rotated_pgs_pdf")
+rotate_pages(rotatepages, page_rotation, input_filepath = NULL,
+  output_directory = NULL, output_filename = "rotated_pgs_pdf")
 }
 \arguments{
-\item{rotatepages}{a vector of page numbers to be rotated  to 90 degrees clockwise}
+\item{rotatepages}{a vector of page numbers to be rotated}
+
+\item{page_rotation}{An integer value from the vector c(0, 90, 180, 270).
+Each option sets the page rotation as follows (in degrees):
+north: 0, east: 90, south: 180, west: 270}
 
 \item{input_filepath}{the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
@@ -25,7 +29,7 @@ remaining pages
 \description{
 If the toolkit Pdftk is available in the
 system, it will be called to rotate the given pages of
-the seleted PDF files to 90 degrees clockwise.
+the seleted PDF files
 
 See the reference for detailed usage of \code{pdftk}.
 }
@@ -33,7 +37,7 @@ See the reference for detailed usage of \code{pdftk}.
 \dontrun{
 # This command promts the user to select the file interactively.
 # Rotate page 2 and 6 to 90 degrees clockwise
-rotate_pages(rotatepages = c(3,6))
+rotate_pages(rotatepages = c(3,6), page_rotation = 90)
 }
 
 \dontrun{
@@ -46,7 +50,7 @@ dev.off()
 }
 staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
-rotate_pages(rotatepages = c(2,3), input_filepath = input_path, output_directory = dir)
+rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_directory = dir)
 }
 }
 \references{

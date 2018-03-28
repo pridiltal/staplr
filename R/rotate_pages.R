@@ -1,11 +1,14 @@
-#' Rotate selected pages of a file to 90 degrees clockwise
+#' Rotate selected pages of a pdf file
 #'
 #' @description If the toolkit Pdftk is available in the
 #' system, it will be called to rotate the given pages of
-#' the seleted PDF files to 90 degrees clockwise.
+#' the seleted PDF files
 #'
 #' See the reference for detailed usage of \code{pdftk}.
-#' @param rotatepages a vector of page numbers to be rotated  to 90 degrees clockwise
+#' @param rotatepages a vector of page numbers to be rotated
+#' @param page_rotation An integer value from the vector c(0, 90, 180, 270).
+#' Each option sets the page rotation as follows (in degrees):
+#' north: 0, east: 90, south: 180, west: 270
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
@@ -18,7 +21,7 @@
 #' \dontrun{
 #' # This command promts the user to select the file interactively.
 #' # Rotate page 2 and 6 to 90 degrees clockwise
-#' rotate_pages(rotatepages = c(3,6))
+#' rotate_pages(rotatepages = c(3,6), page_rotation = 90)
 #' }
 #'
 #' \dontrun{
@@ -31,15 +34,15 @@
 #' }
 #' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
-#' rotate_pages(rotatepages = c(2,3), input_filepath = input_path, output_directory = dir)
+#' rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_directory = dir)
 #' }
 #' @export
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pages <- function(rotatepages, input_filepath = NULL, output_directory = NULL, output_filename = "rotated_pgs_pdf") {
+rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, output_directory = NULL, output_filename = "rotated_pgs_pdf") {
 
-  if(is.null(rotatepages)){
+  if(is.null(rotatepages) | !(page_rotation %in% c(0,90,180,270))){
     stop()
   }
 
@@ -69,7 +72,9 @@ rotate_pages <- function(rotatepages, input_filepath = NULL, output_directory = 
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   degree_0 <-  as.vector(unlist(lapply(degree_0,f)))
 
-  degree_90 <- paste(rotatepages, "east", sep="")
+
+  direction <- c("north", "east", "south", "west" )[match(page_rotation,c(0,90,180,270))]
+  degree_x <- paste(rotatepages, direction, sep="")
 
   if(is.null(output_directory)){
     #Select a folder to store output
@@ -77,14 +82,14 @@ rotate_pages <- function(rotatepages, input_filepath = NULL, output_directory = 
   }
   output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
-  rotate <-vector(class(degree_0), length(c(degree_0,degree_90)))
+  rotate <-vector(class(degree_0), length(c(degree_0,degree_x)))
 
   if(!(1 %in% rotatepages)) {
     rotate[c(TRUE, FALSE)] <-degree_0
-    rotate[c( FALSE, TRUE)] <-degree_90
+    rotate[c( FALSE, TRUE)] <-degree_x
   } else {
     rotate[c(FALSE, TRUE)] <-degree_0
-    rotate[c(TRUE, FALSE )] <-degree_90
+    rotate[c(TRUE, FALSE )] <-degree_x
   }
 
   # Construct a system command to pdftk
