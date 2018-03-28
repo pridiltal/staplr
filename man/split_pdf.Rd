@@ -29,7 +29,7 @@ See the reference for detailed usage of \code{pdftk}.
 split_pdf()
 }
 
-\dontshow{
+\dontrun{
 dir <- tempdir()
 require(lattice)
 for(i in 1:3) {
