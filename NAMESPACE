@@ -3,6 +3,7 @@
 export(get_fields)
 export(remove_pages)
 export(rename_files)
+export(rotate_pages)
 export(rotate_pdf)
 export(set_fields)
 export(split_from)
