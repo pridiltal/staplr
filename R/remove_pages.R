@@ -11,7 +11,6 @@
 #' select the folder interactively.
 #' @param output_directory the path of the output directory
 #' @param output_filename the name of the output file.
-#' @param page_length page count of the original file
 #' @return this function returns a PDF document with the
 #' remaining pages
 #' @author Priyanga Dilini Talagala
@@ -32,12 +31,13 @@
 #' }
 #' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
 #' remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
-#'  output_directory = dir, page_length = 3)
+#'  output_directory = dir)
 #' }
 #' @export
 #' @import utils
+#' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf", page_length = NULL) {
+remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf") {
 
   if(is.null(rmpages)){
     stop()
@@ -48,17 +48,22 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
     input_filepath <- file.choose(new = FALSE)
   }
 
-  readinteger <- function()
-  {
-    n <- readline(prompt="Enter page count: ")
-    return(as.integer(n))
-  }
+  metadataTemp <- tempfile()
 
-  if(is.null(page_length)){
-    total <- 1:readinteger()
-  } else {
-    total <- 1:page_length
-  }
+  # Construct a system command to pdftk to get number of pages
+  system_command <- paste("pdftk",
+                          shQuote(input_filepath),
+                          "dump_data",
+                          "output",
+                          shQuote(metadataTemp))
+
+  system(command = system_command)
+
+  page_length <- as.numeric(stringr::str_extract(grep( "NumberOfPages", paste0(readLines(metadataTemp)),
+                                             value = TRUE), "\\d+$"))
+
+  total <- 1:page_length
+
   keep <- total[-rmpages]
   selected_pages <- split(keep, cumsum(seq_along(keep) %in%
                                       (which(diff(keep)>1)+1)))
