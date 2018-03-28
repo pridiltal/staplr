@@ -127,7 +127,7 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   }
   if(is.null(output_filepath)){
     #Choose output file interactively
-    input_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile())
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
   tempFDF <- tempfile()
