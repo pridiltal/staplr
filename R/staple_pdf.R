@@ -45,19 +45,13 @@ staple_pdf <- function(input_directory = NULL, output_filename = "Full_pdf", out
   }
   output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
-  # Take the filepath arguments and format them for use in a system command
-  quoted_names <- shQuote(input_filepaths)
-  file_list <- paste(quoted_names, collapse = " ")
-  output_filepath <- shQuote(output_filepath)
-
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
-                          file_list,
+                          paste(shQuote(input_filepaths), collapse = " "),
                           "cat",
                           "output",
-                          output_filepath,
+                          shQuote(output_filepath),
                           sep = " ")
   # Invoke the command
   system(command = system_command)
-  #setwd(pwd)
 }

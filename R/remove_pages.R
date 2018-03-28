@@ -48,7 +48,6 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
     input_filepath <- file.choose(new = FALSE)
   }
 
-
   readinteger <- function()
   {
     n <- readline(prompt="Enter page count: ")
@@ -72,19 +71,13 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
   }
   output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
-  # Take the filepath arguments and format them for use in a system command
-  selected_pages <- (unlist(selected_pages))
-  selected_pages <- paste(selected_pages,collapse=" ")
-  output_filepath <- shQuote(output_filepath)
-  quoted_names <- shQuote(input_filepath)
-  input_filepath <- paste(quoted_names, collapse = " ")
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
-                          input_filepath,
+                          shQuote(input_filepath),
                           "cat",
-                          selected_pages,
+                          paste(unlist(selected_pages),collapse=" "),
                           "output",
-                          output_filepath,
+                          shQuote(output_filepath),
                           sep = " ")
   # Invoke the command
   system(command = system_command)
