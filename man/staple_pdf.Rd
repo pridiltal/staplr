@@ -4,17 +4,16 @@
 \alias{staple_pdf}
 \title{Merge multiple PDF files into one}
 \usage{
-staple_pdf(input_directory = NULL, output_filename = "Full_pdf",
-  output_directory = NULL)
+staple_pdf(input_directory = NULL, output_filepath = NULL)
 }
 \arguments{
 \item{input_directory}{the path of the input PDF files.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
-\item{output_filename}{the name of the output file.}
-
-\item{output_directory}{the path of the output directory}
+\item{output_filepath}{the path of the output output PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactivelye.}
 }
 \value{
 this function returns a combined PDF document
@@ -38,7 +37,8 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-staple_pdf(input_directory = dir, output_directory = dir)
+output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+staple_pdf(input_directory = dir, output_file)
 }
 }
 \references{

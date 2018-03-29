@@ -7,8 +7,9 @@
 #' @param input_directory the path of the input PDF files.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the path of the output directory
-#' @param output_filename the name of the output file.
+#' @param output_filepath the path of the output output PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactivelye.
 #' @return this function returns a combined PDF document
 #' @author Priyanga Dilini Talagala
 #' @examples
@@ -24,12 +25,13 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_directory = dir)
+#' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+#' staple_pdf(input_directory = dir, output_file)
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-staple_pdf <- function(input_directory = NULL, output_filename = "Full_pdf", output_directory = NULL) {
+staple_pdf <- function(input_directory = NULL, output_filepath = NULL) {
 
   if(is.null(input_directory)){
     #Choose a folder interactively
@@ -39,11 +41,10 @@ staple_pdf <- function(input_directory = NULL, output_filename = "Full_pdf", out
   # list all the pdf files in the selected folder
   input_filepaths <- (Sys.glob(file.path(input_directory,"*.pdf")))
 
-  if(is.null(output_directory)){
-    #Select a folder to store output
-    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
-  output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

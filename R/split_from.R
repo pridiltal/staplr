@@ -27,7 +27,7 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_directory = dir)
+#' sstaple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 #' split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
 #' }

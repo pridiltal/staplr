@@ -12,8 +12,9 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the path of the output directory
-#' @param output_filename the name of the output file.
+#' @param output_filepath the path of the output output PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactivelye.
 #' @return this function returns a PDF document with the
 #' remaining pages
 #' @author Priyanga Dilini Talagala
@@ -32,15 +33,17 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
+#' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+#' staple_pdf(input_directory = dir, output_file)
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
-#' rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_directory = dir)
+#' output_path <-  file.path(dir, paste("Rotated_pgs_pdf.pdf",  sep = ""))
+#' rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_path)
 #' }
 #' @export
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, output_directory = NULL, output_filename = "rotated_pgs_pdf") {
+rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, output_filepath = NULL) {
 
   if(is.null(rotatepages) | !(page_rotation %in% c(0,90,180,270))){
     stop()
@@ -69,6 +72,7 @@ rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, outp
 
   keep <- total[-rotatepages]
   degree_0 <- split(keep, cumsum(seq_along(keep) %in% (which(diff(keep)>1)+1)))
+  index_0 <- as.vector(sapply(degree_0, function(x) x[[1]]))
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   degree_0 <-  as.vector(unlist(lapply(degree_0,f)))
 
@@ -76,20 +80,14 @@ rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, outp
   direction <- c("north", "east", "south", "west" )[match(page_rotation,c(0,90,180,270))]
   degree_x <- paste(rotatepages, direction, sep="")
 
-  if(is.null(output_directory)){
-    #Select a folder to store output
-    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
-  }
-  output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
-
+  index <- c(index_0,rotatepages)
   rotate <-vector(class(degree_0), length(c(degree_0,degree_x)))
+  rotate[index[order(index)] %in% rotatepages] <- degree_x
+  rotate[!(index[order(index)] %in% rotatepages)] <- degree_0
 
-  if(!(1 %in% rotatepages)) {
-    rotate[c(TRUE, FALSE)] <-degree_0
-    rotate[c( FALSE, TRUE)] <-degree_x
-  } else {
-    rotate[c(FALSE, TRUE)] <-degree_0
-    rotate[c(TRUE, FALSE )] <-degree_x
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
   # Construct a system command to pdftk

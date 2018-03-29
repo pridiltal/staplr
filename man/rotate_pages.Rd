@@ -5,7 +5,7 @@
 \title{Rotate selected pages of a pdf file}
 \usage{
 rotate_pages(rotatepages, page_rotation, input_filepath = NULL,
-  output_directory = NULL, output_filename = "rotated_pgs_pdf")
+  output_filepath = NULL)
 }
 \arguments{
 \item{rotatepages}{a vector of page numbers to be rotated}
@@ -18,9 +18,9 @@ north: 0, east: 90, south: 180, west: 270}
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
-\item{output_directory}{the path of the output directory}
-
-\item{output_filename}{the name of the output file.}
+\item{output_filepath}{the path of the output output PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactivelye.}
 }
 \value{
 this function returns a PDF document with the
@@ -48,9 +48,11 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
+output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+staple_pdf(input_directory = dir, output_file)
 input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
-rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_directory = dir)
+output_path <-  file.path(dir, paste("Rotated_pgs_pdf.pdf",  sep = ""))
+rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_path)
 }
 }
 \references{

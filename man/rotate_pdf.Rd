@@ -44,7 +44,7 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
+staple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
 rotate_pdf(page_rotation = 90, input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
  output_directory = dir)
 }
