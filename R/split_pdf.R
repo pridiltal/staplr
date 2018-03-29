@@ -25,7 +25,7 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
+#' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 #' split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),output_directory = dir )
 #' }
 #' @export
