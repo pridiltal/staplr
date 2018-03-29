@@ -44,10 +44,6 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL)
 
   assertthat::assert_that(is.numeric(rmpages))
 
-  if(is.null(rmpages)){
-    stop()
-  }
-
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
