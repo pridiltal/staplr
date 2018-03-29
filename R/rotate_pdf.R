@@ -10,8 +10,9 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the path of the output directory
-#' @param output_filename the name of the output file.
+#' @param output_filepath the path of the output output PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactivelye.
 #' @return this function returns a PDF document with the rotated pages
 #' @author Priyanga Dilini Talagala
 #' @examples
@@ -29,13 +30,15 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
-#' rotate_pdf(page_rotation = 90, input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
-#'  output_directory = dir)
+#' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+#' staple_pdf(input_directory = dir, output_file)
+#' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+#' output_path <-  file.path(dir, paste("rotated_pdf.pdf",  sep = ""))
+#' rotate_pdf( page_rotation = 90,  input_path, output_path)
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pdf <- function(page_rotation,  input_filepath = NULL, output_directory = NULL, output_filename = "rotated_pdf") {
+rotate_pdf <- function(page_rotation,  input_filepath = NULL, output_filepath = NULL) {
 
   if(is.null(page_rotation)){
     stop()
@@ -46,11 +49,11 @@ rotate_pdf <- function(page_rotation,  input_filepath = NULL, output_directory =
     input_filepath <- file.choose(new = FALSE)
   }
 
-  if(is.null(output_directory)){
-    #Select a folder to store output
-    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
+
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
-  output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
 
   rotation <- c("1-endnorth", "1-endeast", "1-endsouth", "1-endwest" )[match(page_rotation,c(0,90,180,270))]
 
