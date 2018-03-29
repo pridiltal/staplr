@@ -38,11 +38,9 @@
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pdf <- function(page_rotation,  input_filepath = NULL, output_filepath = NULL) {
+rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NULL, output_filepath = NULL) {
 
-  if(is.null(page_rotation)){
-    stop()
-  }
+  page_rotation <- match.arg(page_rotation)
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively

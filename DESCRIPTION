@@ -17,7 +17,8 @@ LazyData: true
 RoxygenNote: 6.0.1
 Imports: 
   tcltk,
-  stringr
+  stringr,
+  assertthat
 Suggests: lattice
 Encoding: UTF-8
 BugReports: https://github.com/pridiltal/staplr/issues

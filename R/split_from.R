@@ -35,6 +35,8 @@
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL) {
 
+  assertthat::assert_that(assertthat::is.number(pg_num))
+
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)

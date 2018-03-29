@@ -42,9 +42,7 @@
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL) {
 
-  if(is.null(rmpages)){
-    stop()
-  }
+  assertthat::assert_that(is.numeric(rmpages))
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively

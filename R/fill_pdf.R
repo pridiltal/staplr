@@ -121,6 +121,8 @@ get_fields <- function(input_filepath = NULL){
 #' }
 #'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
+  assertthat::assert_that(is.list(fields))
+
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
