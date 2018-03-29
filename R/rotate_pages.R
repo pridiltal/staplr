@@ -43,11 +43,11 @@
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pages <- function(rotatepages, page_rotation, input_filepath = NULL, output_filepath = NULL) {
+rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_filepath = NULL, output_filepath = NULL) {
 
-  if(is.null(rotatepages) | !(page_rotation %in% c(0,90,180,270))){
-    stop()
-  }
+  assertthat::assert_that(is.numeric(rotatepages))
+  page_rotation <- match.arg(page_rotation)
+
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
