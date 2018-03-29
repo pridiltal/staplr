@@ -4,8 +4,7 @@
 \alias{remove_pages}
 \title{Remove selected pages from a file}
 \usage{
-remove_pages(rmpages, input_filepath = NULL, output_directory = NULL,
-  output_filename = "trimmed_pdf")
+remove_pages(rmpages, input_filepath = NULL, output_filepath = NULL)
 }
 \arguments{
 \item{rmpages}{a vector of page numbers to be removed}
@@ -14,9 +13,9 @@ remove_pages(rmpages, input_filepath = NULL, output_directory = NULL,
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
-\item{output_directory}{the path of the output directory}
-
-\item{output_filename}{the name of the output file.}
+\item{output_filepath}{the path of the output output PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactivelye.}
 }
 \value{
 this function returns a PDF document with the
@@ -44,9 +43,11 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
-remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
- output_directory = dir)
+output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+staple_pdf(input_directory = dir, output_file)
+input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+output_path <-  file.path(dir, paste("trimmed_pdf.pdf",  sep = ""))
+remove_pages(rmpages = 1, input_path, output_path)
 }
 }
 \references{

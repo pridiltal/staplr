@@ -9,8 +9,9 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_directory the path of the output directory
-#' @param output_filename the name of the output file.
+#' @param output_filepath the path of the output output PDF file.
+#' The default is set to NULL. IF NULL, it  prompt the user to
+#' select the folder interactivelye.
 #' @return this function returns a PDF document with the
 #' remaining pages
 #' @author Priyanga Dilini Talagala
@@ -29,15 +30,17 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' staple_pdf(input_directory = dir, output_directory = dir, output_filename = "Full_pdf")
-#' remove_pages(rmpages = c(1), input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),
-#'  output_directory = dir)
+#' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
+#' staple_pdf(input_directory = dir, output_file)
+#' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+#' output_path <-  file.path(dir, paste("trimmed_pdf.pdf",  sep = ""))
+#' remove_pages(rmpages = 1, input_path, output_path)
 #' }
 #' @export
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL, output_filename = "trimmed_pdf") {
+remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL) {
 
   if(is.null(rmpages)){
     stop()
@@ -70,11 +73,11 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_directory = NULL
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   selected_pages <- lapply(selected_pages,f)
 
-  if(is.null(output_directory)){
-    #Select a folder to store output
-    output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
-  output_filepath<- file.path(output_directory, paste(output_filename,".pdf",  sep = ""))
+
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
