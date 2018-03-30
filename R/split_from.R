@@ -48,10 +48,13 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, p
   }
 
   parts <- length(pg_num) + 1
-  splitPoints = c(0,pg_num,'end')
+  splitPoints <- c(0,pg_num,'end')
+  digits <- floor(log(parts))
 
   for (i in seq_len(parts)){
-    output_filepath <- file.path(output_directory, paste(prefix,i,".pdf",  sep = ""))
+    output_filepath <- file.path(output_directory,
+                                 paste(prefix, stringr::str_pad(i,digits, pad = '0'),
+                                       ".pdf",  sep = ""))
 
     system_command <- paste("pdftk",
                             shQuote(input_filepath),
