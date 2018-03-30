@@ -27,13 +27,13 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' sstaple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
-#' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+#' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
+#' input_path <- file.path(dir, "Full_pdf.pdf")
 #' split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL) {
+split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, prefix = 'part') {
 
   assertthat::assert_that(assertthat::is.number(pg_num))
 
@@ -48,8 +48,8 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL) {
   }
 
   # Take the filepath arguments and format them for use in a system command
-  output_filepath_1 <- file.path(output_directory, paste("part1.pdf",  sep = ""))
-  output_filepath_2 <- file.path(output_directory, paste("part2.pdf",  sep = ""))
+  output_filepath_1 <- file.path(output_directory, paste(prefix,"1.pdf",  sep = ""))
+  output_filepath_2 <- file.path(output_directory, paste(prefix,"2.pdf",  sep = ""))
 
   # Construct a system command to pdftk to save the first part
   system_command <- paste("pdftk",
