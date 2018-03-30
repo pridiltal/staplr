@@ -1,11 +1,11 @@
-#' Splits single input PDF document into two parts from a given point
+#' Splits single input PDF document into parts from given points
 #'
 #' @description If the toolkit Pdftk is available in the
 #' system, it will be called to Split a single input PDF document
 #' into two parts from a given point
 #'
 #' See the reference for detailed usage of \code{pdftk}.
-#' @param pg_num a nonnegative integer. Split the pdf document into two from this page number.
+#' @param pg_num A vector of non-negative integers. Split the pdf document into parts from the numbered pages.
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
@@ -27,15 +27,15 @@
 #' print(xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' sstaple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
-#' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+#' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
+#' input_path <- file.path(dir, "Full_pdf.pdf")
 #' split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL) {
+split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, prefix = 'part') {
 
-  assertthat::assert_that(assertthat::is.number(pg_num))
+  assertthat::assert_that(is.numeric(pg_num))
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -47,31 +47,25 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL) {
     output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
 
-  # Take the filepath arguments and format them for use in a system command
-  output_filepath_1 <- file.path(output_directory, paste("part1.pdf",  sep = ""))
-  output_filepath_2 <- file.path(output_directory, paste("part2.pdf",  sep = ""))
+  parts <- length(pg_num) + 1
+  splitPoints <- c(0,pg_num,'end')
+  digits <- floor(log(parts))
 
-  # Construct a system command to pdftk to save the first part
-  system_command <- paste("pdftk",
-                          shQuote(input_filepath),
-                          "cat",
-                          paste("1-",pg_num, sep = ""),
-                          "output",
-                          shQuote(output_filepath_1),
-                          sep = " ")
-  # Invoke the command
-  system(command = system_command)
+  for (i in seq_len(parts)){
+    output_filepath <- file.path(output_directory,
+                                 paste(prefix, stringr::str_pad(i,digits, pad = '0'),
+                                       ".pdf",  sep = ""))
 
-  # Construct a system command to pdftk to save the second part
-  system_command <- paste("pdftk",
-                          shQuote(input_filepath),
-                          "cat",
-                          paste(pg_num+1, "-end",sep = ""),
-                          "output",
-                          shQuote(output_filepath_2),
-                          sep = " ")
-  # Invoke the command
-  system(command = system_command)
+    system_command <- paste("pdftk",
+                            shQuote(input_filepath),
+                            "cat",
+                            paste(as.integer(splitPoints[i])+1,'-',splitPoints[i+1], sep = ""),
+                            "output",
+                            shQuote(output_filepath),
+                            sep = " ")
+
+    system(command = system_command)
+  }
 
 }
 

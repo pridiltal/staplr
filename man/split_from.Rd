@@ -2,12 +2,13 @@
 % Please edit documentation in R/split_from.R
 \name{split_from}
 \alias{split_from}
-\title{Splits single input PDF document into two parts from a given point}
+\title{Splits single input PDF document into parts from given points}
 \usage{
-split_from(pg_num, input_filepath = NULL, output_directory = NULL)
+split_from(pg_num, input_filepath = NULL, output_directory = NULL,
+  prefix = "part")
 }
 \arguments{
-\item{pg_num}{a nonnegative integer. Split the pdf document into two from this page number.}
+\item{pg_num}{A vector of non-negative integers. Split the pdf document into parts from the numbered pages.}
 
 \item{input_filepath}{the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
@@ -40,8 +41,8 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-sstaple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
-input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
+staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
+input_path <- file.path(dir, "Full_pdf.pdf")
 split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
 }
 }

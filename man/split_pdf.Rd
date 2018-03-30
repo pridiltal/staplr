@@ -4,7 +4,8 @@
 \alias{split_pdf}
 \title{Splits single input PDF document into individual pages.}
 \usage{
-split_pdf(input_filepath = NULL, output_directory = NULL)
+split_pdf(input_filepath = NULL, output_directory = NULL,
+  prefix = "page_")
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file.
@@ -37,7 +38,7 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-staple_pdf(input_directory = dir, output_filepath = 'Full_pdf.pdf')
+staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),output_directory = dir )
 }
 }
