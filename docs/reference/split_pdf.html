@@ -45,6 +45,8 @@ See the reference for detailed usage of pdftk." />
 <![endif]-->
 
 
+
+
   </head>
 
   <body>
@@ -80,6 +82,7 @@ See the reference for detailed usage of pdftk." />
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -87,7 +90,7 @@ See the reference for detailed usage of pdftk." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Splits single input PDF document into individual pages.</h1>
@@ -101,7 +104,8 @@ into individual pages.</p>
 <p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>split_pdf</span>(<span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>split_pdf</span>(<span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"page_"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -115,6 +119,10 @@ select the folder interactively.</p></td>
     <tr>
       <th>output_directory</th>
       <td><p>the path of the output directory</p></td>
+    </tr>
+    <tr>
+      <th>prefix</th>
+      <td><p>A string for output filename prefix</p></td>
     </tr>
     </table>
     
@@ -132,7 +140,17 @@ individual pages</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>split_pdf</span>()
 <span class='co'># }</span><div class='input'>
-</div></pre>
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'>tempdir</span>()
+<span class='fu'>require</span>(<span class='no'>lattice</span>)
+<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>3</span>) {
+<span class='fu'>pdf</span>(<span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='fu'>paste</span>(<span class='st'>"plot"</span>, <span class='no'>i</span>, <span class='st'>".pdf"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)))
+<span class='fu'>print</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/lattice/topics/xyplot'>xyplot</a></span>(<span class='no'>iris</span>[,<span class='fl'>1</span>] ~ <span class='no'>iris</span>[,<span class='no'>i</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))
+<span class='fu'>dev.off</span>()
+}
+<span class='fu'><a href='staple_pdf.html'>staple_pdf</a></span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='no'>dir</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='st'>'Full_pdf.pdf'</span>))
+<span class='fu'>split_pdf</span>(<span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='fu'>paste</span>(<span class='st'>"Full_pdf.pdf"</span>,  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)),<span class='kw'>output_directory</span> <span class='kw'>=</span> <span class='no'>dir</span> )
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -164,6 +182,8 @@ Priyanga Dilini Talagala
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

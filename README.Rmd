@@ -32,12 +32,14 @@ knitr::opts_chunk$set(
 
 This package provides functions to manipulate PDF files:
 
-    - merge multiple PDF files: staple_pdf()
-    - splits single input PDF file into individual pages: split_pdf()
-    - remove selected pages from a file: remove_pages()
-    - rename multiple files in a directory: rename_files()
-    - fill out PDF forms: get_fields() and set_fields()
-
+   - fill out PDF forms: get_fields() and set_fields() 
+   - merge multiple PDF files into one: staple_pdf() 
+   - remove selected pages from a file: remove_pages()
+   - rename multiple files in a directory: rename_files()
+   - rotate entire pdf document: rotate_pdf() 
+   - rotate selected pages of a pdf file: rotate_pages()
+   - splits single input PDF document into individual pages: split_pdf()
+   - splits single input PDF document into parts from given points: split_from()
 
 This package is still under development and this repository contains a development version of the R package *staplr*.
 

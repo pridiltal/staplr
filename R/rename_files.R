@@ -27,6 +27,7 @@
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir
+#' @importFrom assertthat assert_that
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 rename_files <- function(input_directory = NULL, new_names) {
   assertthat::assert_that(is.character(new_names))

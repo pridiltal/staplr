@@ -9,6 +9,7 @@
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param output_directory the path of the output directory
+#' @param prefix A string for output filename prefix
 #' @return this function splits a single input PDF document into
 #' individual pages
 #' @author Priyanga Dilini Talagala

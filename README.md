@@ -15,7 +15,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--23-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--30-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -23,11 +23,15 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 This package provides functions to manipulate PDF files:
 
-    - merge multiple PDF files: staple_pdf()
-    - splits single input PDF file into individual pages: split_pdf()
-    - remove selected pages from a file: remove_pages()
-    - rename multiple files in a directory: rename_files()
-    - fill out PDF forms: get_fields() and set_fields()
+  - fill out PDF forms: get\_fields() and set\_fields()
+  - merge multiple PDF files into one: staple\_pdf()
+  - remove selected pages from a file: remove\_pages()
+  - rename multiple files in a directory: rename\_files()
+  - rotate entire pdf document: rotate\_pdf()
+  - rotate selected pages of a pdf file: rotate\_pages()
+  - splits single input PDF document into individual pages: split\_pdf()
+  - splits single input PDF document into parts from given points:
+    split\_from()
 
 This package is still under development and this repository contains a
 development version of the R package *staplr*.

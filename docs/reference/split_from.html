@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rename multiple files — rename_files • staplr</title>
+<title>Splits single input PDF document into parts from given points — split_from • staplr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,10 +25,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Rename multiple files — rename_files" />
+<meta property="og:title" content="Splits single input PDF document into parts from given points — split_from" />
 
-<meta property="og:description" content="Rename multiple files in a directory and
-write renamed files back to directory" />
+<meta property="og:description" content="If the toolkit Pdftk is available in the
+system, it will be called to Split a single input PDF document
+into two parts from a given point
+See the reference for detailed usage of pdftk." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -91,35 +93,47 @@ write renamed files back to directory" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rename multiple files</h1>
+    <h1>Splits single input PDF document into parts from given points</h1>
     
     </div>
 
     
-    <p>Rename multiple files in a directory and
-write renamed files back to directory</p>
+    <p>If the toolkit Pdftk is available in the
+system, it will be called to Split a single input PDF document
+into two parts from a given point</p>
+<p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>rename_files</span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>new_names</span>)</pre>
+    <pre class="usage"><span class='fu'>split_from</span>(<span class='no'>pg_num</span>, <span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>prefix</span> <span class='kw'>=</span> <span class='st'>"part"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input_directory</th>
-      <td><p>the path of the input PDF files.
+      <th>pg_num</th>
+      <td><p>A vector of non-negative integers. Split the pdf document into parts from the numbered pages.</p></td>
+    </tr>
+    <tr>
+      <th>input_filepath</th>
+      <td><p>the path of the input PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.</p></td>
     </tr>
     <tr>
-      <th>new_names</th>
-      <td><p>a vector of names for the output files.</p></td>
+      <th>output_directory</th>
+      <td><p>the path of the output directory</p></td>
+    </tr>
+    <tr>
+      <th>prefix</th>
+      <td><p>A string for output filename prefix</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>this function writes renamed files back to directory</p>
+    <p>this function splits a single input PDF document into
+individual pages</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -128,8 +142,20 @@ select the folder interactively.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>#if the directory contains 3 PDF files</span>
-<span class='fu'>rename_files</span>(<span class='kw'>new_names</span> <span class='kw'>=</span> <span class='fu'>paste</span>(<span class='st'>"file"</span>,<span class='fl'>1</span>:<span class='fl'>3</span>))
+<span class='co'># Split the pdf from page 10</span>
+<span class='fu'>split_from</span>(<span class='kw'>pg_num</span><span class='kw'>=</span><span class='fl'>10</span>)
+<span class='co'># }</span><div class='input'>
+</div><span class='co'># NOT RUN {</span>
+<span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'>tempdir</span>()
+<span class='fu'>require</span>(<span class='no'>lattice</span>)
+<span class='kw'>for</span>(<span class='no'>i</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>4</span>) {
+<span class='fu'>pdf</span>(<span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='fu'>paste</span>(<span class='st'>"plot"</span>, <span class='no'>i</span>, <span class='st'>".pdf"</span>, <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>)))
+<span class='fu'>print</span>(<span class='fu'><a href='http://www.rdocumentation.org/packages/lattice/topics/xyplot'>xyplot</a></span>(<span class='no'>iris</span>[,<span class='fl'>1</span>] ~ <span class='no'>iris</span>[,<span class='no'>i</span>], <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>iris</span>))
+<span class='fu'>dev.off</span>()
+}
+<span class='fu'><a href='staple_pdf.html'>staple_pdf</a></span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='no'>dir</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='st'>'Full_pdf.pdf'</span>))
+<span class='no'>input_path</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='st'>"Full_pdf.pdf"</span>)
+<span class='fu'>split_from</span>(<span class='kw'>pg_num</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='no'>input_path</span> ,<span class='kw'>output_directory</span> <span class='kw'>=</span> <span class='no'>dir</span> )
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

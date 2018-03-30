@@ -11,9 +11,14 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="jquery.sticky-kit.min.js"></script><script src="pkgdown.js"></script><meta property="og:title" content="A Toolkit for PDF Files">
 <meta property="og:description" content="Provides function to manipulate PDF files: 
-    merge multiple PDF files into one; Splits a single input PDF document into
-    individual pages; remove selected pages from a file;
-    rename multiple files in a directory.">
+    fill out PDF forms;
+    merge multiple PDF files into one; 
+    remove selected pages from a file;
+    rename multiple files in a directory;
+    rotate entire pdf document; 
+    rotate selected pages of a pdf file;
+    splits single input PDF document into individual pages;
+    splits single input PDF document into parts from given points.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -22,7 +27,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -59,12 +64,11 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     
 
     
     
-<div class="contents">
 <div id="staplr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#staplr" class="anchor"></a>staplr <img src="../../R%20packages/staplr/logo.png" align="right" height="150">
@@ -73,18 +77,23 @@
 <hr>
 <p><a href="https://cran.r-project.org/package=staplr"><img src="http://www.r-pkg.org/badges/version/staplr" alt="CRAN_Status_Badge"></a> <a href="commits/master"><img src="https://img.shields.io/badge/Package%20version-1.1.0-orange.svg?style=flat-square" alt="packageversion"></a></p>
 <hr>
-<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--03--23-yellowgreen.svg" alt="Last-changedate"></a></p>
+<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--03--30-yellowgreen.svg" alt="Last-changedate"></a></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 </div>
 <div id="staplr-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#staplr-1" class="anchor"></a>staplr</h1>
 <p>This package provides functions to manipulate PDF files:</p>
-<pre><code>- merge multiple PDF files: staple_pdf()
-- splits single input PDF file into individual pages: split_pdf()
-- remove selected pages from a file: remove_pages()
-- rename multiple files in a directory: rename_files()
-- fill out PDF forms: get_fields() and set_fields()</code></pre>
+<ul>
+<li>fill out PDF forms: get_fields() and set_fields()</li>
+<li>merge multiple PDF files into one: staple_pdf()</li>
+<li>remove selected pages from a file: remove_pages()</li>
+<li>rename multiple files in a directory: rename_files()</li>
+<li>rotate entire pdf document: rotate_pdf()</li>
+<li>rotate selected pages of a pdf file: rotate_pages()</li>
+<li>splits single input PDF document into individual pages: split_pdf()</li>
+<li>splits single input PDF document into parts from given points: split_from()</li>
+</ul>
 <p>This package is still under development and this repository contains a development version of the R package <em>staplr</em>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -156,7 +165,6 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 </ul>
 </div>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -206,6 +214,8 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
