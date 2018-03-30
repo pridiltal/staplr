@@ -31,7 +31,7 @@
 #' @export
 #' @import utils
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-split_pdf <- function(input_filepath = NULL, output_directory = NULL) {
+split_pdf <- function(input_filepath = NULL, output_directory = NULL, prefix = 'page_') {
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -43,8 +43,22 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL) {
     output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
 
+  # Getting the page count to add the correct amout of zeroes to make it scalable
+  metadataTemp <- tempfile()
+  # Construct a system command to pdftk to get number of pages
+  system_command <- paste("pdftk",
+                          shQuote(input_filepath),
+                          "dump_data",
+                          "output",
+                          shQuote(metadataTemp))
+  system(command = system_command)
+  page_length <- as.numeric(stringr::str_extract(grep( "NumberOfPages", paste0(readLines(metadataTemp)),
+                                                       value = TRUE), "\\d+$"))
+  digits <- max(floor(log(page_length)),4)
+
+
   # Take the filepath arguments and format them for use in a system command
-  output_filepath <- shQuote(paste0(output_directory,"/page_%04d.pdf"))
+  output_filepath <- shQuote(paste0(output_directory, "/", prefix, "%0",digits,"d.pdf"))
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
