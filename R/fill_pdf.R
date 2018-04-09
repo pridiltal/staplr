@@ -9,6 +9,7 @@ fdfEdit <- function(fieldToFill,fdf){
     # we need to escape them
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\\\(',fixed = TRUE)
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\\\\\', fixed = TRUE)
     fieldToFill$value = paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
     fieldToFill$value = paste0('/',fieldToFill$value)
