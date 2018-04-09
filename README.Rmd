@@ -101,7 +101,7 @@ fields = get_fields(pdfFile)
 
 # You make modifications in any of the fields by
 fields$TextField1$value = 'this is text'
-set_fields(pdfPath, 'newFile.pdf', fields)
+set_fields(pdfFile, 'newFile.pdf', fields)
 
 # This will create a filled pdf file
 ```
