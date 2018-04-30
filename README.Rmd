@@ -47,7 +47,9 @@ This package is still under development and this repository contains a developme
 
 #### First Install pdftk
 
-download and install [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) NB: this is not an R package!
+download and install [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). This is not an R package!
+
+NB: pdftk is known to hang indefinitely on macOS High Sierra. If this happens to you, [this version](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg) should work for macOS El Capitan (10.11), it also works on Sierra (10.12) and High Sierra (10.13).
 
 #### Then Install staplr
 You can install the stable version from CRAN.

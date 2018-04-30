@@ -15,7 +15,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--03--30-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--04--30-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -41,8 +41,14 @@ development version of the R package *staplr*.
 #### First Install pdftk
 
 download and install
-[pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/) NB: this
-is not an R package\!
+[pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). This is
+not an R package\!
+
+NB: pdftk is known to hang indefinitely on macOS High Sierra. If this
+happens to you, [this
+version](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
+should work for macOS El Capitan (10.11), it also works on Sierra
+(10.12) and High Sierra (10.13).
 
 #### Then Install staplr
 
