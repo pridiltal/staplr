@@ -4,16 +4,19 @@
 \alias{staple_pdf}
 \title{Merge multiple PDF files into one}
 \usage{
-staple_pdf(input_directory = NULL, output_filepath = NULL)
+staple_pdf(input_directory = NULL, input_files = NULL,
+  output_filepath = NULL)
 }
 \arguments{
 \item{input_directory}{the path of the input PDF files.
-The default is set to NULL. IF NULL, it  prompt the user to
+The default is set to NULL. If NULL, it  prompt the user to
 select the folder interactively.}
+
+\item{input_files}{a vector of input PDF files. The default is set to NULL. If NULL and \code{input_directory} is also NULL, the user is propted to select a folder interactively.}
 
 \item{output_filepath}{the path of the output output PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactivelye.}
+select the folder interactively.}
 }
 \value{
 this function returns a combined PDF document
