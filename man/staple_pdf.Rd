@@ -5,7 +5,7 @@
 \title{Merge multiple PDF files into one}
 \usage{
 staple_pdf(input_directory = NULL, input_files = NULL,
-  output_filename = "full_pdf", output_directory = NULL)
+  output_filepath = NULL)
 }
 \arguments{
 \item{input_directory}{the path of the input PDF files.
@@ -14,9 +14,7 @@ select the folder interactively.}
 
 \item{input_files}{a vector of input PDF files. The default is set to NULL. If NULL and \code{input_directory} is also NULL, the user is propted to select a folder interactively.}
 
-\item{output_filename}{the name of the output PDF file. The default is full_pdf.pdf.}
-
-\item{output_directory}{the path of the output PDF file.
+\item{output_filepath}{the path of the output output PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 }
@@ -42,7 +40,7 @@ pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
-output_file <- file.path(dir, paste('full_pdf.pdf',  sep = ""))
+output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
 staple_pdf(input_directory = dir, output_file)
 }
 }
