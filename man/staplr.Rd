@@ -17,5 +17,5 @@ The core functions in this package: \code{\link{staple_pdf}},
  \code{\link{remove_pages}}, \code{\link{split_pdf}}, \code{\link{rename_files}}
 }
 \author{
-Priyanga Dilini Talagala and Ogan Mancarci
+Priyanga Dilini Talagala, Ogan Mancarci and Daniel Padfield
 }

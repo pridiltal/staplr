@@ -1,5 +1,5 @@
-pandoc: 1.19.2.1
-pkgdown: 0.1.0.9000
-pkgdown_sha: 7d8b4882c4eb650f0f869a618f5c445c657313f0
+pandoc: 2.1.2
+pkgdown: 1.0.0
+pkgdown_sha: d43ca38c74827d1d6babc3a80d48cd3a8e8fad8c
 articles: []
 

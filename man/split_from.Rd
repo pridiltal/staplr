@@ -52,5 +52,5 @@ split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \author{
-Priyanga Dilini Talagala
+Priyanga Dilini Talagala and Ogan Mancarci
 }

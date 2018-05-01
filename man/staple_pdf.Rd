@@ -48,5 +48,5 @@ staple_pdf(input_directory = dir, output_file)
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \author{
-Priyanga Dilini Talagala
+Priyanga Dilini Talagala and Daniel Padfield
 }

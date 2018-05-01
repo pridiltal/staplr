@@ -77,7 +77,7 @@
 <hr>
 <p><a href="https://cran.r-project.org/package=staplr"><img src="http://www.r-pkg.org/badges/version/staplr" alt="CRAN_Status_Badge"></a> <a href="commits/master"><img src="https://img.shields.io/badge/Package%20version-1.1.0-orange.svg?style=flat-square" alt="packageversion"></a></p>
 <hr>
-<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--03--30-yellowgreen.svg" alt="Last-changedate"></a></p>
+<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--05--02-yellowgreen.svg" alt="Last-changedate"></a></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 </div>
 <div id="staplr-1" class="section level1">
@@ -101,58 +101,59 @@
 <div id="first-install-pdftk" class="section level4">
 <h4 class="hasAnchor">
 <a href="#first-install-pdftk" class="anchor"></a>First Install pdftk</h4>
-<p>download and install <a href="https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a> NB: this is not an R package!</p>
+<p>download and install <a href="https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/">pdftk</a>. This is not an R package!</p>
+<p>NB: pdftk is known to hang indefinitely on macOS High Sierra. If this happens to you, <a href="https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg">this version</a> should work for macOS El Capitan (10.11), it also works on Sierra (10.12) and High Sierra (10.13).</p>
 </div>
 <div id="then-install-staplr" class="section level4">
 <h4 class="hasAnchor">
 <a href="#then-install-staplr" class="anchor"></a>Then Install staplr</h4>
 <p>You can install the stable version from CRAN.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">'staplr'</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">'staplr'</span>, <span class="dt">dependencies =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>You can install staplr from github with:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"pridiltal/staplr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"pridiltal/staplr"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(staplr)
-<span class="co"># Merge multiple PDF files into one</span>
-<span class="kw"><a href="reference/staple_pdf.html">staple_pdf</a></span>()
-
-<span class="co"># This command promts the user to select the file interactively. </span>
-<span class="co"># Remove page 2 and 3 from the selected file.</span>
-<span class="kw"><a href="reference/remove_pages.html">remove_pages</a></span>(<span class="dt">rmpages =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))
-
-<span class="co"># This function splits a single input PDF document into individual pages</span>
-<span class="kw"><a href="reference/split_pdf.html">split_pdf</a></span>()
-
-<span class="co"># This function writes renamed files back to directory</span>
-<span class="co">#if the directory contains 3 PDF files</span>
-<span class="kw"><a href="reference/rename_files.html">rename_files</a></span>(<span class="dt">new_names =</span> <span class="kw">paste</span>(<span class="st">"file"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))
-
-<span class="co"># These functions are to fill out pdf forms</span>
-<span class="kw"><a href="reference/get_fields.html">get_fields</a></span>() 
-<span class="kw"><a href="reference/set_fields.html">set_fields</a></span>()
-<span class="co"># This includes 2 external functions `get_fields` and `set_fields` </span>
-<span class="co"># and files to use as examples.</span>
-<span class="co"># This is what the example file looks like</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(staplr)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># Merge multiple PDF files into one</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="reference/staple_pdf.html">staple_pdf</a></span>()</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># This command promts the user to select the file interactively. </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Remove page 2 and 3 from the selected file.</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="reference/remove_pages.html">remove_pages</a></span>(<span class="dt">rmpages =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># This function splits a single input PDF document into individual pages</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw"><a href="reference/split_pdf.html">split_pdf</a></span>()</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># This function writes renamed files back to directory</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#if the directory contains 3 PDF files</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw"><a href="reference/rename_files.html">rename_files</a></span>(<span class="dt">new_names =</span> <span class="kw">paste</span>(<span class="st">"file"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># These functions are to fill out pdf forms</span></a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>() </a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw"><a href="reference/set_fields.html">set_fields</a></span>()</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co"># This includes 2 external functions `get_fields` and `set_fields` </span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co"># and files to use as examples.</span></a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co"># This is what the example file looks like</span></a></code></pre></div>
 <div class="figure">
 <img src="https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png" alt="image"><p class="caption">image</p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># If you get path to this file by</span>
-pdfFile =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">'testForm.pdf'</span>,<span class="dt">package =</span> <span class="st">'staplr'</span>)
-
-<span class="co"># And do</span>
-fields =<span class="st"> </span><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>(pdfFile)
-<span class="co"># You'll get a list of fields that the pdf contains </span>
-<span class="co"># along with some additional information about the fields.</span>
-
-<span class="co"># You make modifications in any of the fields by</span>
-fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span class="st"> 'this is text'</span>
-<span class="kw"><a href="reference/set_fields.html">set_fields</a></span>(pdfPath, <span class="st">'newFile.pdf'</span>, fields)
-
-<span class="co"># This will create a filled pdf file</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># If you get path to this file by</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">pdfFile =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">'testForm.pdf'</span>,<span class="dt">package =</span> <span class="st">'staplr'</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># And do</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">fields =<span class="st"> </span><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>(pdfFile)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># You'll get a list of fields that the pdf contains </span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># along with some additional information about the fields.</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># You make modifications in any of the fields by</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span class="st"> 'this is text'</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="reference/set_fields.html">set_fields</a></span>(pdfFile, <span class="st">'newFile.pdf'</span>, fields)</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># This will create a filled pdf file</span></a></code></pre></div>
 <div class="figure">
 <img src="https://user-images.githubusercontent.com/6352379/37745838-65986038-2d34-11e8-9d16-5d6514ef24ab.png" alt="image"><p class="caption">image</p>
 </div>
@@ -188,6 +189,7 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 <ul class="list-unstyled">
 <li>Priyanga Dilini Talagala <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Ogan Mancarci <br><small class="roles"> Author </small>  </li>
+<li>Daniel Padfield <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
@@ -205,7 +207,7 @@ fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span c
 
 
       <footer><div class="copyright">
-  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci.</p>
+  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield.</p>
 </div>
 
 <div class="pkgdown">

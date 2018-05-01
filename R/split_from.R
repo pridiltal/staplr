@@ -13,7 +13,7 @@
 #' @param prefix A string for output filename prefix
 #' @return this function splits a single input PDF document into
 #' individual pages
-#' @author Priyanga Dilini Talagala
+#' @author Priyanga Dilini Talagala and Ogan Mancarci
 #' @examples
 #' \dontrun{
 #' # Split the pdf from page 10

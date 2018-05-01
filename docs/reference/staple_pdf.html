@@ -25,6 +25,9 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
+
+
+
 <meta property="og:title" content="Merge multiple PDF files into one — staple_pdf" />
 
 <meta property="og:description" content="If the toolkit Pdftk is available in the
@@ -42,8 +45,6 @@ See the reference for detailed usage of pdftk." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
-
-
 
 
   </head>
@@ -94,15 +95,19 @@ See the reference for detailed usage of pdftk." />
     <div class="page-header">
     <h1>Merge multiple PDF files into one</h1>
     
+    <div class="hidden name"><code>staple_pdf.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>If the toolkit Pdftk is available in the
 system, it will be called to merge the PDF files.</p>
 <p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>staple_pdf</span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>staple_pdf</span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>input_files</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -110,14 +115,18 @@ system, it will be called to merge the PDF files.</p>
     <tr>
       <th>input_directory</th>
       <td><p>the path of the input PDF files.
-The default is set to NULL. IF NULL, it  prompt the user to
+The default is set to NULL. If NULL, it  prompt the user to
 select the folder interactively.</p></td>
+    </tr>
+    <tr>
+      <th>input_files</th>
+      <td><p>a vector of input PDF files. The default is set to NULL. If NULL and <code>input_directory</code> is also NULL, the user is propted to select a folder interactively.</p></td>
     </tr>
     <tr>
       <th>output_filepath</th>
       <td><p>the path of the output output PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactivelye.</p></td>
+select the folder interactively.</p></td>
     </tr>
     </table>
     
@@ -167,7 +176,7 @@ Priyanga Dilini Talagala
 
       <footer>
       <div class="copyright">
-  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci.</p>
+  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield.</p>
 </div>
 
 <div class="pkgdown">

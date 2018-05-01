@@ -6,7 +6,8 @@ Depends: R (>= 3.4.0)
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Authors@R:c(
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
-    person("Ogan", "Mancarci", email="ogan.mancarci@gmail.com", role='aut')
+    person("Ogan", "Mancarci", email="ogan.mancarci@gmail.com", role='aut'),
+    person("Daniel", "Padfield", email= "d.padfield@exeter.ac.uk", role ='aut')
     )
 Description: Provides function to manipulate PDF files: 
     fill out PDF forms;

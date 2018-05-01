@@ -48,5 +48,5 @@ split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),outp
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \author{
-Priyanga Dilini Talagala
+Priyanga Dilini Talagala and Ogan Mancarci
 }

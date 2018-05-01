@@ -12,7 +12,7 @@
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @return this function returns a combined PDF document
-#' @author Priyanga Dilini Talagala
+#' @author Priyanga Dilini Talagala and Daniel Padfield
 #' @examples
 #' \dontrun{
 #' staple_pdf()
