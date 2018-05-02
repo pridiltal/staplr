@@ -10,7 +10,7 @@ output: github_document
 
 ---
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/package=staplr)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
  
 ---
  

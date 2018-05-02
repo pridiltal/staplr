@@ -10,7 +10,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/package=staplr)
+[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
 
 -----
 
