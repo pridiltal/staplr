@@ -8,6 +8,9 @@ before_install:
   - sudo apt-get install -y pdftk
 r_packages:
   - covr
-
+script:
+  - sed -i '/tests/d' ./.Rbuildignore
+  - R CMD build .
+  - R CMD check *tar.gz
 after_success:
   - Rscript -e 'library(covr); codecov()'
