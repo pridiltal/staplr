@@ -3,9 +3,11 @@
 language: r
 cache: packages
 warnings_are_errors: false
-
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y pdftk
+  - sed -i '/tests/d' ./.Rbuildignore
 r_packages:
   - covr
-
 after_success:
   - Rscript -e 'library(covr); codecov()'
