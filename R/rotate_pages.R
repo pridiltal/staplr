@@ -46,7 +46,7 @@
 rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_filepath = NULL, output_filepath = NULL) {
 
   assertthat::assert_that(is.numeric(rotatepages))
-  page_rotation <- match.arg(page_rotation)
+  page_rotation <- match.arg(as.character(page_rotation), c(0, 90, 180, 270))
 
 
   if(is.null(input_filepath)){
