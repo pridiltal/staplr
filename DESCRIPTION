@@ -27,6 +27,7 @@ Imports:
   assertthat
 Suggests: 
   lattice,
-  testthat
+  testthat,
+  pdftools
 Encoding: UTF-8
 BugReports: https://github.com/pridiltal/staplr/issues

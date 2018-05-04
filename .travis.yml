@@ -5,7 +5,7 @@ cache: packages
 warnings_are_errors: false
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y pdftk
+  - sudo apt-get install -y pdftk libpoppler-cpp-dev
   - sed -i '/tests/d' ./.Rbuildignore
 r_packages:
   - covr
