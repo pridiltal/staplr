@@ -14,7 +14,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--05--02-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--05--09-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 

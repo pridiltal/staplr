@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">staplr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.0</span>
       </span>
     </div>
 
@@ -75,9 +75,9 @@
 </h1></div>
 
 <hr>
-<p><a href="https://cran.r-project.org/package=staplr"><img src="http://www.r-pkg.org/badges/version/staplr" alt="CRAN_Status_Badge"></a></p>
+<p><a href="https://cran.r-project.org/web/packages/staplr/index.html"><img src="http://www.r-pkg.org/badges/version/staplr" alt="CRAN_Status_Badge"></a></p>
 <hr>
-<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--05--02-yellowgreen.svg" alt="Last-changedate"></a></p>
+<p><a href="/commits/master"><img src="https://img.shields.io/badge/last%20change-2018--05--09-yellowgreen.svg" alt="Last-changedate"></a></p>
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 </div>
 <div id="staplr-1" class="section level1">
@@ -119,22 +119,22 @@
 <a href="#example" class="anchor"></a>Example</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(staplr)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co"># Merge multiple PDF files into one</span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="reference/staple_pdf.html">staple_pdf</a></span>()</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">staple_pdf</span>()</a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co"># This command promts the user to select the file interactively. </span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co"># Remove page 2 and 3 from the selected file.</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="reference/remove_pages.html">remove_pages</a></span>(<span class="dt">rmpages =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw">remove_pages</span>(<span class="dt">rmpages =</span> <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co"># This function splits a single input PDF document into individual pages</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw"><a href="reference/split_pdf.html">split_pdf</a></span>()</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="kw">split_pdf</span>()</a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"></a>
 <a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co"># This function writes renamed files back to directory</span></a>
 <a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#if the directory contains 3 PDF files</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw"><a href="reference/rename_files.html">rename_files</a></span>(<span class="dt">new_names =</span> <span class="kw">paste</span>(<span class="st">"file"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">rename_files</span>(<span class="dt">new_names =</span> <span class="kw">paste</span>(<span class="st">"file"</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb3-15" data-line-number="15"></a>
 <a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co"># These functions are to fill out pdf forms</span></a>
-<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>() </a>
-<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw"><a href="reference/set_fields.html">set_fields</a></span>()</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17"><span class="kw">get_fields</span>() </a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"><span class="kw">set_fields</span>()</a>
 <a class="sourceLine" id="cb3-19" data-line-number="19"><span class="co"># This includes 2 external functions `get_fields` and `set_fields` </span></a>
 <a class="sourceLine" id="cb3-20" data-line-number="20"><span class="co"># and files to use as examples.</span></a>
 <a class="sourceLine" id="cb3-21" data-line-number="21"><span class="co"># This is what the example file looks like</span></a></code></pre></div>
@@ -145,13 +145,13 @@
 <a class="sourceLine" id="cb4-2" data-line-number="2">pdfFile =<span class="st"> </span><span class="kw">system.file</span>(<span class="st">'testForm.pdf'</span>,<span class="dt">package =</span> <span class="st">'staplr'</span>)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co"># And do</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">fields =<span class="st"> </span><span class="kw"><a href="reference/get_fields.html">get_fields</a></span>(pdfFile)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">fields =<span class="st"> </span><span class="kw">get_fields</span>(pdfFile)</a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co"># You'll get a list of fields that the pdf contains </span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co"># along with some additional information about the fields.</span></a>
 <a class="sourceLine" id="cb4-8" data-line-number="8"></a>
 <a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co"># You make modifications in any of the fields by</span></a>
 <a class="sourceLine" id="cb4-10" data-line-number="10">fields<span class="op">$</span>TextField1<span class="op">$</span>value =<span class="st"> 'this is text'</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw"><a href="reference/set_fields.html">set_fields</a></span>(pdfFile, <span class="st">'newFile.pdf'</span>, fields)</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw">set_fields</span>(pdfFile, <span class="st">'newFile.pdf'</span>, fields)</a>
 <a class="sourceLine" id="cb4-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co"># This will create a filled pdf file</span></a></code></pre></div>
 <div class="figure">
