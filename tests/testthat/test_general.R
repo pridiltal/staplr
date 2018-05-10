@@ -32,15 +32,23 @@ test_that('remove_pages',{
 test_that('rotate',{
   pdfFile = system.file('testForm.pdf',package = 'staplr')
   tempFile = tempfile(fileext = '.pdf')
+  rotate_pages(c(1,2), 90, pdfFile, tempFile)
 
-  rotate_pages(c(1,2), 180, pdfFile, tempFile)
-  expect_true(file.exists(tempFile))
+  # check the dimensions of the rotated pdf files to see if its rotated
+  newDims = dim(pdftools::pdf_render_page(tempFile,1))
+  oldDims = dim(pdftools::pdf_render_page(pdfFile,1))
+  expect_equal(newDims[2],oldDims[3])
+  expect_equal(newDims[3],oldDims[2])
+
 
   tempFile = tempfile(fileext = '.pdf')
-  rotate_pdf(180, pdfFile, tempFile)
-  # couldn't find a reliable way to detect page orientation so this only
-  # checks to see if the file exists
-  expect_true(file.exists(tempFile))
+  rotate_pdf(90, pdfFile, tempFile)
+
+  # check the dimensions of the rotated pdf files to see if its rotated
+  newDims = dim(pdftools::pdf_render_page(tempFile,1))
+  oldDims = dim(pdftools::pdf_render_page(pdfFile,1))
+  expect_equal(newDims[2],oldDims[3])
+  expect_equal(newDims[3],oldDims[2])
 })
 
 
