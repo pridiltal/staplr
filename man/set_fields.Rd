@@ -18,7 +18,11 @@ changes in a PDF, edit the \code{values} component of an element within
 this list}
 }
 \description{
-Set fields of a pdf form
+If the toolkit Pdftk is available in the
+system, it will be called to fill a pdf form with given a list of fields.
+List of fields can be acquired by \code{\link{get_fields}} function.
+
+See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
 \dontrun{
@@ -33,6 +37,9 @@ fields$checkBox$value = 'Yes'
 set_fields(pdfFile,'filledPdf.pdf',fields)
 }
 
+}
+\references{
+\url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \seealso{
 \code{\link{get_fields}}

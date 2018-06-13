@@ -29,6 +29,11 @@ fdfEdit <- function(fieldToFill,fdf){
 
 #' Get form fields from a pdf form
 #'
+#' @description If the toolkit Pdftk is available in the
+#' system, it will be called to get form fields from a pdf file.
+#'
+#' See the reference for detailed usage of \code{pdftk}.
+#'
 #' @param input_filepath the path of the input PDF file. The default is set to
 #'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #'
@@ -46,6 +51,7 @@ fdfEdit <- function(fieldToFill,fdf){
 #' fields = get_fields(pdfFile)
 #' }
 #' @export
+#' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 get_fields <- function(input_filepath = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -97,6 +103,12 @@ get_fields <- function(input_filepath = NULL){
 
 #' Set fields of a pdf form
 #'
+#' @description If the toolkit Pdftk is available in the
+#' system, it will be called to fill a pdf form with given a list of fields.
+#' List of fields can be acquired by \code{\link{get_fields}} function.
+#'
+#' See the reference for detailed usage of \code{pdftk}.
+#'
 #' @param input_filepath the path of the input PDF file. The default is set to
 #'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #' @param output_filepath the path of the output PDF file. The default is set to
@@ -121,6 +133,7 @@ get_fields <- function(input_filepath = NULL){
 #' set_fields(pdfFile,'filledPdf.pdf',fields)
 #' }
 #'
+#' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   assertthat::assert_that(is.list(fields))
 

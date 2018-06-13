@@ -19,13 +19,19 @@ A list of fields. With type, name and value components. To use with
   corresponding to non checked and checked states respectively.
 }
 \description{
-Get form fields from a pdf form
+If the toolkit Pdftk is available in the
+system, it will be called to get form fields from a pdf file.
+
+See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
 \dontrun{
 pdfFile = system.file('testForm.pdf',package = 'staplr')
 fields = get_fields(pdfFile)
 }
+}
+\references{
+\url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \seealso{
 \code{link{set_fields}}
