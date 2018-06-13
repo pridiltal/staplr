@@ -29,6 +29,15 @@ test_that('remove_pages',{
   expect_true(pdftools::pdf_text(pdfFile)[2] == pdftools::pdf_text(tempFile)[1])
 })
 
+test_that('select_pages',{
+  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  tempFile <- tempfile(fileext = '.pdf')
+
+  select_pages(selpages = 2, pdfFile, tempFile)
+  # ensure that the page is removed so the new page 1 is the old page 2
+  expect_true(pdftools::pdf_text(pdfFile)[2] == pdftools::pdf_text(tempFile)[1])
+})
+
 test_that('rotate',{
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
   tempFile <- tempfile(fileext = '.pdf')
