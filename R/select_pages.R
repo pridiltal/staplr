@@ -1,8 +1,8 @@
 #' Select pages from a file
 #'
 #' @description If the toolkit Pdftk is available in the
-#' system, it will be called to select the given pages from
-#' the seleted PDF files.
+#' system, it will be called to combine the selected pages
+#' in a new pdf file.
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #' @param selpages a vector of page numbers to be selected
@@ -17,7 +17,7 @@
 #' @author Priyanga Dilini Talagala, modified by Granville Matheson
 #' @examples
 #' \dontrun{
-#' # This command promts the user to select the file interactively.
+#' # This command prompts the user to select the file interactively.
 #' # Remove page 2 and 3 from the selected file.
 #' select_pages(selpages = c(3,6))
 #' }
