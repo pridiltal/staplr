@@ -72,11 +72,11 @@ library(staplr)
 # Merge multiple PDF files into one
 staple_pdf()
 
-# This command promts the user to select the file interactively. 
+# This command prompts the user to select the file interactively. 
 # Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(2,3))
 
-# This function select pages from a file;
+# This function selects pages from a file;
 select_pages(selpages = c(1,3))
 
 # This function splits a single input PDF document into individual pages
