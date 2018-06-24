@@ -31,7 +31,7 @@ See the reference for detailed usage of \code{pdftk}.
 \examples{
 \dontrun{
 # This command prompts the user to select the file interactively.
-# Remove page 2 and 3 from the selected file.
+# Select page 3 and 6 from the selected file.
 select_pages(selpages = c(3,6))
 }
 
@@ -54,5 +54,5 @@ select_pages(selpages = 1, input_path, output_path)
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 }
 \author{
-Priyanga Dilini Talagala, modified by Granville Matheson
+Granville Matheson, Priyanga Dilini Talagala
 }

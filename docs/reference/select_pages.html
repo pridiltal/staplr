@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Remove selected pages from a file — remove_pages • staplr</title>
+<title>Select pages from a file — select_pages • staplr</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +28,11 @@
 
 
 
-<meta property="og:title" content="Remove selected pages from a file — remove_pages" />
+<meta property="og:title" content="Select pages from a file — select_pages" />
 
 <meta property="og:description" content="If the toolkit Pdftk is available in the
-system, it will be called to remove the given pages from
-the seleted PDF files.
+system, it will be called to combine the selected pages
+in a new pdf file.
 See the reference for detailed usage of pdftk." />
 
 <meta property="og:image" content="/logo.png" />
@@ -94,28 +94,28 @@ See the reference for detailed usage of pdftk." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Remove selected pages from a file</h1>
+    <h1>Select pages from a file</h1>
     
-    <div class="hidden name"><code>remove_pages.Rd</code></div>
+    <div class="hidden name"><code>select_pages.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
     <p>If the toolkit Pdftk is available in the
-system, it will be called to remove the given pages from
-the seleted PDF files.</p>
+system, it will be called to combine the selected pages
+in a new pdf file.</p>
 <p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>remove_pages</span>(<span class='no'>rmpages</span>, <span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>select_pages</span>(<span class='no'>selpages</span>, <span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>rmpages</th>
-      <td><p>a vector of page numbers to be removed</p></td>
+      <th>selpages</th>
+      <td><p>a vector of page numbers to be selected</p></td>
     </tr>
     <tr>
       <th>input_filepath</th>
@@ -144,8 +144,8 @@ remaining pages</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># This command prompts the user to select the file interactively.</span>
-<span class='co'># Remove page 2 and 3 from the selected file.</span>
-<span class='fu'>remove_pages</span>(<span class='kw'>rmpages</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>6</span>))
+<span class='co'># Select page 3 and 6 from the selected file.</span>
+<span class='fu'>select_pages</span>(<span class='kw'>selpages</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>,<span class='fl'>6</span>))
 <span class='co'># }</span><div class='input'>
 </div><span class='co'># NOT RUN {</span>
 <span class='no'>dir</span> <span class='kw'>&lt;-</span> <span class='fu'>tempdir</span>()
@@ -159,7 +159,7 @@ remaining pages</p>
 <span class='fu'><a href='staple_pdf.html'>staple_pdf</a></span>(<span class='kw'>input_directory</span> <span class='kw'>=</span> <span class='no'>dir</span>, <span class='no'>output_file</span>)
 <span class='no'>input_path</span> <span class='kw'>&lt;-</span> <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='fu'>paste</span>(<span class='st'>"Full_pdf.pdf"</span>,  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>))
 <span class='no'>output_path</span> <span class='kw'>&lt;-</span>  <span class='fu'>file.path</span>(<span class='no'>dir</span>, <span class='fu'>paste</span>(<span class='st'>"trimmed_pdf.pdf"</span>,  <span class='kw'>sep</span> <span class='kw'>=</span> <span class='st'>""</span>))
-<span class='fu'>remove_pages</span>(<span class='kw'>rmpages</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>input_path</span>, <span class='no'>output_path</span>)
+<span class='fu'>select_pages</span>(<span class='kw'>selpages</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>input_path</span>, <span class='no'>output_path</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -176,7 +176,7 @@ remaining pages</p>
 
     <h2>Author</h2>
     
-Priyanga Dilini Talagala
+Granville Matheson, Priyanga Dilini Talagala
 
   </div>
 </div>

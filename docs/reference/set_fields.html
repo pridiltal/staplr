@@ -30,7 +30,10 @@
 
 <meta property="og:title" content="Set fields of a pdf form — set_fields" />
 
-<meta property="og:description" content="Set fields of a pdf form" />
+<meta property="og:description" content="If the toolkit Pdftk is available in the
+system, it will be called to fill a pdf form with given a list of fields.
+List of fields can be acquired by get_fields function.
+See the reference for detailed usage of pdftk." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -60,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">staplr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.1</span>
       </span>
     </div>
 
@@ -98,7 +101,10 @@
 
     <div class="ref-description">
     
-    <p>Set fields of a pdf form</p>
+    <p>If the toolkit Pdftk is available in the
+system, it will be called to fill a pdf form with given a list of fields.
+List of fields can be acquired by <code><a href='get_fields.html'>get_fields</a></code> function.</p>
+<p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
     </div>
 
@@ -119,21 +125,25 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
     </tr>
     <tr>
       <th>fields</th>
-      <td><p>Fields returned from <code>get_fields</code> function. To make
+      <td><p>Fields returned from <code><a href='get_fields.html'>get_fields</a></code> function. To make
 changes in a PDF, edit the <code>values</code> component of an element within
 this list</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p><a href='https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/'>https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/</a></p>
+    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>get_fields</code></p></div>
+    <div class='dont-index'><p><code><a href='get_fields.html'>get_fields</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>pdfFile</span> <span class='kw'>=</span> <span class='fu'>system.file</span>(<span class='st'>'testForm.pdf'</span>,<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'staplr'</span>)
-<span class='no'>fields</span> <span class='kw'>=</span> <span class='fu'>get_fields</span>(<span class='no'>pdfFile</span>)
+<span class='no'>fields</span> <span class='kw'>=</span> <span class='fu'><a href='get_fields.html'>get_fields</a></span>(<span class='no'>pdfFile</span>)
 
 <span class='no'>fields</span>$<span class='no'>TextField1</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='st'>'this is text'</span>
 <span class='no'>fields</span>$<span class='no'>TextField2</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='st'>'more text'</span>
@@ -149,6 +159,8 @@ this list</p></td>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -163,7 +175,7 @@ Ogan Mancarci
 
       <footer>
       <div class="copyright">
-  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield.</p>
+  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield, Granville Matheson.</p>
 </div>
 
 <div class="pkgdown">

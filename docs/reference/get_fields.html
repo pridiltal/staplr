@@ -30,7 +30,9 @@
 
 <meta property="og:title" content="Get form fields from a pdf form — get_fields" />
 
-<meta property="og:description" content="Get form fields from a pdf form" />
+<meta property="og:description" content="If the toolkit Pdftk is available in the
+system, it will be called to get form fields from a pdf file.
+See the reference for detailed usage of pdftk." />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -60,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">staplr</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.2.1</span>
       </span>
     </div>
 
@@ -98,7 +100,9 @@
 
     <div class="ref-description">
     
-    <p>Get form fields from a pdf form</p>
+    <p>If the toolkit Pdftk is available in the
+system, it will be called to get form fields from a pdf file.</p>
+<p>See the reference for detailed usage of <code>pdftk</code>.</p>
     
     </div>
 
@@ -117,11 +121,15 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A list of fields. With type, name and value components. To use with
-  <code>set_fields</code> edit the value element of the fields you want to
+  <code><a href='set_fields.html'>set_fields</a></code> edit the value element of the fields you want to
   modify. If the field of type "button", the value will be a factor. In this
   case the factor levels describe the possible values for the field. For
   example for a checkbox the typical level names would be "Off" and "Yes",
   corresponding to non checked and checked states respectively.</p>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p><a href='https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/'>https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/</a></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -141,6 +149,8 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
       
       <li><a href="#value">Value</a></li>
 
+      <li><a href="#references">References</a></li>
+
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
@@ -155,7 +165,7 @@ Ogan Mancarci
 
       <footer>
       <div class="copyright">
-  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield.</p>
+  <p>Developed by Priyanga Dilini Talagala, Ogan Mancarci, Daniel Padfield, Granville Matheson.</p>
 </div>
 
 <div class="pkgdown">

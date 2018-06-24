@@ -14,7 +14,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--05--09-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2018--06--25-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -28,6 +28,7 @@ This package provides functions to manipulate PDF files:
   - rename multiple files in a directory: rename\_files()
   - rotate entire pdf document: rotate\_pdf()
   - rotate selected pages of a pdf file: rotate\_pages()
+  - Select pages from a file: select\_pages()
   - splits single input PDF document into individual pages: split\_pdf()
   - splits single input PDF document into parts from given points:
     split\_from()
@@ -74,6 +75,9 @@ staple_pdf()
 # This command promts the user to select the file interactively. 
 # Remove page 2 and 3 from the selected file.
 remove_pages(rmpages = c(2,3))
+
+# This function select pages from a file;
+select_pages(selpages = c(1,3))
 
 # This function splits a single input PDF document into individual pages
 split_pdf()

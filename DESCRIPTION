@@ -1,13 +1,14 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 2.2.0
+Version: 2.2.1
 Depends: R (>= 3.4.0)
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Authors@R: c(
     person("Priyanga Dilini", "Talagala", email="dilini.talagala@monash.edu", role= c("aut","cre")),
     person("Ogan", "Mancarci", email="ogan.mancarci@gmail.com", role='aut'),
-    person("Daniel", "Padfield", email= "d.padfield@exeter.ac.uk", role ='aut')
+    person("Daniel", "Padfield", email= "d.padfield@exeter.ac.uk", role ='aut'),
+    person("Granville", "Matheson", email= "mathesong@gmail.com", role ='aut')
     )
 Description: Provides function to manipulate PDF files: 
     fill out PDF forms;
@@ -16,6 +17,7 @@ Description: Provides function to manipulate PDF files:
     rename multiple files in a directory;
     rotate entire pdf document; 
     rotate selected pages of a pdf file;
+    Select pages from a file;
     splits single input PDF document into individual pages;
     splits single input PDF document into parts from given points.
 License: GPL-3
