@@ -20,7 +20,7 @@
 #' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
-#' # This command promts the user to select the file interactively.
+#' # This command prompts the user to select the file interactively.
 #' # Rotate page 2 and 6 to 90 degrees clockwise
 #' rotate_pages(rotatepages = c(3,6), page_rotation = 90)
 #' }

@@ -17,7 +17,7 @@
 #' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{
-#' # This command promts the user to select the file interactively.
+#' # This command prompts the user to select the file interactively.
 #' # Rotate the entire PDF document to 90 degrees clockwise
 #' rotate_pdf(page_rotation = 90)
 #' }

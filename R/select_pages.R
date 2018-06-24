@@ -1,11 +1,11 @@
-#' Remove selected pages from a file
+#' Select pages from a file
 #'
 #' @description If the toolkit Pdftk is available in the
-#' system, it will be called to remove the given pages from
-#' the seleted PDF files.
+#' system, it will be called to combine the selected pages
+#' in a new pdf file.
 #'
 #' See the reference for detailed usage of \code{pdftk}.
-#' @param rmpages a vector of page numbers to be removed
+#' @param selpages a vector of page numbers to be selected
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
@@ -14,12 +14,12 @@
 #' select the folder interactivelye.
 #' @return this function returns a PDF document with the
 #' remaining pages
-#' @author Priyanga Dilini Talagala
+#' @author Priyanga Dilini Talagala, modified by Granville Matheson
 #' @examples
 #' \dontrun{
 #' # This command prompts the user to select the file interactively.
 #' # Remove page 2 and 3 from the selected file.
-#' remove_pages(rmpages = c(3,6))
+#' select_pages(selpages = c(3,6))
 #' }
 #'
 #' \dontrun{
@@ -34,15 +34,15 @@
 #' staple_pdf(input_directory = dir, output_file)
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 #' output_path <-  file.path(dir, paste("trimmed_pdf.pdf",  sep = ""))
-#' remove_pages(rmpages = 1, input_path, output_path)
+#' select_pages(selpages = 1, input_path, output_path)
 #' }
 #' @export
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL) {
+select_pages <- function(selpages, input_filepath = NULL, output_filepath = NULL) {
 
-  assertthat::assert_that(is.numeric(rmpages))
+  assertthat::assert_that(is.numeric(selpages))
 
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -61,13 +61,13 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL)
   system(command = system_command)
 
   page_length <- as.numeric(stringr::str_extract(grep( "NumberOfPages", paste0(readLines(metadataTemp)),
-                                             value = TRUE), "\\d+$"))
+                                                       value = TRUE), "\\d+$"))
 
   total <- 1:page_length
 
-  keep <- total[-rmpages]
+  keep <- total[selpages]
   selected_pages <- split(keep, cumsum(seq_along(keep) %in%
-                                      (which(diff(keep)>1)+1)))
+                                         (which(diff(keep)>1)+1)))
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   selected_pages <- lapply(selected_pages,f)
 
