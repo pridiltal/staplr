@@ -4,7 +4,7 @@ fdfEdit <- function(fieldToFill,fdf){
   if(is.na(fieldToFill$value)){
     fieldToFill$value=''
   }
-  if(fieldToFill$type == 'Text'){
+  if(fieldToFill$type %in%  c('Text','Choice')){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\\\(',fixed = TRUE)

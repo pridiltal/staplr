@@ -11,11 +11,14 @@ test_that('fill_pdf',{
   fields$TextField2$value <- 'more text'
   fields$RadioGroup$value <- 2
   fields$checkBox$value <- 'Yes'
+  fields$`List Box`$value <- 'Entry1'
 
   set_fields(pdfFile,tempFile,fields)
 
   # ensure that the resulting file is filled with the correct text
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
+  expect_true(grepl('Entry1', pdftools::pdf_text(tempFile)[1]))
+
 })
 
 
