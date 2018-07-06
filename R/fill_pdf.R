@@ -7,9 +7,9 @@ fdfEdit <- function(fieldToFill,fdf){
   if(fieldToFill$type == 'Text'){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\\\\\', fixed = TRUE)
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\\\(',fixed = TRUE)
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
-    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\\\\\', fixed = TRUE)
     fieldToFill$value = paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
     fieldToFill$value = paste0('/',fieldToFill$value)
