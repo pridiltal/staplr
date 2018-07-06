@@ -8,7 +8,7 @@ test_that('fill_pdf',{
   fields <- get_fields(pdfFile)
 
   fields$TextField1$value <- 'this is text'
-  fields$TextField2$value <- 'more text'
+  fields$TextField2$value <- 'more text with some paranthesis () ('
   fields$RadioGroup$value <- 2
   fields$checkBox$value <- 'Yes'
 
@@ -16,6 +16,8 @@ test_that('fill_pdf',{
 
   # ensure that the resulting file is filled with the correct text
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
+  expect_true(grepl('more text with some paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
+
 })
 
 
