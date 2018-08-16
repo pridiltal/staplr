@@ -1,3 +1,13 @@
+# https://stackoverflow.com/questions/51850775/how-to-decode-a-character-with-numeric-character-references-in-it/51850941#51850941
+sub_decimal <- function(char) {
+  while(TRUE) {
+    utf <- stringr::str_match(char, '\\&\\#([0-9]+)\\;')[,2]
+    if (is.na(utf)) break()
+    char <- sub('\\&\\#([0-9]+)\\;', intToUtf8(utf), char)
+  }
+  return(char)
+}
+
 
 # this is an internal function that edits an fdf string
 fdfEdit <- function(fieldToFill,fdf){
@@ -86,11 +96,11 @@ get_fields <- function(input_filepath = NULL){
     stateOptions <- stringr::str_extract_all(x,'(?<=FieldStateOption: ).*?(?=\n|$)')[[1]]
 
     if(length(stateOptions)>0){
-      value <- factor(value,levels = stateOptions)
+      value <- factor(sub_decimal(value),levels = sapply(stateOptions,sub_decimal))
     }
 
     return(list(type = type,
-                name = name,
+                name = sub_decimal(name),
                 value = value))
   })
 
@@ -155,8 +165,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   system(system_command)
 
 
-  fdf <- paste(readLines(tempFDF),
+  fdf <- paste(readLines(tempFDF,encoding ='latin1'),
               collapse= '\n')
+
 
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]
@@ -164,7 +175,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   }
 
   newFDF <- tempfile()
-  writeLines(fdf, newFDF)
+  f = file(newFDF,open = "w",encoding = 'latin1')
+  writeLines(fdf, f,useBytes = TRUE)
+  close(f)
 
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
