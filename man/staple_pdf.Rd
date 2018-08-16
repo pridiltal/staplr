@@ -41,7 +41,7 @@ print(xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
 output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
-staple_pdf(input_directory = dir, output_file)
+staple_pdf(input_directory = dir, output_filepath = output_file)
 }
 }
 \references{

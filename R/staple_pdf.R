@@ -27,7 +27,7 @@
 #' dev.off()
 #' }
 #' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
-#' staple_pdf(input_directory = dir, output_file)
+#' staple_pdf(input_directory = dir, output_filepath = output_file)
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir
