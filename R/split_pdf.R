@@ -44,6 +44,9 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL, prefix = '
     output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
 
+  input_filepath <- path.expand(input_filepath)
+  output_directory <- path.expand(output_directory)
+
   # Getting the page count to add the correct amout of zeroes to make it scalable
   metadataTemp <- tempfile()
   # Construct a system command to pdftk to get number of pages

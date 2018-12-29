@@ -51,6 +51,9 @@ staple_pdf <- function(input_directory = NULL, input_files = NULL,
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
+  input_filepaths <- path.expand(input_filepaths)
+  output_filepath <- path.expand(output_filepath)
+
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
                           paste(shQuote(input_filepaths), collapse = " "),

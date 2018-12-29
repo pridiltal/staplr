@@ -49,6 +49,14 @@ select_pages <- function(selpages, input_filepath = NULL, output_filepath = NULL
     input_filepath <- file.choose(new = FALSE)
   }
 
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
+  }
+
+  input_filepath <- path.expand(input_filepath)
+  output_filepath <- path.expand(output_filepath)
+
   metadataTemp <- tempfile()
 
   # Construct a system command to pdftk to get number of pages
@@ -70,12 +78,6 @@ select_pages <- function(selpages, input_filepath = NULL, output_filepath = NULL
                                          (which(diff(keep)>1)+1)))
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   selected_pages <- lapply(selected_pages,f)
-
-  if(is.null(output_filepath)){
-    #Choose output file interactively
-    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
-  }
-
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

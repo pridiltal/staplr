@@ -53,6 +53,9 @@ rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NUL
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
+  input_filepath <- path.expand(input_filepath)
+  output_filepath <- path.expand(output_filepath)
+
   rotation <- c("1-endnorth", "1-endeast", "1-endsouth", "1-endwest" )[match(page_rotation,c(0,90,180,270))]
 
   # Construct a system command to pdftk

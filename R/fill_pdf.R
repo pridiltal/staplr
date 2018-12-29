@@ -68,6 +68,8 @@ get_fields <- function(input_filepath = NULL){
     input_filepath <- file.choose(new = FALSE)
   }
 
+  input_filepath <- path.expand(input_filepath)
+
   fieldsTemp <- tempfile()
 
   # generate the data field dump in a temporary file
@@ -155,6 +157,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
     #Choose output file interactively
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
+
+  input_filepath <- path.expand(input_filepath)
+  output_filepath <- path.expand(output_filepath)
 
   tempFDF <- tempfile()
   # create the fdf file to fill
