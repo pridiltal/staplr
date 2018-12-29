@@ -58,8 +58,8 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
-  input_filepath <- path.expand(input_filepath)
-  output_filepath <- path.expand(output_filepath)
+  input_filepath <- normalizePath(input_filepath, mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath, mustWork = FALSE)
 
   metadataTemp <- tempfile()
 

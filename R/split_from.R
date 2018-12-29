@@ -48,8 +48,8 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, p
     output_directory<- tcltk::tk_choose.dir(caption = "Select directory to save output")
   }
 
-  input_filepath <- path.expand(input_filepath)
-  output_directory <- path.expand(output_directory)
+  input_filepath <- normalizePath(input_filepath, mustWork = TRUE)
+  output_directory <- normalizePath(output_directory, mustWork = TRUE)
 
   parts <- length(pg_num) + 1
   splitPoints <- c(0,pg_num,'end')
