@@ -9,7 +9,7 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_filepath the path of the output output PDF file.
+#' @param output_filepath the path of the output PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactivelye.
 #' @return this function returns a PDF document with the
