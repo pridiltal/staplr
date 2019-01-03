@@ -31,7 +31,7 @@ fdfEdit <- function(fieldToFill,fdf){
 
   # place the field in the correct location
   fdf <- stringr::str_replace(fdf,
-                              paste0('/V\\s.*\n/T\\s\\(',fieldToFill$name,'\\)'),
+                              paste0('/V\\s.*\n/T\\s\\(\\Q',fieldToFill$name,'\\E\\)'),
                               paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
   return(fdf)
 }
