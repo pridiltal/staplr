@@ -10,7 +10,7 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_filepath the path of the output output PDF file.
+#' @param output_filepath the path of the output PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactivelye.
 #' @return this function returns a PDF document with the rotated pages
@@ -52,6 +52,9 @@ rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NUL
     #Choose output file interactively
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
+
+  input_filepath <- normalizePath(input_filepath, mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath, mustWork = FALSE)
 
   rotation <- c("1-endnorth", "1-endeast", "1-endsouth", "1-endwest" )[match(page_rotation,c(0,90,180,270))]
 

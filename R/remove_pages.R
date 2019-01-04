@@ -9,7 +9,7 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_filepath the path of the output output PDF file.
+#' @param output_filepath the path of the output PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactivelye.
 #' @return this function returns a PDF document with the
@@ -49,6 +49,14 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL)
     input_filepath <- file.choose(new = FALSE)
   }
 
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
+  }
+
+  input_filepath <- normalizePath(input_filepath, mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath, mustWork = FALSE)
+
   metadataTemp <- tempfile()
 
   # Construct a system command to pdftk to get number of pages
@@ -70,12 +78,6 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL)
                                       (which(diff(keep)>1)+1)))
   f<-function(x){paste(min(x),"-",max(x),sep = "")}
   selected_pages <- lapply(selected_pages,f)
-
-  if(is.null(output_filepath)){
-    #Choose output file interactively
-    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
-  }
-
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

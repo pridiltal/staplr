@@ -16,7 +16,7 @@ north: 0, east: 90, south: 180, west: 270}
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactively.}
 
-\item{output_filepath}{the path of the output output PDF file.
+\item{output_filepath}{the path of the output PDF file.
 The default is set to NULL. IF NULL, it  prompt the user to
 select the folder interactivelye.}
 }

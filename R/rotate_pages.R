@@ -12,7 +12,7 @@
 #' @param input_filepath the path of the input PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
-#' @param output_filepath the path of the output output PDF file.
+#' @param output_filepath the path of the output PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactivelye.
 #' @return this function returns a PDF document with the
@@ -53,6 +53,13 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
   }
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
+  }
+
+  input_filepath <- normalizePath(input_filepath, mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath, mustWork = FALSE)
 
   metadataTemp <- tempfile()
 
@@ -84,11 +91,6 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
   rotate <-vector(class(degree_0), length(c(degree_0,degree_x)))
   rotate[index[order(index)] %in% rotatepages] <- degree_x
   rotate[!(index[order(index)] %in% rotatepages)] <- degree_0
-
-  if(is.null(output_filepath)){
-    #Choose output file interactively
-    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
-  }
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

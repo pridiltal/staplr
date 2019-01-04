@@ -8,7 +8,7 @@
 #' The default is set to NULL. If NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param input_files a vector of input PDF files. The default is set to NULL. If NULL and \code{input_directory} is also NULL, the user is propted to select a folder interactively.
-#' @param output_filepath the path of the output output PDF file.
+#' @param output_filepath the path of the output PDF file.
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @return this function returns a combined PDF document
@@ -50,6 +50,9 @@ staple_pdf <- function(input_directory = NULL, input_files = NULL,
     #Choose output file interactively
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
+
+  input_filepaths <- normalizePath(input_filepaths, mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath, mustWork = FALSE)
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",

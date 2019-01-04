@@ -31,7 +31,7 @@ fdfEdit <- function(fieldToFill,fdf){
 
   # place the field in the correct location
   fdf <- stringr::str_replace(fdf,
-                              paste0('/V\\s.*\n/T\\s\\(',fieldToFill$name,'\\)'),
+                              paste0('/V\\s.*\n/T\\s\\(\\Q',fieldToFill$name,'\\E\\)'),
                               paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
   return(fdf)
 }
@@ -67,6 +67,8 @@ get_fields <- function(input_filepath = NULL){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
   }
+
+  input_filepath <- normalizePath(input_filepath,mustWork = TRUE)
 
   fieldsTemp <- tempfile()
 
@@ -105,6 +107,14 @@ get_fields <- function(input_filepath = NULL){
   })
 
   names(fields) <- sapply(fields,function(x){x$name})
+
+  hierarchyFields = names(fields)[grepl('\\.',names(fields))]
+  if(length(hierarchyFields>0)){
+    warning('This pdf includes field names with "."s in them. "."s in pdf field',
+            ' names imply hierarchy. Filling such fields is not currently ',
+            'supported by staplr and they will be ignored. If the "."s have no ',
+            'functional importance, please remove them.')
+  }
 
   return(fields)
 }
@@ -156,6 +166,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
+  input_filepath <- normalizePath(input_filepath,mustWork = TRUE)
+  output_filepath <- normalizePath(output_filepath,mustWork = FALSE)
+
   tempFDF <- tempfile()
   # create the fdf file to fill
   system_command <- paste('pdftk',
@@ -168,6 +181,18 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   fdf <- paste(readLines(tempFDF,encoding ='latin1'),
               collapse= '\n')
 
+  hierarchyFields = names(fields)[grepl('\\.',names(fields))]
+  hierarchyRoot = unique(stringr::str_extract(hierarchyFields,'.*?(?=\\.)'))
+  if(length(hierarchyFields>0)){
+    warning('This pdf includes field names with "."s in them. "."s in pdf field',
+            ' names imply hierarchy. Filling such fields is not currently ',
+            'supported by staplr and they will be ignored. If the "."s have no ',
+            'functional importance, please remove them.')
+
+    for (x in hierarchyRoot){
+      fdf =  stringr::str_replace_all(fdf,paste0('/Kids \\[[\\s\\S]*?\\n/T \\(',x,'\\)\\n>> \\n<<\n'),'')
+    }
+  }
 
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]

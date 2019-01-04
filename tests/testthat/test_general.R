@@ -5,20 +5,26 @@ test_that('fill_pdf',{
   tempFile <- tempfile(fileext = '.pdf')
 
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
-  fields <- get_fields(pdfFile)
+
+  testthat::expect_warning(get_fields(pdfFile),'This pdf includes field names with')
+
+  fields <- suppressWarnings(get_fields(pdfFile))
 
   fields$TextField1$value <- 'this is text'
   fields$TextField2$value <- 'more text with some paranthesis () ('
   fields$RadioGroup$value <- 2
   fields$checkBox$value <- 'Yes'
   fields$`List Box`$value <- 'Entry1'
+  fields$`1a`$value <- 'SimilarName'
 
-  set_fields(pdfFile,tempFile,fields)
+
+  suppressWarnings(set_fields(pdfFile,tempFile,fields))
 
   # ensure that the resulting file is filled with the correct text
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
   expect_true(grepl('more text with some paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
   expect_true(grepl('Entry1', pdftools::pdf_text(tempFile)[1]))
+  expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
 
 })
 
