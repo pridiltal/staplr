@@ -5,8 +5,9 @@ test_that('fill_pdf',{
   tempFile <- tempfile(fileext = '.pdf')
 
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile2 <- system.file('testFormWithHierarchies.pdf',package = 'staplr')
 
-  testthat::expect_warning(get_fields(pdfFile),'This pdf includes field names with')
+  testthat::expect_error(get_fields(pdfFile2),'This pdf includes field names with')
 
   fields <- suppressWarnings(get_fields(pdfFile))
 
@@ -15,7 +16,9 @@ test_that('fill_pdf',{
   fields$RadioGroup$value <- 2
   fields$checkBox$value <- 'Yes'
   fields$`List Box`$value <- 'Entry1'
-  fields$`1a`$value <- 'SimilarName'
+  # fields$node1$value <- 'SimilarName'
+  # fields$betweenHierarch$value <- 'between hierarchies'
+
 
 
   suppressWarnings(set_fields(pdfFile,tempFile,fields))
@@ -24,7 +27,7 @@ test_that('fill_pdf',{
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
   expect_true(grepl('more text with some paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
   expect_true(grepl('Entry1', pdftools::pdf_text(tempFile)[1]))
-  expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  # expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
 
 })
 
