@@ -21,7 +21,8 @@ test_that('fill_pdf',{
   fields$hierarchy2.child.node1$value <- 'second hierarchy child 1 node 1'
   fields$hierarchy2.child2.node2$value <- 'second hierarchy child 2 node 2'
 
-
+  fields$`(weird) paranthesis`$value <- 'paranthesis is weird'
+  fields$`weird #C3#91 characters`$value <- 'characters are weird'
 
   set_fields(pdfFile,tempFile,fields)
 
@@ -38,6 +39,8 @@ test_that('fill_pdf',{
   expect_true(grepl('first[\\s]+hiearchy[\\s]+node[\\s]+2', pdftools::pdf_text(tempFile)[1],perl = TRUE))
   expect_true(grepl('between[\\s]+hierarchies', pdftools::pdf_text(tempFile)[1],perl = TRUE))
   expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('paranthesis', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('characters', pdftools::pdf_text(tempFile)[1],perl = TRUE))
 
 })
 

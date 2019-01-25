@@ -8,7 +8,7 @@ sub_decimal <- function(char) {
   return(char)
 }
 
-
+# getting code review at https://codereview.stackexchange.com/questions/212118/a-faux-parser-for-fdf-files
 fdfAnnotate <- function(fdfLines){
   fields <- vector(length = length(fdfLines),mode= "character")
   nests <- 0
@@ -16,7 +16,7 @@ fdfAnnotate <- function(fdfLines){
   for (i in seq_along(fdfLines)){
     if(grepl("^/T \\(",fdfLines[i])){
       # /T represents a field or a root name
-      name <- stringr::str_extract(fdfLines[i],"(?<=\\().*?(?=\\))")
+      name <- stringr::str_extract(fdfLines[i],"(?<=/T \\().*?(?=\\)$)")
       if(grepl("^/V",fdfLines[i-1])){
         # if the line before the naming line starts with /V
         # there is no hierarhcy, just name the line
@@ -48,7 +48,11 @@ fdfAnnotate <- function(fdfLines){
       }
     }
   }
-  data.frame(fdfLines,fields,stringsAsFactors = FALSE)
+  annotatedFDF = data.frame(fdfLines,fields,stringsAsFactors = FALSE)
+  annotatedFDF$fields <- gsub('\\(','(',x = annotatedFDF$fields,fixed = TRUE)
+  annotatedFDF$fields <- gsub('\\)',')',x = annotatedFDF$fields,fixed = TRUE)
+  return(annotatedFDF)
+
 }
 
 # this is an internal function that edits an fdf string
@@ -73,7 +77,6 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 
   # place the field in the correct location
   annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] = paste('/V',fieldToFill$value)
-
   return(annotatedFDF)
 }
 
@@ -195,7 +198,6 @@ get_fields <- function(input_filepath = NULL){
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   assertthat::assert_that(is.list(fields))
-
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -220,7 +222,6 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   fdfLines <- readLines(tempFDF,encoding ='latin1')
 
   annotatedFDF = fdfAnnotate(fdfLines)
-
   assertthat::assert_that(all(names(fields) %in% annotatedFDF$fields),
                      msg = paste('Field names do not match the fields of the pdf.',
                                  'Either you are using fields generated from a wrong',
