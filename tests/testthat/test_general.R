@@ -35,13 +35,20 @@ test_that('fill_pdf',{
   # expect_true(grepl('Ñ, ñ, É, Í, Ó', pdftools::pdf_text(tempFile)[2],fixed = TRUE))
   # default texts seems to be erased by other pdftk functions. not sure why.
   # expect_true(grepl('default[\\s]+node1', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('second[\\s]+hierarchy[\\s]+child[\\s]+1[\\s]+node[\\s]+1', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('first[\\s]+hiearchy[\\s]+node[\\s]+2', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('between[\\s]+hierarchies', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('paranthesis', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  expect_true(grepl('characters', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('second[\\s]+hierarchy[\\s]+child[\\s]+1[\\s]+node[\\s]+1', pdfText[1],perl = TRUE))
+  expect_true(grepl('first[\\s]+hiearchy[\\s]+node[\\s]+2', pdfText[1],perl = TRUE))
+  expect_true(grepl('between[\\s]+hierarchies', pdfText[1],perl = TRUE))
+  expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdfText[1],perl = TRUE))
+  expect_true(grepl('paranthesis', pdfText[1],perl = TRUE))
+  expect_true(grepl('characters', pdfText[1],perl = TRUE))
 
+  testOutput = tempfile(fileext = '.pdf')
+  idenfity_form_fields(pdfFile, testOutput)
+  pdfText = pdftools::pdf_text(testOutput)
+  expect_true(grepl('TextField1', pdfText[1],perl = TRUE))
+  expect_true(grepl('TextFieldPage2', pdfText[2],perl = TRUE))
+  expect_true(grepl('TextFieldPage3', pdfText[3],perl = TRUE))
 })
 
 

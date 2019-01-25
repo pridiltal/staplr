@@ -81,6 +81,47 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 }
 
 
+
+#' Identify text form fields
+#'
+#' Helps identification of text forum fields by creating a file that is filled
+#' with field names. Some pdf editors show field names when you mouse over the
+#' fields as well.
+#'
+#' @param input_filepath
+#' @param output_filepath
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' idenfity_form_fields(pdfFile, 'testOutput.pdf')
+#' }
+idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL){
+  if(is.null(input_filepath)){
+    #Choose the pdf file interactively
+    input_filepath <- file.choose(new = FALSE)
+  }
+  if(is.null(output_filepath)){
+    #Choose output file interactively
+    output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
+  }
+
+  fields = get_fields(input_filepath)
+
+  fields = lapply(fields,function(field){
+    if(field$type == 'Text'){
+      field$value = field$name
+    }
+    return(field)
+  })
+
+  set_fields(input_filepath,output_filepath,fields)
+
+}
+
 #' Get form fields from a pdf form
 #'
 #' @description If the toolkit Pdftk is available in the
