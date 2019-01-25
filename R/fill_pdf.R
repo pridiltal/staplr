@@ -125,7 +125,12 @@ get_fields <- function(input_filepath = NULL){
 
   fields <- paste0(readLines(fieldsTemp),
                    collapse = '\n')
-  fields <- strsplit(fields, '---')[[1]][-1]
+  fields <- stringr::str_replace_all(fields,'&lt;','<')
+  fields <- stringr::str_replace_all(fields,'&gt;','>')
+  fields <- stringr::str_replace_all(fields,'&quot;','"')
+  fields <- stringr::str_replace_all(fields,'&amp;','&')
+
+    fields <- strsplit(fields, '---')[[1]][-1]
 
   # parse the fields
   fields <- lapply(fields,function(x){
@@ -161,6 +166,18 @@ get_fields <- function(input_filepath = NULL){
 
 
 
+# taken outside to make testing easier
+get_fdf_lines <- function(input_filepath){
+
+  tempFDF <- tempfile()
+  system_command <- paste('pdftk',
+                          shQuote(input_filepath),
+                          'generate_fdf','output',
+                          shQuote(tempFDF))
+  system(system_command)
+  fdfLines <- readLines(tempFDF,encoding ='latin1')
+  return(fdfLines)
+}
 
 
 #' Set fields of a pdf form
@@ -210,16 +227,7 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   input_filepath <- normalizePath(input_filepath,mustWork = TRUE)
   output_filepath <- normalizePath(output_filepath,mustWork = FALSE)
 
-  tempFDF <- tempfile()
-  # create the fdf file to fill
-  system_command <- paste('pdftk',
-                          shQuote(input_filepath),
-                          'generate_fdf','output',
-                          shQuote(tempFDF))
-  system(system_command)
-
-
-  fdfLines <- readLines(tempFDF,encoding ='latin1')
+  fdfLines <- get_fdf_lines(input_filepath)
 
   annotatedFDF = fdfAnnotate(fdfLines)
   assertthat::assert_that(all(names(fields) %in% annotatedFDF$fields),
