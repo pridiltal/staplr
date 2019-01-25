@@ -4,30 +4,40 @@ test_that('fill_pdf',{
 
   tempFile <- tempfile(fileext = '.pdf')
 
+  # pdfFile <- system.file('testForm.pdf',package = 'staplr')
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
-  pdfFile2 <- system.file('testFormWithHierarchies.pdf',package = 'staplr')
 
-  testthat::expect_error(get_fields(pdfFile2),'This pdf includes field names with')
-
-  fields <- suppressWarnings(get_fields(pdfFile))
+  fields <- get_fields(pdfFile)
 
   fields$TextField1$value <- 'this is text'
-  fields$TextField2$value <- 'more text with some paranthesis () ('
+  fields$TextField2$value <- 'more text with some \\ / paranthesis () ('
   fields$RadioGroup$value <- 2
   fields$checkBox$value <- 'Yes'
   fields$`List Box`$value <- 'Entry1'
-  # fields$node1$value <- 'SimilarName'
-  # fields$betweenHierarch$value <- 'between hierarchies'
+  # fields$TextFieldPage2$value = 'some special chars Ñ, ñ, É, Í, Ó'
+  fields$node1$value <- 'SimilarName'
+  fields$betweenHierarch$value <- 'between hierarchies'
+  fields$hierarchy.node2$value <- 'first hiearchy node 2'
+  fields$hierarchy2.child.node1$value <- 'second hierarchy child 1 node 1'
+  fields$hierarchy2.child2.node2$value <- 'second hierarchy child 2 node 2'
 
 
 
-  suppressWarnings(set_fields(pdfFile,tempFile,fields))
+  set_fields(pdfFile,tempFile,fields)
 
   # ensure that the resulting file is filled with the correct text
+  # some have [\\s]+ in them to ensure they are read correctly even if they are
+  # divided between multiple lines
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
-  expect_true(grepl('more text with some paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
+  expect_true(grepl('more text with some \\ / paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
   expect_true(grepl('Entry1', pdftools::pdf_text(tempFile)[1]))
-  # expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  # expect_true(grepl('Ñ, ñ, É, Í, Ó', pdftools::pdf_text(tempFile)[2],fixed = TRUE))
+  # default texts seems to be erased by other pdftk functions. not sure why.
+  # expect_true(grepl('default[\\s]+node1', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('second[\\s]+hierarchy[\\s]+child[\\s]+1[\\s]+node[\\s]+1', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('first[\\s]+hiearchy[\\s]+node[\\s]+2', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('between[\\s]+hierarchies', pdftools::pdf_text(tempFile)[1],perl = TRUE))
+  expect_true(grepl('A similarly named non hierarchical field[\\s\\S]+?SimilarName', pdftools::pdf_text(tempFile)[1],perl = TRUE))
 
 })
 

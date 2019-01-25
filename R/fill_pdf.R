@@ -9,20 +9,62 @@ sub_decimal <- function(char) {
 }
 
 
+fdfAnnotate <- function(fdfLines){
+  fields <- vector(length = length(fdfLines),mode= "character")
+  nests <- 0
+  # iterate over every line
+  for (i in seq_along(fdfLines)){
+    if(grepl("^/T \\(",fdfLines[i])){
+      # /T represents a field or a root name
+      name <- stringr::str_extract(fdfLines[i],"(?<=\\().*?(?=\\))")
+      if(grepl("^/V",fdfLines[i-1])){
+        # if the line before the naming line starts with /V
+        # there is no hierarhcy, just name the line
+        fields[i-1] <-  name
+      } else if(grepl("^>>\\]",fdfLines[i-1])){
+        # if the line above the name is >>] the name represents a root
+        # start reading from the line above
+        z <- i-2
+        # this keeps track of the nest levels.
+        # we will be reading the file backwards trying to
+        # reach to the end of this root
+        nest <-  1
+        while(nest!=0){
+          if(grepl("^/V",fdfLines[z])){
+            # if a field is found, append the name of the root to the left
+            # separated by a "."
+            fields[z] <- paste0(name,".",fields[z])
+          } else if(grepl("^>>\\]",fdfLines[z])){
+            # if another nest stops, that means we are inside another root
+            nest <-  nest + 1
+          } else if(grepl("^/Kids \\[",fdfLines[z])){
+            # every time a root closes reduce the nest. if you reach 0
+            # it means its over
+            nest <-  nest - 1
+          }
+          # go back one line in the file.
+          z = z - 1
+        }
+      }
+    }
+  }
+  data.frame(fdfLines,fields,stringsAsFactors = FALSE)
+}
+
 # this is an internal function that edits an fdf string
-fdfEdit <- function(fieldToFill,fdf){
+fdfEdit <- function(fieldToFill,annotatedFDF){
   if(is.na(fieldToFill$value)){
-    fieldToFill$value=''
+    fieldToFill$value <- ''
   }
   if(fieldToFill$type %in%  c('Text','Choice')){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
-    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\\\\\', fixed = TRUE)
-    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\\\(',fixed = TRUE)
-    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\\\)', fixed = TRUE)
-    fieldToFill$value = paste0('(',fieldToFill$value,')')
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\', fixed = TRUE)
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\(',fixed = TRUE)
+    fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\)', fixed = TRUE)
+    fieldToFill$value <-  paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
-    fieldToFill$value = paste0('/',fieldToFill$value)
+    fieldToFill$value <-  paste0('/',fieldToFill$value)
   } else{
     # As far as I know there are no other field types but just in case
     warning("I don't know how to fill the field type \"",fieldToFill$type,
@@ -30,10 +72,9 @@ fdfEdit <- function(fieldToFill,fdf){
   }
 
   # place the field in the correct location
-  fdf <- stringr::str_replace(fdf,
-                              paste0('/V\\s.*\n/T\\s\\(\\Q',fieldToFill$name,'\\E\\)'),
-                              paste0('/V ',fieldToFill$value,'\n/T \\(',fieldToFill$name,'\\)'))
-  return(fdf)
+  annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] = paste('/V',fieldToFill$value)
+
+  return(annotatedFDF)
 }
 
 
@@ -108,13 +149,9 @@ get_fields <- function(input_filepath = NULL){
 
   names(fields) <- sapply(fields,function(x){x$name})
 
-  hierarchyFields = names(fields)[grepl('\\.',names(fields))]
-  if(length(hierarchyFields>0)){
-    stop('This pdf includes field names with "."s in them. "."s in pdf field',
-         ' names imply hierarchy. Filling such files is not currently ',
-         'supported by staplr. If the "."s have no ',
-         'functional importance, please remove them.')
-  }
+  # remove typeless fields. it seems like nested hierarchies generate these typeless
+  # fields that don't really exist and don't appear on the fdf file.
+  fields = fields[sapply(fields,function(x){x$type})!='']
 
   return(fields)
 }
@@ -180,26 +217,27 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   system(system_command)
 
 
-  fdf <- paste(readLines(tempFDF,encoding ='latin1'),
-              collapse= '\n')
+  fdfLines <- readLines(tempFDF,encoding ='latin1')
 
-  hierarchyFields = names(fields)[grepl('\\.',names(fields))]
-  hierarchyRoot = unique(stringr::str_extract(hierarchyFields,'.*?(?=\\.)'))
-  if(length(hierarchyFields>0)){
-    stop('This pdf includes field names with "."s in them. "."s in pdf field',
-         ' names imply hierarchy. Filling such files is not currently ',
-         'supported by staplr. If the "."s have no ',
-         'functional importance, please remove them.')
-  }
+  annotatedFDF = fdfAnnotate(fdfLines)
+
+  assertthat::assert_that(all(names(fields) %in% annotatedFDF$fields),
+                     msg = paste('Field names do not match the fields of the pdf.',
+                                 'Either you are using fields generated from a wrong',
+                                 'pdf file or there is a parsing error. If there is a',
+                                 'parsing error, please notify the developers (https://github.com/pridiltal/staplr)'))
+
 
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]
-    fdf <- fdfEdit(fieldToFill,fdf)
+    annotatedFDF <- fdfEdit(fieldToFill,annotatedFDF)
   }
+
+  # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
 
   newFDF <- tempfile()
   f = file(newFDF,open = "w",encoding = 'latin1')
-  writeLines(fdf, f,useBytes = TRUE)
+  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = TRUE)
   close(f)
 
   system_command <- paste('pdftk',
