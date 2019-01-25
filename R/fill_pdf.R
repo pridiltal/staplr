@@ -88,8 +88,10 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' with field names. Some pdf editors show field names when you mouse over the
 #' fields as well.
 #'
-#' @param input_filepath
-#' @param output_filepath
+#' @param input_filepath the path of the input PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
+#' @param output_filepath the path of the output PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #'
 #' @return
 #' @export
