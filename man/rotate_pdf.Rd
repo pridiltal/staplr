@@ -5,18 +5,20 @@
 \title{Rotate entire pdf document}
 \usage{
 rotate_pdf(page_rotation = c(0, 90, 180, 270), input_filepath = NULL,
-  output_filepath = NULL, overwrite = FALSE)
+  output_filepath = NULL)
 }
 \arguments{
 \item{page_rotation}{An integer value from the vector c(0, 90, 180, 270).
 Each option sets the page rotation as follows (in degrees):
 north: 0, east: 90, south: 180, west: 270}
 
-\item{input_filepath}{the path of the input PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.}
+\item{input_filepath}{the path of the input PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactively.}
 
-\item{output_filepath}{the path of the output PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.}
+\item{output_filepath}{the path of the output PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactivelye.}
 }
 \value{
 this function returns a PDF document with the rotated pages

@@ -88,9 +88,12 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' with field names. Some pdf editors show field names when you mouse over the
 #' fields as well.
 #'
-#' @inheritParams input_filepath
-#' @inheritParams output_filepath
-#' @inheritParams overwrite
+#' @param input_filepath the path of the input PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
+#' @param output_filepath the path of the output PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
+#'
+#' @return
 #' @export
 #'
 #' @examples
@@ -98,7 +101,7 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
 #' idenfity_form_fields(pdfFile, 'testOutput.pdf')
 #' }
-idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,overwrite = FALSE){
+idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -117,10 +120,7 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
     return(field)
   })
 
-  set_fields(input_filepath = input_filepath,
-             output_filepath = output_filepath,
-             fields = fields,
-             overwrite = overwrite)
+  set_fields(input_filepath,output_filepath,fields)
 
 }
 
@@ -231,12 +231,13 @@ get_fdf_lines <- function(input_filepath){
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #'
-#' @inheritParams input_filepath
-#' @inheritParams output_filepath
+#' @param input_filepath the path of the input PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
+#' @param output_filepath the path of the output PDF file. The default is set to
+#'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #' @param fields Fields returned from \code{\link{get_fields}} function. To make
 #'   changes in a PDF, edit the \code{values} component of an element within
 #'   this list
-#' @inheritParams overwrite
 #'
 #' @export
 #' @author Ogan Mancarci
@@ -255,7 +256,7 @@ get_fdf_lines <- function(input_filepath){
 #' }
 #'
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, overwrite = FALSE){
+set_fields = function(input_filepath = NULL, output_filepath = NULL, fields){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -291,17 +292,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, ove
   writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = TRUE)
   close(f)
 
-  system_command <-
-    paste("pdftk",
-          shQuote(input_filepath),
-          "fill_form",
-          shQuote(newFDF),
-          "output",
-          "{shQuote(output_filepath)}")
-
-
-  fileIO(input_filepath = input_filepath,
-         output_filepath = output_filepath,
-         overwrite = overwrite,
-         system_command = system_command)
-  }
+  system_command <- paste('pdftk',
+                          shQuote(input_filepath),
+                          'fill_form', shQuote(newFDF),
+                          'output', shQuote(output_filepath))
+  system(system_command)
+}
