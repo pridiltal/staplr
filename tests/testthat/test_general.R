@@ -25,17 +25,17 @@ test_that('fill_pdf',{
   fields$`weird #C3#91 characters`$value <- 'characters are weird'
 
   set_fields(pdfFile,tempFile,fields)
+  pdfText = pdftools::pdf_text(tempFile)
 
   # ensure that the resulting file is filled with the correct text
   # some have [\\s]+ in them to ensure they are read correctly even if they are
   # divided between multiple lines
-  expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
-  expect_true(grepl('more text with some \\ / paranthesis () (', pdftools::pdf_text(tempFile)[1],fixed = TRUE))
-  expect_true(grepl('Entry1', pdftools::pdf_text(tempFile)[1]))
+  expect_true(grepl('this is text', pdfText[1]))
+  expect_true(grepl('more text with some \\ / paranthesis () (', pdfText[1],fixed = TRUE))
+  expect_true(grepl('Entry1', pdfText[1]))
   # expect_true(grepl('Ñ, ñ, É, Í, Ó', pdftools::pdf_text(tempFile)[2],fixed = TRUE))
   # default texts seems to be erased by other pdftk functions. not sure why.
   # expect_true(grepl('default[\\s]+node1', pdftools::pdf_text(tempFile)[1],perl = TRUE))
-  pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('second[\\s]+hierarchy[\\s]+child[\\s]+1[\\s]+node[\\s]+1', pdfText[1],perl = TRUE))
   expect_true(grepl('first[\\s]+hiearchy[\\s]+node[\\s]+2', pdfText[1],perl = TRUE))
   expect_true(grepl('between[\\s]+hierarchies', pdfText[1],perl = TRUE))
@@ -150,5 +150,42 @@ test_that('staple',{
   files <- list.files(tempDir,pattern = '.pdf',full.names = TRUE)
   staple_pdf(input_files = files[c(1,2)],output_filepath = tempFile)
   expect_identical(pdftools::pdf_text(pdfFile)[1:2] ,pdftools::pdf_text(tempFile))
+
+})
+
+
+test_that('overwrite',{
+  # fill pdf
+  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  tempFile = tempfile(fileext = '.pdf')
+  file.copy(pdfFile,tempFile)
+
+  fields <- get_fields(tempFile)
+  fields$TextField1$value <- 'this is text'
+  set_fields(pdfFile,tempFile,fields,overwrite = TRUE)
+  expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
+
+
+  oldSecondPage = pdftools::pdf_text(tempFile)[2]
+  # remove pages)
+  remove_pages(rmpages = 1, tempFile, tempFile,overwrite = TRUE)
+  # ensure that the page is removed so the new page 1 is the old page 2
+  expect_true(oldSecondPage == pdftools::pdf_text(tempFile)[1])
+
+  oldDims <- dim(pdftools::pdf_render_page(tempFile,1))
+
+  rotate_pages(c(1), 90, tempFile, tempFile,overwrite = TRUE)
+  # check the dimensions of the rotated pdf files to see if its rotated
+  newDims <- dim(pdftools::pdf_render_page(tempFile,1))
+
+  expect_equal(newDims[2],oldDims[3])
+  expect_equal(newDims[3],oldDims[2])
+
+  oldDims <- dim(pdftools::pdf_render_page(tempFile,2))
+  rotate_pdf(90,tempFile,tempFile,overwrite = TRUE)
+  newDims <- dim(pdftools::pdf_render_page(tempFile,2))
+  expect_equal(newDims[2],oldDims[3])
+  expect_equal(newDims[3],oldDims[2])
+
 
 })
