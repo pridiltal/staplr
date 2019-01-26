@@ -22,12 +22,11 @@ Description: Provides function to manipulate PDF files:
     splits single input PDF document into parts from given points.
 License: GPL-3
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.0.1
 Imports:
   tcltk,
   stringr,
-  assertthat,
-  glue
+  assertthat
 Suggests: 
   lattice,
   testthat,

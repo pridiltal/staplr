@@ -5,7 +5,7 @@
 \title{Rotate selected pages of a pdf file}
 \usage{
 rotate_pages(rotatepages, page_rotation = c(0, 90, 180, 270),
-  input_filepath = NULL, output_filepath = NULL, overwrite = FALSE)
+  input_filepath = NULL, output_filepath = NULL)
 }
 \arguments{
 \item{rotatepages}{a vector of page numbers to be rotated}
@@ -14,13 +14,13 @@ rotate_pages(rotatepages, page_rotation = c(0, 90, 180, 270),
 Each option sets the page rotation as follows (in degrees):
 north: 0, east: 90, south: 180, west: 270}
 
-\item{input_filepath}{the path of the input PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.}
+\item{input_filepath}{the path of the input PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactively.}
 
-\item{output_filepath}{the path of the output PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.}
-
-\item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
+\item{output_filepath}{the path of the output PDF file.
+The default is set to NULL. IF NULL, it  prompt the user to
+select the folder interactivelye.}
 }
 \value{
 this function returns a PDF document with the
