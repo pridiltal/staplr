@@ -5,9 +5,7 @@
 #' into individual pages.
 #'
 #' See the reference for detailed usage of \code{pdftk}.
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
+#' @inheritParams input_filepath
 #' @param output_directory the path of the output directory
 #' @param prefix A string for output filename prefix
 #' @return this function splits a single input PDF document into
@@ -63,7 +61,6 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL, prefix = '
 
   # Take the filepath arguments and format them for use in a system command
   output_filepath <- shQuote(paste0(output_directory, "/", prefix, "%0",digits,"d.pdf"))
-
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
                           shQuote(input_filepath),

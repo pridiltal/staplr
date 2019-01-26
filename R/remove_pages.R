@@ -6,12 +6,9 @@
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #' @param rmpages a vector of page numbers to be removed
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
-#' @param output_filepath the path of the output PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactivelye.
+#' @inheritParams input_filepath
+#' @inheritParams output_filepath
+#' @inheritParams overwrite
 #' @return this function returns a PDF document with the
 #' remaining pages
 #' @author Priyanga Dilini Talagala
@@ -40,7 +37,7 @@
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL) {
+remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL, overwrite = TRUE) {
 
   assertthat::assert_that(is.numeric(rmpages))
 
@@ -80,13 +77,17 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL)
   selected_pages <- lapply(selected_pages,f)
 
   # Construct a system command to pdftk
-  system_command <- paste("pdftk",
-                          shQuote(input_filepath),
-                          "cat",
-                          paste(unlist(selected_pages),collapse=" "),
-                          "output",
-                          shQuote(output_filepath),
-                          sep = " ")
-  # Invoke the command
-  system(command = system_command)
+  system_command <-
+    paste("pdftk",
+          shQuote(input_filepath),
+          "cat",
+          paste(unlist(selected_pages),collapse=' '), "output",
+          "{shQuote(output_filepath)}")
+
+
+  fileIO(input_filepath = input_filepath,
+         output_filepath = output_filepath,
+         overwrite = overwrite,
+         system_command = system_command)
+
 }

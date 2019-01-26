@@ -4,18 +4,19 @@
 \alias{remove_pages}
 \title{Remove selected pages from a file}
 \usage{
-remove_pages(rmpages, input_filepath = NULL, output_filepath = NULL)
+remove_pages(rmpages, input_filepath = NULL, output_filepath = NULL,
+  overwrite = TRUE)
 }
 \arguments{
 \item{rmpages}{a vector of page numbers to be removed}
 
-\item{input_filepath}{the path of the input PDF file.
-The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactively.}
+\item{input_filepath}{the path of the input PDF file. The default is set to
+NULL. IF NULL, it  prompt the user to select the folder interactively.}
 
-\item{output_filepath}{the path of the output PDF file.
-The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactivelye.}
+\item{output_filepath}{the path of the output PDF file. The default is set to
+NULL. IF NULL, it  prompt the user to select the folder interactively.}
+
+\item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
 }
 \value{
 this function returns a PDF document with the
