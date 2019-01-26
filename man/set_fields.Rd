@@ -5,7 +5,7 @@
 \title{Set fields of a pdf form}
 \usage{
 set_fields(input_filepath = NULL, output_filepath = NULL, fields,
-  overwrite = FALSE)
+  overwrite = TRUE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to

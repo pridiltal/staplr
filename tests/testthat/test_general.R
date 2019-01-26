@@ -164,6 +164,7 @@ test_that('overwrite',{
   fields$TextField1$value <- 'this is text'
   set_fields(pdfFile,tempFile,fields,overwrite = TRUE)
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
+  expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE),'already exists')
 
 
   oldSecondPage = pdftools::pdf_text(tempFile)[2]
@@ -192,5 +193,16 @@ test_that('overwrite',{
   oldPage2 = pdftools::pdf_text(tempFile)[2]
   select_pages(selpages = 2, tempFile, tempFile,overwrite = TRUE)
   expect_true(oldPage2 == pdftools::pdf_text(tempFile)[1])
+
+  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  file.copy(pdfFile,tempFile,overwrite = TRUE)
+  tempDir = tempfile()
+  dir.create(tempDir)
+  split_from(tempFile,pg_num = 2,output_directory = tempDir)
+  expect_error(split_from(tempFile,pg_num = 2,output_directory = tempDir,overwrite = FALSE),'already exists')
+
+  staple_pdf(input_directory = tempDir,output_filepath = tempFile)
+  expect_error(staple_pdf(input_directory = tempDir,output_filepath = tempFile,overwrite = FALSE), 'already exists')
+
 
 })

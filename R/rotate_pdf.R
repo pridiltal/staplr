@@ -5,8 +5,10 @@
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #' @param page_rotation An integer value from the vector c(0, 90, 180, 270).
-#' Each option sets the page rotation as follows (in degrees):
-#' north: 0, east: 90, south: 180, west: 270
+#' Each option sets the page orientation as follows:
+#' north: 0, east: 90, south: 180, west: 270. Note that the orientation cannot be
+#' cummulatively changed (eg. 90 (east) will always turn the page so the beginning
+#' of the page is on the right side)
 #' @inheritParams input_filepath
 #' @inheritParams output_filepath
 #' @inheritParams overwrite

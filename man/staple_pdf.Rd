@@ -5,7 +5,7 @@
 \title{Merge multiple PDF files into one}
 \usage{
 staple_pdf(input_directory = NULL, input_files = NULL,
-  output_filepath = NULL)
+  output_filepath = NULL, overwrite = TRUE)
 }
 \arguments{
 \item{input_directory}{the path of the input PDF files.
@@ -14,9 +14,10 @@ select the folder interactively.}
 
 \item{input_files}{a vector of input PDF files. The default is set to NULL. If NULL and \code{input_directory} is also NULL, the user is propted to select a folder interactively.}
 
-\item{output_filepath}{the path of the output PDF file.
-The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactively.}
+\item{output_filepath}{the path of the output PDF file. The default is set to
+NULL. IF NULL, it  prompt the user to select the folder interactively.}
+
+\item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
 }
 \value{
 this function returns a combined PDF document

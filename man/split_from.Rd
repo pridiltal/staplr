@@ -5,18 +5,19 @@
 \title{Splits single input PDF document into parts from given points}
 \usage{
 split_from(pg_num, input_filepath = NULL, output_directory = NULL,
-  prefix = "part")
+  prefix = "part", overwrite = TRUE)
 }
 \arguments{
 \item{pg_num}{A vector of non-negative integers. Split the pdf document into parts from the numbered pages.}
 
-\item{input_filepath}{the path of the input PDF file.
-The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactively.}
+\item{input_filepath}{the path of the input PDF file. The default is set to
+NULL. IF NULL, it  prompt the user to select the folder interactively.}
 
 \item{output_directory}{the path of the output directory}
 
 \item{prefix}{A string for output filename prefix}
+
+\item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
 }
 \value{
 this function splits a single input PDF document into

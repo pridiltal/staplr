@@ -5,7 +5,7 @@
 \title{Identify text form fields}
 \usage{
 idenfity_form_fields(input_filepath = NULL, output_filepath = NULL,
-  overwrite = FALSE)
+  overwrite = TRUE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to

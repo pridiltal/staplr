@@ -5,7 +5,7 @@
 \title{Remove selected pages from a file}
 \usage{
 remove_pages(rmpages, input_filepath = NULL, output_filepath = NULL,
-  overwrite = FALSE)
+  overwrite = TRUE)
 }
 \arguments{
 \item{rmpages}{a vector of page numbers to be removed}

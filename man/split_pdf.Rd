@@ -8,9 +8,8 @@ split_pdf(input_filepath = NULL, output_directory = NULL,
   prefix = "page_")
 }
 \arguments{
-\item{input_filepath}{the path of the input PDF file.
-The default is set to NULL. IF NULL, it  prompt the user to
-select the folder interactively.}
+\item{input_filepath}{the path of the input PDF file. The default is set to
+NULL. IF NULL, it  prompt the user to select the folder interactively.}
 
 \item{output_directory}{the path of the output directory}
 
