@@ -4,7 +4,8 @@
 \alias{idenfity_form_fields}
 \title{Identify text form fields}
 \usage{
-idenfity_form_fields(input_filepath = NULL, output_filepath = NULL)
+idenfity_form_fields(input_filepath = NULL, output_filepath = NULL,
+  overwrite = FALSE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -12,6 +13,8 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.}
 
 \item{output_filepath}{the path of the output PDF file. The default is set to
 NULL. IF NULL, it  prompt the user to select the folder interactively.}
+
+\item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
 }
 \description{
 Helps identification of text forum fields by creating a file that is filled

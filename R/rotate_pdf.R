@@ -7,12 +7,8 @@
 #' @param page_rotation An integer value from the vector c(0, 90, 180, 270).
 #' Each option sets the page rotation as follows (in degrees):
 #' north: 0, east: 90, south: 180, west: 270
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
-#' @param output_filepath the path of the output PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactivelye.
+#' @inheritParams input_filepath
+#' @inheritParams output_filepath
 #' @return this function returns a PDF document with the rotated pages
 #' @author Priyanga Dilini Talagala
 #' @examples
@@ -38,7 +34,7 @@
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NULL, output_filepath = NULL) {
+rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NULL, output_filepath = NULL, overwrite = FALSE) {
 
   page_rotation <- match.arg(as.character(page_rotation),c(0, 90, 180, 270))
 
@@ -60,13 +56,17 @@ rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NUL
 
   # Construct a system command to pdftk
   system_command <- paste("pdftk",
-                          shQuote(input_filepath),
+                          "{shQuote(input_filepath)}",
                           "cat",
-                          rotation,
+                          "{rotation}",
                           "output",
-                          shQuote(output_filepath),
+                          "{shQuote(output_filepath)}",
                           sep = " ")
   # Invoke the command
-  system(command = system_command)
+  fileIO(input_filepath = input_filepath,
+         output_filepath = output_filepath,
+         overwrite = overwrite,
+         system_command = system_command,
+         rotation = rotation)
 
 }
