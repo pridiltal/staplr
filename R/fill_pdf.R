@@ -98,7 +98,7 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
 #' idenfity_form_fields(pdfFile, 'testOutput.pdf')
 #' }
-idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,overwrite = FALSE){
+idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,overwrite = TRUE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -255,7 +255,7 @@ get_fdf_lines <- function(input_filepath){
 #' }
 #'
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, overwrite = FALSE){
+set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, overwrite = TRUE){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively

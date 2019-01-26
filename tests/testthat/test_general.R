@@ -188,4 +188,9 @@ test_that('overwrite',{
   expect_equal(newDims[3],oldDims[2])
 
 
+  # ensure that the page is removed so the new page 1 is the old page 2
+  oldPage2 = pdftools::pdf_text(tempFile)[2]
+  select_pages(selpages = 2, tempFile, tempFile,overwrite = TRUE)
+  expect_true(oldPage2 == pdftools::pdf_text(tempFile)[1])
+
 })

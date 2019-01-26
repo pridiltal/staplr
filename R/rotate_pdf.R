@@ -9,6 +9,7 @@
 #' north: 0, east: 90, south: 180, west: 270
 #' @inheritParams input_filepath
 #' @inheritParams output_filepath
+#' @inheritParams overwrite
 #' @return this function returns a PDF document with the rotated pages
 #' @author Priyanga Dilini Talagala
 #' @examples
@@ -34,7 +35,7 @@
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NULL, output_filepath = NULL, overwrite = FALSE) {
+rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NULL, output_filepath = NULL, overwrite = TRUE) {
 
   page_rotation <- match.arg(as.character(page_rotation),c(0, 90, 180, 270))
 

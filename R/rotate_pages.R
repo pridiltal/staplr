@@ -41,7 +41,7 @@
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_filepath = NULL, output_filepath = NULL, overwrite = FALSE) {
+rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_filepath = NULL, output_filepath = NULL, overwrite = TRUE) {
 
   assertthat::assert_that(is.numeric(rotatepages))
   page_rotation <- match.arg(as.character(page_rotation), c(0, 90, 180, 270))

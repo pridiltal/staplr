@@ -6,11 +6,10 @@
 #'
 #' See the reference for detailed usage of \code{pdftk}.
 #' @param pg_num A vector of non-negative integers. Split the pdf document into parts from the numbered pages.
-#' @param input_filepath the path of the input PDF file.
-#' The default is set to NULL. IF NULL, it  prompt the user to
-#' select the folder interactively.
+#' @inheritParams input_filepath
 #' @param output_directory the path of the output directory
 #' @param prefix A string for output filename prefix
+#' @inheritParams overwrite
 #' @return this function splits a single input PDF document into
 #' individual pages
 #' @author Priyanga Dilini Talagala and Ogan Mancarci
@@ -34,7 +33,8 @@
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, prefix = 'part') {
+split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, prefix = 'part',
+                       overwrite = TRUE) {
 
   assertthat::assert_that(is.numeric(pg_num))
 
@@ -59,6 +59,10 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, p
     output_filepath <- file.path(output_directory,
                                  paste(prefix, stringr::str_pad(i,digits, pad = '0'),
                                        ".pdf",  sep = ""))
+
+    if(!overwrite & file.exists(output_filepath)){
+      stop(paste(output_filepath,'already exists. Set overwrite = TRUE to overwrite'))
+    }
 
     system_command <- paste("pdftk",
                             shQuote(input_filepath),

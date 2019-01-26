@@ -37,7 +37,7 @@
 #' @import utils
 #' @importFrom  stringr str_extract
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL, overwrite = FALSE) {
+remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL, overwrite = TRUE) {
 
   assertthat::assert_that(is.numeric(rmpages))
 
