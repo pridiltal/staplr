@@ -292,12 +292,16 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, ove
   close(f)
 
   system_command <-
-    paste('pdftk {shQuote(input_filepath)} fill_form {shQuote(newFDF)} output {shQuote(output_filepath)}')
+    paste("pdftk",
+          shQuote(input_filepath),
+          "fill_form",
+          shQuote(newFDF),
+          "output",
+          "{shQuote(output_filepath)}")
 
 
   fileIO(input_filepath = input_filepath,
          output_filepath = output_filepath,
          overwrite = overwrite,
-         system_command = system_command,
-         newFDF = newFDF)
+         system_command = system_command)
   }

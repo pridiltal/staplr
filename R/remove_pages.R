@@ -79,16 +79,15 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL,
   # Construct a system command to pdftk
   system_command <-
     paste("pdftk",
-          "{shQuote(input_filepath)}",
+          shQuote(input_filepath),
           "cat",
-          "{paste(unlist(selected_pages),collapse=' ')}", "output",
+          paste(unlist(selected_pages),collapse=' '), "output",
           "{shQuote(output_filepath)}")
 
 
   fileIO(input_filepath = input_filepath,
          output_filepath = output_filepath,
          overwrite = overwrite,
-         system_command = system_command,
-         selected_pages = selected_pages)
+         system_command = system_command)
 
 }

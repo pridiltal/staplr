@@ -99,9 +99,9 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
     rotate[!(index[order(index)] %in% rotatepages)] <- degree_0
 
     # Construct a system command to pdftk
-    system_command <- paste("pdftk", "{shQuote(input_filepath)}",
+    system_command <- paste("pdftk", shQuote(input_filepath),
                             "cat",
-                            "{paste(rotate,collapse=' ')}",
+                            paste(rotate,collapse=' '),
                             "output",
                             "{shQuote(output_filepath)}",
                             sep = " ")
@@ -109,7 +109,6 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
     fileIO(input_filepath = input_filepath,
            output_filepath = output_filepath,
            overwrite = overwrite,
-           system_command = system_command,
-           rotate = rotate)
+           system_command = system_command)
   }
 }

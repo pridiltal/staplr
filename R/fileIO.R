@@ -30,10 +30,8 @@ NULL
 fileIO = function(input_filepath,
                   output_filepath,
                   overwrite,
-                  system_command,
-                  ...){
+                  system_command){
 
-  args = list(...)
 
   if(!overwrite & file.exists(output_filepath)){
     stop(paste(output_filepath,'already exists. Set overwrite = TRUE to overwrite'))
@@ -46,7 +44,7 @@ fileIO = function(input_filepath,
     collision <- FALSE
   }
 
-  system(with(args,glue::glue(system_command)))
+  system(glue::glue(system_command))
 
   if(collision){
     # this last overwrite is redundant but just in case...
