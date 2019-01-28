@@ -204,6 +204,11 @@ get_fields <- function(input_filepath = NULL){
   # fields that don't really exist and don't appear on the fdf file.
   fields = fields[sapply(fields,function(x){x$type})!='']
 
+  # remove fields that don't appear on the FDF
+  fdfLines <- get_fdf_lines(input_filepath)
+  annotatedFDF = fdfAnnotate(fdfLines)
+  fields = fields[names(fields) %in% annotatedFDF$fields]
+
   return(fields)
 }
 
@@ -272,12 +277,6 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, ove
   fdfLines <- get_fdf_lines(input_filepath)
 
   annotatedFDF = fdfAnnotate(fdfLines)
-  assertthat::assert_that(all(names(fields) %in% annotatedFDF$fields),
-                     msg = paste('Field names do not match the fields of the pdf.',
-                                 'Either you are using fields generated from a wrong',
-                                 'pdf file or there is a parsing error. If there is a',
-                                 'parsing error, please notify the developers (https://github.com/pridiltal/staplr)'))
-
 
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]
