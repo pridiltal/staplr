@@ -1,5 +1,5 @@
 
-# staplr <img src="logo.png" align="right" height="150"/>
+# staplr <img src="man/figures/logo.png" align="right" height="150"/>
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -14,7 +14,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2018--06--25-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--02--13-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -49,6 +49,22 @@ happens to you, [this
 version](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
 should work for macOS El Capitan (10.11), it also works on Sierra
 (10.12) and High Sierra (10.13).
+
+Installation instructions for Red Hat or CentOS distributions can be
+found here:
+<https://www.pdflabs.com/docs/install-pdftk-on-redhat-or-centos/>
+
+Packaged versions can be found for
+[Arch](https://aur.archlinux.org/packages/pdftk/) and
+[Ubuntu](https://packages.ubuntu.com/search?keywords=pdftk). On Ubuntu,
+for example, this means pdftk can be installed with the following
+command on
+[most](https://askubuntu.com/questions/1028522/how-can-i-install-pdftk-in-ubuntu-18-04-bionic)
+versions:
+
+``` bash
+sudo apt install pdftk
+```
 
 #### Then Install staplr
 

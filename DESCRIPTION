@@ -1,7 +1,7 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 2.2.1
+Version: 2.9.0
 Depends: R (>= 3.4.0)
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Authors@R: c(
@@ -22,7 +22,7 @@ Description: Provides function to manipulate PDF files:
     splits single input PDF document into parts from given points.
 License: GPL-3
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Imports:
   tcltk,
   stringr,
