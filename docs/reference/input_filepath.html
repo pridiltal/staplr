@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Set fields of a pdf form — set_fields • staplr</title>
+<title>file io — input_filepath • staplr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,12 +30,9 @@
 
 
 
-<meta property="og:title" content="Set fields of a pdf form — set_fields" />
+<meta property="og:title" content="file io — input_filepath" />
 
-<meta property="og:description" content="If the toolkit Pdftk is available in the
-system, it will be called to fill a pdf form with given a list of fields.
-List of fields can be acquired by get_fields function.
-See the reference for detailed usage of pdftk." />
+<meta property="og:description" content="file io" />
 
 <meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -99,22 +96,17 @@ See the reference for detailed usage of pdftk." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Set fields of a pdf form</h1>
+    <h1>file io</h1>
     
-    <div class="hidden name"><code>set_fields.Rd</code></div>
+    <div class="hidden name"><code>input_filepath.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>If the toolkit Pdftk is available in the
-system, it will be called to fill a pdf form with given a list of fields.
-List of fields can be acquired by <code><a href='get_fields.html'>get_fields</a></code> function.</p>
-<p>See the reference for detailed usage of <code>pdftk</code>.</p>
+    <p>file io</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>set_fields</span>(<span class='kw'>input_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>output_filepath</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>fields</span>,
-  <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -124,60 +116,16 @@ List of fields can be acquired by <code><a href='get_fields.html'>get_fields</a>
       <td><p>the path of the input PDF file. The default is set to
 NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
     </tr>
-    <tr>
-      <th>output_filepath</th>
-      <td><p>the path of the output PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
-    </tr>
-    <tr>
-      <th>fields</th>
-      <td><p>Fields returned from <code><a href='get_fields.html'>get_fields</a></code> function. To make
-changes in a PDF, edit the <code>values</code> component of an element within
-this list</p></td>
-    </tr>
-    <tr>
-      <th>overwrite</th>
-      <td><p>If a file exists in <code>output_filepath</code>, should it be overwritten.</p></td>
-    </tr>
     </table>
     
-    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p><a href='https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/'>https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/</a></p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='get_fields.html'>get_fields</a></code></p></div>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='no'>pdfFile</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>'testForm.pdf'</span>,<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'staplr'</span>)
-<span class='no'>fields</span> <span class='kw'>=</span> <span class='fu'><a href='get_fields.html'>get_fields</a></span>(<span class='no'>pdfFile</span>)
-
-<span class='no'>fields</span>$<span class='no'>TextField1</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='st'>'this is text'</span>
-<span class='no'>fields</span>$<span class='no'>TextField2</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='st'>'more text'</span>
-<span class='no'>fields</span>$<span class='no'>RadioGroup</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='fl'>2</span>
-<span class='no'>fields</span>$<span class='no'>checkBox</span>$<span class='no'>value</span> <span class='kw'>=</span> <span class='st'>'Yes'</span>
-
-<span class='fu'>set_fields</span>(<span class='no'>pdfFile</span>,<span class='st'>'filledPdf.pdf'</span>,<span class='no'>fields</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#references">References</a></li>
+                </ul>
 
-      <li><a href="#see-also">See also</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Ogan Mancarci</p>
   </div>
 </div>
 
