@@ -16,7 +16,6 @@ output: github_document
  
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits/master)
 
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, echo = FALSE}
@@ -42,6 +41,7 @@ This package provides functions to manipulate PDF files:
    - splits single input PDF document into parts from given points: split_from()
 
 This package is still under development and this repository contains a development version of the R package *staplr*.
+
 
 ## Installation
 
