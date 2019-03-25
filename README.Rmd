@@ -11,6 +11,7 @@ output: github_document
 ---
 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
+[![](http://cranlogs.r-pkg.org/badges/staplr)](http://cran.rstudio.com/web/packages/staplr/index.html)
  
 ---
  

@@ -11,10 +11,11 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 -----
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
+[![](http://cranlogs.r-pkg.org/badges/staplr)](http://cran.rstudio.com/web/packages/staplr/index.html)
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--02--13-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--03--25-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
