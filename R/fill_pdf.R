@@ -165,15 +165,14 @@ get_fields <- function(input_filepath = NULL){
                           'dump_data_fields','output',
                           shQuote(fieldsTemp))
   system(system_command)
-
+  # here encoding isn't important because any unusual character is in numeric character references
   fields <- paste0(readLines(fieldsTemp),
                    collapse = '\n')
   fields <- stringr::str_replace_all(fields,'&lt;','<')
   fields <- stringr::str_replace_all(fields,'&gt;','>')
   fields <- stringr::str_replace_all(fields,'&quot;','"')
   fields <- stringr::str_replace_all(fields,'&amp;','&')
-
-    fields <- strsplit(fields, '---')[[1]][-1]
+  fields <- strsplit(fields, '---')[[1]][-1]
 
   # parse the fields
   fields <- lapply(fields,function(x){
@@ -195,7 +194,7 @@ get_fields <- function(input_filepath = NULL){
 
     return(list(type = type,
                 name = sub_decimal(name),
-                value = value))
+                value = sub_decimal(value)))
   })
 
   names(fields) <- sapply(fields,function(x){x$name})
@@ -215,7 +214,11 @@ get_fields <- function(input_filepath = NULL){
 
 
 # taken outside to make testing easier
-get_fdf_lines <- function(input_filepath){
+# this file has always wierd characters at the beginning
+# not reading with latin1 will result in a warning. and later on
+# causes parsing failures regardless of the character set being used in
+# the input pdf
+get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
 
   tempFDF <- tempfile()
   system_command <- paste('pdftk',
@@ -223,7 +226,7 @@ get_fdf_lines <- function(input_filepath){
                           'generate_fdf','output',
                           shQuote(tempFDF))
   system(system_command)
-  fdfLines <- readLines(tempFDF,encoding ='latin1')
+  fdfLines <- suppressWarnings(readLines(tempFDF,encoding = encoding))
   return(fdfLines)
 }
 
@@ -242,6 +245,7 @@ get_fdf_lines <- function(input_filepath){
 #'   changes in a PDF, edit the \code{values} component of an element within
 #'   this list
 #' @inheritParams overwrite
+#' @param encoding Encoding
 #'
 #' @export
 #' @author Ogan Mancarci
@@ -260,7 +264,10 @@ get_fdf_lines <- function(input_filepath){
 #' }
 #'
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, overwrite = TRUE){
+set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
+                      overwrite = TRUE,
+                      encoding = getOption("encoding"),
+                      useBytes = FALSE){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -286,10 +293,9 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields, ove
   # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
 
   newFDF <- tempfile()
-  f = file(newFDF,open = "w",encoding = 'latin1')
-  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = TRUE)
+  f = file(newFDF,open = "w",encoding = encoding)
+  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = useBytes)
   close(f)
-
   system_command <-
     paste("pdftk",
           shQuote(input_filepath),
