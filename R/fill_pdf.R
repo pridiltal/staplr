@@ -245,7 +245,10 @@ get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
 #'   changes in a PDF, edit the \code{values} component of an element within
 #'   this list
 #' @inheritParams overwrite
-#' @param encoding Encoding
+#' @param encoding Encoding option passed to \code{\link[base]{file}}.
+#' Change this and \code{useByte} if characters you are trying to write to the
+#' field are not writable to a file using the default options
+#' @param useByte useByte option passed to \code{\link[base]{writeLines}}.
 #'
 #' @export
 #' @author Ogan Mancarci

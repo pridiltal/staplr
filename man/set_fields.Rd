@@ -5,7 +5,8 @@
 \title{Set fields of a pdf form}
 \usage{
 set_fields(input_filepath = NULL, output_filepath = NULL, fields,
-  overwrite = TRUE)
+  overwrite = TRUE, encoding = getOption("encoding"),
+  useBytes = FALSE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -19,6 +20,12 @@ changes in a PDF, edit the \code{values} component of an element within
 this list}
 
 \item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
+
+\item{encoding}{Encoding option passed to \code{\link[base]{file}}.
+Change this and \code{useByte} if characters you are trying to write to the
+field are not writable to a file using the default options}
+
+\item{useByte}{useByte option passed to \code{\link[base]{writeLines}}.}
 }
 \description{
 If the toolkit Pdftk is available in the
