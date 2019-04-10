@@ -58,16 +58,20 @@ test_that('fill_pdf',{
   # this test actually doesn't work even though the resulting FDF file is just fine.
   # expect_true(grepl(' ½ ¾ ‘ ’ ” “ •', pdftools::pdf_text(tempFile2)[2],fixed = TRUE))
 
-
-
-
-
   testOutput = tempfile(fileext = '.pdf')
   idenfity_form_fields(pdfFile, testOutput)
   pdfText = pdftools::pdf_text(testOutput)
   expect_true(grepl('TextField1', pdfText[1],perl = TRUE))
   expect_true(grepl('TextFieldPage2', pdfText[2],perl = TRUE))
   expect_true(grepl('TextFieldPage3', pdfText[3],perl = TRUE))
+
+  fields <- get_fields(pdfFile,convert_field_names = TRUE)
+
+  expect_true("weird Ñ characters" %in% names(fields))
+
+  fields$`weird Ñ characters`$value = 'hey'
+
+  # set_fields(pdfFile,tempFile2,fields)
 })
 
 
@@ -183,9 +187,9 @@ test_that('overwrite',{
 
   fields <- get_fields(tempFile)
   fields$TextField1$value <- 'this is text'
-  set_fields(pdfFile,tempFile,fields,overwrite = TRUE)
+  set_fields(pdfFile,tempFile,fields,overwrite = TRUE,encoding = 'utf-8')
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
-  expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE),'already exists')
+  expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE,encoding = 'utf-8'),'already exists')
 
 
   oldSecondPage = pdftools::pdf_text(tempFile)[2]

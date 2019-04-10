@@ -8,6 +8,28 @@ sub_decimal <- function(char) {
   return(char)
 }
 
+encodeUTF8 <- function(char){
+  while(TRUE){
+    utf8 = stringr::str_extract(char, '(\\#([A-Z]|[0-9]){2})+')
+    if(is.na(utf8)) break()
+    utf8chars <- strsplit(utf8, "#")
+    # https://stackoverflow.com/questions/55583644/convert-utf-8-encoding-in-text-form-to-characters
+    # just grab the first entry, and leave off the blank
+    utf8chars <- utf8chars[[1]][-1]
+    # Convert the hex to integer
+    utf8int <- strtoi(paste0("0x",utf8chars))
+    # Then to raw
+    utf8raw <- as.raw(utf8int)
+    # And finally to character
+    utf8char <- rawToChar(utf8raw)
+    # On Windows you'll also need this
+    Encoding(utf8char) <- "utf-8"
+
+    char <- sub('(\\#([A-Z]|[0-9]){2})+',utf8char,char)
+  }
+  return(char)
+}
+
 # getting code review at https://codereview.stackexchange.com/questions/212118/a-faux-parser-for-fdf-files
 fdfAnnotate <- function(fdfLines){
   fields <- vector(length = length(fdfLines),mode= "character")
@@ -134,6 +156,14 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
 #' @param input_filepath the path of the input PDF file. The default is set to
 #'   NULL. IF NULL, it  prompt the user to select the folder interactively.
 #'
+#' @param convert_field_names By default \code{pdftk} will encode certain characters
+#' of the field names in plain text UTF-8 so if using a non-latin alphabet, your
+#' field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
+#' characters. However this process it not guaranteed to be perfect as pdftk doesn
+#' not differentiate between encoded text and regular text using escape characters.
+#' If you have field names that intentionally include components that look like encoded characters
+#' this will attempt to fix them. Use this option only when necessary.
+#'
 #' @return A list of fields. With type, name and value components. To use with
 #'   \code{\link{set_fields}} edit the value element of the fields you want to
 #'   modify. If the field of type "button", the value will be a factor. In this
@@ -149,7 +179,8 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
-get_fields <- function(input_filepath = NULL){
+#'
+get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -192,10 +223,19 @@ get_fields <- function(input_filepath = NULL){
       value <- factor(sub_decimal(value),levels = sapply(stateOptions,sub_decimal))
     }
 
+    if(convert_field_names){
+      name = encodeUTF8(name)
+      attr(name,"converted") = TRUE
+    }
+
     return(list(type = type,
-                name = sub_decimal(name),
+                name = name,
                 value = sub_decimal(value)))
   })
+
+  if(convert_field_names){
+
+  }
 
   names(fields) <- sapply(fields,function(x){x$name})
 
@@ -205,8 +245,14 @@ get_fields <- function(input_filepath = NULL){
 
   # remove fields that don't appear on the FDF
   fdfLines <- get_fdf_lines(input_filepath)
-  annotatedFDF = fdfAnnotate(fdfLines)
+  annotatedFDF <- fdfAnnotate(fdfLines)
+  if(convert_field_names){
+    annotatedFDF$fields <- sapply(annotatedFDF$fields,encodeUTF8)
+  }
   fields = fields[names(fields) %in% annotatedFDF$fields]
+
+  # class(fields) = 'pdf_fields'
+
 
   return(fields)
 }
@@ -267,10 +313,11 @@ get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
 #' }
 #'
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
+#'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
                       overwrite = TRUE,
-                      encoding = getOption("encoding"),
-                      useBytes = FALSE){
+                      encoding = "latin1",
+                      useBytes = TRUE){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
