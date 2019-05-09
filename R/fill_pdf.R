@@ -1,9 +1,14 @@
 # https://stackoverflow.com/questions/51850775/how-to-decode-a-character-with-numeric-character-references-in-it/51850941#51850941
-sub_decimal <- function(char) {
-  while(TRUE) {
-    utf <- stringr::str_match(char, '\\&\\#([0-9]+)\\;')[,2]
-    if (is.na(utf)) break()
-    char <- sub('\\&\\#([0-9]+)\\;', intToUtf8(utf), char)
+# modified to support surrogate pairs (eg emoji)
+sub_decimal <- function(char){
+  while(TRUE){
+    # first get the character. might be in multipart
+    utf <- stringr::str_extract(char, '(\\&\\#([0-9]+)\\;)+')
+    if(is.na(utf)){
+      break()
+    }
+    utf <- stringr::str_extract_all(utf,'[0-9]+')[[1]]
+    char <- sub('(\\&\\#([0-9]+)\\;)+', intToUtf8(utf,allow_surrogate_pairs = TRUE), char)
   }
   return(char)
 }
@@ -191,6 +196,8 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
   fieldsTemp <- tempfile()
 
   # generate the data field dump in a temporary file
+  # theoratically, using dump_data_fields_utf8 can get rid of the need to use sub_demical
+  # but this fails to process inputs containing stuff like emoji
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
                           'dump_data_fields','output',
@@ -209,8 +216,21 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
   fields <- lapply(fields,function(x){
     type <- stringr::str_extract(x,'(?<=FieldType: ).*?(?=\n|$)')
     name <- stringr::str_extract(x,'(?<=FieldName: ).*?(?=\n|$)')
-    value <- stringr::str_extract(x,'(?<=FieldValue: ).*?(?=\n|$)')
-    if(is.na(value)){
+
+    value <- stringr::str_extract_all(x,'(?<=FieldValue: ).*?(?=\n|$)')[[1]]
+    # sometimes there are multiple field values. It is currently unclear why this happens
+    # but the example file I have only created the extra fieldValue when there was
+    # an entry.
+    if(length(value)>1){
+      if(all(value == '')){
+        value = ''
+      } else if(length(value[value!=''])==1){
+        value <- value[value!='']
+      } else{
+        warning(paste(name, "field has >1 FieldValues. set_fields only accepts fields of length one"))
+      }
+    }
+    if(length(value)==0){
       # sometimes FieldValue is non populated
       # note the field is a button, this will cause it to be returned as an NA.
       # this is later handled by fdfEdit function which replaces the NA with
