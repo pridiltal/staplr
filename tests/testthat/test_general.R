@@ -53,7 +53,7 @@ test_that('fill_pdf',{
   expect_true(grepl('Ñ, ñ, É, Í, Ó', pdftools::pdf_text(tempFile2)[2],fixed = TRUE))
 
   fields <- get_fields(tempFile)
-  fields$TextFieldPage2$value = "some more special chars ½ ¾ ‘ ’ ” “ •"
+  fields$TextFieldPage2$value = "some more special char"
   set_fields(pdfFile,tempFile2,fields,useBytes =TRUE,encoding ='UTF-8')
   # this test actually doesn't work even though the resulting FDF file is just fine.
   # expect_true(grepl(' ½ ¾ ‘ ’ ” “ •', pdftools::pdf_text(tempFile2)[2],fixed = TRUE))
@@ -76,7 +76,7 @@ test_that('fill_pdf',{
 
 
 test_that('remove_pages',{
-  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
   tempFile <- tempfile(fileext = '.pdf')
 
   remove_pages(rmpages = 1, pdfFile, tempFile)
@@ -85,7 +85,7 @@ test_that('remove_pages',{
 })
 
 test_that('select_pages',{
-  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
   tempFile <- tempfile(fileext = '.pdf')
 
   select_pages(selpages = 2, pdfFile, tempFile)
@@ -94,7 +94,7 @@ test_that('select_pages',{
 })
 
 test_that('rotate',{
-  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
   tempFile <- tempfile(fileext = '.pdf')
   rotate_pages(c(1,2), 90, pdfFile, tempFile)
 
@@ -116,10 +116,8 @@ test_that('rotate',{
 })
 
 
-# here I removed comparisons to the first page because it includes a default
-# field which is removed by pdftk operations
 test_that('split',{
-  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
   pdfFileInfo <- pdftools::pdf_info(pdfFile)
   tempDir <- tempfile()
   dir.create(tempDir)
@@ -132,13 +130,14 @@ test_that('split',{
 
   # compare the second page of the original file with the second page created
   # this also checks if the prefix works and the number of trailing zeroes
+  expect_equal(pdftools::pdf_text(pdfFile)[1],pdftools::pdf_text(file.path(tempDir,'p0001.pdf')))
   expect_equal(pdftools::pdf_text(pdfFile)[2],pdftools::pdf_text(file.path(tempDir,'p0002.pdf')))
 
   tempDir <- tempfile()
   dir.create(tempDir)
   split_from(pg_num = 1,pdfFile,tempDir,prefix = 'p')
   # compare the text of the original file with the resulting files
-  # expect_equal(pdftools::pdf_text(pdfFile)[1],pdftools::pdf_text(file.path(tempDir,'p1.pdf')))
+  expect_equal(pdftools::pdf_text(pdfFile)[1],pdftools::pdf_text(file.path(tempDir,'p1.pdf')))
   expect_equal(pdftools::pdf_text(pdfFile)[2],pdftools::pdf_text(file.path(tempDir,'p2.pdf'))[1])
   expect_equal(pdftools::pdf_text(pdfFile)[3],pdftools::pdf_text(file.path(tempDir,'p2.pdf'))[2])
 
@@ -157,7 +156,7 @@ test_that('split',{
 
 test_that('staple',{
   # create individual pdfs first
-  pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
   pdfFileInfo <- pdftools::pdf_info(pdfFile)
   tempDir <- tempfile()
   dir.create(tempDir)
@@ -190,6 +189,10 @@ test_that('overwrite',{
   set_fields(pdfFile,tempFile,fields,overwrite = TRUE,encoding = 'utf-8')
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
   expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE,encoding = 'utf-8'),'already exists')
+
+  pdfFile <- system.file('testFile.pdf',package = 'staplr')
+  tempFile = tempfile(fileext = '.pdf')
+  file.copy(pdfFile,tempFile)
 
 
   oldSecondPage = pdftools::pdf_text(tempFile)[2]
