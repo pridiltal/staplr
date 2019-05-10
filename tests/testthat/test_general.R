@@ -4,10 +4,32 @@ test_that('fill_pdf',{
 
   tempFile <- tempfile(fileext = '.pdf')
 
-  # pdfFile <- system.file('testForm.pdf',package = 'staplr')
+  pdfFile <- system.file('simpleForm.pdf',package = 'staplr')
+
+  fields = get_fields(pdfFile)
+
+  fields$TextField$value = 'normal text'
+
+  set_fields(pdfFile,tempFile,fields)
+  pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('normal text', pdfText))
+
+  fields$TextField$value = 'Ñ, ñ, É, Í, Ó'
+  set_fields(pdfFile,tempFile,fields)
+  pdfText = pdftools::pdf_text(tempFile)
+
+  fields$TextField$value = '½ ¾ ‘ ’ ” “ •'
+  set_fields(pdfFile,tempFile,fields,encoding = 'UTF-8',useBytes = TRUE)
+  pdfText = pdftools::pdf_text(tempFile)
+
+  pdfFile <- system.file('simpleFormRichText.pdf',package = 'staplr')
+
+
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
 
-  fields <- get_fields(pdfFile)
+  fields <- get_fields(pdfFile,convert_field_names = TRUE)
+
+  set_fields(pdfFile,tempFile,fields)
 
   fields$TextField1$value <- 'this is text'
   fields$TextField2$value <- 'more text with some \\ / paranthesis () ('

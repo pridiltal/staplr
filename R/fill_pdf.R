@@ -164,10 +164,14 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
 #' @param convert_field_names By default \code{pdftk} will encode certain characters
 #' of the field names in plain text UTF-8 so if using a non-latin alphabet, your
 #' field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
-#' characters. However this process it not guaranteed to be perfect as pdftk doesn
+#' characters. However this process it not guaranteed to be perfect as pdftk does
 #' not differentiate between encoded text and regular text using escape characters.
 #' If you have field names that intentionally include components that look like encoded characters
-#' this will attempt to fix them. Use this option only when necessary.
+#' this will attempt to fix them. Use this option only when necessary. If TRUE,
+#' remember to set it to TRUE when using \code{\link{set_fields}} as well.
+#' @param encoding_warnings If field names include strings that look like plain text UTF-8
+#' codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
+#' If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.
 #'
 #' @return A list of fields. With type, name and value components. To use with
 #'   \code{\link{set_fields}} edit the value element of the fields you want to
@@ -185,7 +189,7 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 #'
-get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
+get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encoding_warnings = TRUE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -245,17 +249,14 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
 
     if(convert_field_names){
       name = encodeUTF8(name)
-      attr(name,"converted") = TRUE
+    } else if(encoding_warnings && name != encodeUTF8(name)){
+      warning(paste(name,'field seems to include plain text UTF-8. Setting convert_field_names = TRUE might help.'))
     }
 
     return(list(type = type,
                 name = name,
                 value = sub_decimal(value)))
   })
-
-  if(convert_field_names){
-
-  }
 
   names(fields) <- sapply(fields,function(x){x$name})
 
@@ -284,15 +285,18 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE){
 # not reading with latin1 will result in a warning. and later on
 # causes parsing failures regardless of the character set being used in
 # the input pdf
-get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
-
-  tempFDF <- tempfile()
+get_fdf_lines <- function(input_filepath,
+                          output_filepath = NULL,
+                          encoding = 'latin1',...){
+  if(is.null(output_filepath)){
+    output_filepath <- tempfile()
+  }
   system_command <- paste('pdftk',
                           shQuote(input_filepath),
                           'generate_fdf','output',
-                          shQuote(tempFDF))
+                          shQuote(output_filepath))
   system(system_command)
-  fdfLines <- suppressWarnings(readLines(tempFDF,encoding = encoding))
+  fdfLines <- suppressWarnings(readLines(output_filepath,encoding = encoding,...))
   return(fdfLines)
 }
 
@@ -311,6 +315,8 @@ get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
 #'   changes in a PDF, edit the \code{values} component of an element within
 #'   this list
 #' @inheritParams overwrite
+#' @param convert_field_names If you set convert_field_names when using \code{\link{get_fields}}
+#' you should set this to TRUE as well so the fields can be matched correctly.
 #' @param encoding Encoding option passed to \code{\link[base]{file}}.
 #' Change this and \code{useByte} if characters you are trying to write to the
 #' field are not writable to a file using the default options
@@ -336,6 +342,7 @@ get_fdf_lines <- function(input_filepath,encoding = 'latin1'){
 #'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
                       overwrite = TRUE,
+                      convert_field_names = FALSE,
                       encoding = "latin1",
                       useBytes = TRUE){
   assertthat::assert_that(is.list(fields))
@@ -355,17 +362,23 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
 
   annotatedFDF = fdfAnnotate(fdfLines)
 
+  if(convert_field_names){
+    annotatedFDF$fields <- sapply(annotatedFDF$fields,encodeUTF8)
+  }
+
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]
     annotatedFDF <- fdfEdit(fieldToFill,annotatedFDF)
   }
 
   # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
-
+browser()
   newFDF <- tempfile()
   f = file(newFDF,open = "w",encoding = encoding)
-  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = useBytes)
+  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
   close(f)
+  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
+
   system_command <-
     paste("pdftk",
           shQuote(input_filepath),
