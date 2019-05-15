@@ -349,24 +349,6 @@ get_fdf_lines <- function(input_filepath,
   return(fdfLines)
 }
 
-generate_fdf <- function(annotatedFDF){
-  # convert the file to latin1 raw for non field regions or
-  # button fields. I do not know if button fields can have non-unicode sections
-  # further investigation required
-  annotatedFDF$encoding[annotatedFDF$fields=='' | !grepl('\\(',annotatedFDF$fdfLines)] <-
-    iconv(annotatedFDF$fdfLines[annotatedFDF$fields==''|| !grepl('\\(',annotatedFDF$fdfLines)],
-          from = 'latin1',to='latin1',toRaw = TRUE)
-
-  # convert the mixed encoded lines
-  toEncode = annotatedFDF$fdfLines[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)]
-
-  annotatedFDF$encoding[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)] <-
-    lapply(annotatedFDF$fdfLines[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)],function(x){
-
-    })
-
-}
-
 #' Set fields of a pdf form
 #'
 #' @description If the toolkit Pdftk is available in the
@@ -383,10 +365,6 @@ generate_fdf <- function(annotatedFDF){
 #' @inheritParams overwrite
 #' @param convert_field_names If you set convert_field_names when using \code{\link{get_fields}}
 #' you should set this to TRUE as well so the fields can be matched correctly.
-#' @param encoding Encoding option passed to \code{\link[base]{file}}.
-#' Change this and \code{useByte} if characters you are trying to write to the
-#' field are not writable to a file using the default options
-#' @param useByte useByte option passed to \code{\link[base]{writeLines}}.
 #'
 #' @export
 #' @author Ogan Mancarci

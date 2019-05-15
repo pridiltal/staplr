@@ -4,7 +4,8 @@
 \alias{get_fields}
 \title{Get form fields from a pdf form}
 \usage{
-get_fields(input_filepath = NULL, convert_field_names = FALSE)
+get_fields(input_filepath = NULL, convert_field_names = FALSE,
+  encoding_warnings = TRUE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -13,10 +14,15 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.}
 \item{convert_field_names}{By default \code{pdftk} will encode certain characters
 of the field names in plain text UTF-8 so if using a non-latin alphabet, your
 field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
-characters. However this process it not guaranteed to be perfect as pdftk doesn
+characters. However this process it not guaranteed to be perfect as pdftk does
 not differentiate between encoded text and regular text using escape characters.
 If you have field names that intentionally include components that look like encoded characters
-this will attempt to fix them. Use this option only when necessary.}
+this will attempt to fix them. Use this option only when necessary. If TRUE,
+remember to set it to TRUE when using \code{\link{set_fields}} as well.}
+
+\item{encoding_warnings}{If field names include strings that look like plain text UTF-8
+codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
+If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.}
 }
 \value{
 A list of fields. With type, name and value components. To use with
