@@ -5,7 +5,6 @@ test_that('fill_pdf',{
   tempFile <- tempfile(fileext = '.pdf')
 
   pdfFile <- system.file('simpleForm.pdf',package = 'staplr')
-
   fields = get_fields(pdfFile)
 
   fields$TextField$value = 'normal text'
@@ -17,19 +16,32 @@ test_that('fill_pdf',{
   fields$TextField$value = 'Ñ, ñ, É, Í, Ó'
   set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('Ñ, ñ, É, Í, Ó', pdfText))
+
 
   fields$TextField$value = '½ ¾ ‘ ’ ” “ •'
-  set_fields(pdfFile,tempFile,fields,encoding = 'UTF-8',useBytes = TRUE)
+  set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
+  # there is a proplem with pdftools. It removed spaces between the special characters
+  # for no apparent reason. Examination of the file shows that the spaces are still there.
+  # consider filing an issue at pdftools
+  # expect_true(grepl('½ ¾ ‘ ’ ” “ •', pdfText))
+  expect_true(grepl('½¾‘’”“•', pdfText))
 
+
+  # this test is there to see if we can get identical output when the text is rich
   pdfFile <- system.file('simpleFormRichText.pdf',package = 'staplr')
+  fields = get_fields(pdfFile)
+  set_fields(pdfFile,tempFile,fields)
+  # pdftools complains about these files. doesn't seem to effect anything
+  expect_equivalent(pdftools::pdf_text(pdfFile), pdftools::pdf_text(tempFile))
 
 
+  # test with the complex file that pretty much has everything that can go wrong
+  # i hope...
   pdfFile <- system.file('testForm.pdf',package = 'staplr')
-
   fields <- get_fields(pdfFile,convert_field_names = TRUE)
 
-  set_fields(pdfFile,tempFile,fields)
 
   fields$TextField1$value <- 'this is text'
   fields$TextField2$value <- 'more text with some \\ / paranthesis () ('
@@ -47,9 +59,9 @@ test_that('fill_pdf',{
   fields$InterstingChar2$value <- "this field had weirder content"
 
   fields$`(weird) paranthesis`$value <- 'paranthesis is weird'
-  fields$`weird #C3#91 characters`$value <- 'characters are weird'
+  fields$`weird Ñ characters`$value <- 'characters are weird'
 
-  set_fields(pdfFile,tempFile,fields)
+  set_fields(pdfFile,tempFile,fields,convert_field_names = TRUE)
   pdfText = pdftools::pdf_text(tempFile)
 
   # ensure that the resulting file is filled with the correct text
@@ -67,33 +79,8 @@ test_that('fill_pdf',{
   expect_true(grepl('paranthesis', pdfText[1],perl = TRUE))
   expect_true(grepl('characters', pdfText[1],perl = TRUE))
 
-  tempFile2 <- tempfile(fileext = '.pdf')
-  fields <- get_fields(tempFile)
 
-  fields$TextFieldPage2$value = 'some special chars Ñ, ñ, É, Í, Ó'
-  set_fields(pdfFile,tempFile2,fields,encoding = 'latin1')
-  expect_true(grepl('Ñ, ñ, É, Í, Ó', pdftools::pdf_text(tempFile2)[2],fixed = TRUE))
-
-  fields <- get_fields(tempFile)
-  fields$TextFieldPage2$value = "some more special char"
-  set_fields(pdfFile,tempFile2,fields,useBytes =TRUE,encoding ='UTF-8')
-  # this test actually doesn't work even though the resulting FDF file is just fine.
-  # expect_true(grepl(' ½ ¾ ‘ ’ ” “ •', pdftools::pdf_text(tempFile2)[2],fixed = TRUE))
-
-  testOutput = tempfile(fileext = '.pdf')
-  idenfity_form_fields(pdfFile, testOutput)
-  pdfText = pdftools::pdf_text(testOutput)
-  expect_true(grepl('TextField1', pdfText[1],perl = TRUE))
-  expect_true(grepl('TextFieldPage2', pdfText[2],perl = TRUE))
-  expect_true(grepl('TextFieldPage3', pdfText[3],perl = TRUE))
-
-  fields <- get_fields(pdfFile,convert_field_names = TRUE)
-
-  expect_true("weird Ñ characters" %in% names(fields))
-
-  fields$`weird Ñ characters`$value = 'hey'
-
-  # set_fields(pdfFile,tempFile2,fields)
+  expect_warning(get_fields(tempFile),regexp = "field seems to include plain text UTF-8")
 })
 
 
@@ -206,11 +193,11 @@ test_that('overwrite',{
   tempFile = tempfile(fileext = '.pdf')
   file.copy(pdfFile,tempFile)
 
-  fields <- get_fields(tempFile)
+  fields <- get_fields(tempFile,convert_field_names = TRUE)
   fields$TextField1$value <- 'this is text'
-  set_fields(pdfFile,tempFile,fields,overwrite = TRUE,encoding = 'utf-8')
+  set_fields(pdfFile,tempFile,fields,convert_field_names = TRUE)
   expect_true(grepl('this is text', pdftools::pdf_text(tempFile)[1]))
-  expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE,encoding = 'utf-8'),'already exists')
+  expect_error(set_fields(pdfFile,tempFile,fields,overwrite = FALSE,convert_field_names = TRUE),'already exists')
 
   pdfFile <- system.file('testFile.pdf',package = 'staplr')
   tempFile = tempfile(fileext = '.pdf')

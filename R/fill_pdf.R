@@ -75,9 +75,14 @@ fdfAnnotate <- function(fdfLines){
       }
     }
   }
-  annotatedFDF = data.frame(fdfLines,fields,stringsAsFactors = FALSE)
+  annotatedFDF <- data.frame(fdfLines,fields,stringsAsFactors = FALSE)
   annotatedFDF$fields <- gsub('\\(','(',x = annotatedFDF$fields,fixed = TRUE)
   annotatedFDF$fields <- gsub('\\)',')',x = annotatedFDF$fields,fixed = TRUE)
+
+  annotatedFDF$raw[annotatedFDF$fields==''] <-
+    iconv(annotatedFDF$fdfLines[annotatedFDF$fields==''],
+          from = 'latin1',to='latin1',toRaw = TRUE)
+
   return(annotatedFDF)
 
 }
@@ -90,20 +95,64 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
   if(fieldToFill$type %in%  c('Text','Choice')){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
+    originalValue <- as.character(fieldToFill$value)
+
+    # at this point this is only here for debugging. Can be removed with no consequence.
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '\\',replacement = '\\\\', fixed = TRUE)
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = '(',replacement = '\\(',fixed = TRUE)
     fieldToFill$value <- gsub(x = fieldToFill$value, pattern = ')',replacement = '\\)', fixed = TRUE)
+
+    annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] <- paste0('/V (',fieldToFill$value,')')
+
+
+    fieldRaw <- iconv(fieldToFill$value,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+
+
+    # need to manually change the escaped characters into UTF-8 encoding...
+    # this is currently very inefficient. I might be missing an easier way
+    # to encode this. at the very least, having consecutive non escape
+    # characters group up should make this more efficient
+    # need to evaluate how badly it impacts performance
+
+    charactersToEscape <- strsplit(originalValue,'')[[1]] %in% c("(",")","\\")
+
+    utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
+      if(x == '('){
+        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                 iconv('(',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+      } else if(x == ')'){
+        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                 iconv(')',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+      } else if(x =='\\'){
+        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                 iconv('\\',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+      } else{
+        out <- iconv(x,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+      }
+    }))
+
+
+    annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
+       c(iconv("/V (",from = 'latin1',to='latin1',toRaw = TRUE)[[1]], # the encapsulating part is encoded in latin1
+        as.raw(c(254,255)), # this is fe ff, the byte order mark for UTF-16BE
+        utf16Value, # the actual field is converted from UTF-8 to UTF-16
+        iconv(")",from = 'latin1',to='latin1',toRaw = TRUE)[[1]]) # close with a final paranthesis
+
+
     fieldToFill$value <-  paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
-    fieldToFill$value <-  paste0('/',fieldToFill$value)
+    annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] = paste0('/V /',fieldToFill$value)
+
+    # just encode the button with the regulat latin1
+    annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
+      iconv(annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'],from='latin1',"latin1",toRaw = TRUE)[[1]]
+
+
   } else{
     # As far as I know there are no other field types but just in case
     warning("I don't know how to fill the field type \"",fieldToFill$type,
             '". Please notify the dev.')
   }
-
-  # place the field in the correct location
-  annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] = paste('/V',fieldToFill$value)
   return(annotatedFDF)
 }
 
@@ -296,10 +345,27 @@ get_fdf_lines <- function(input_filepath,
                           'generate_fdf','output',
                           shQuote(output_filepath))
   system(system_command)
-  fdfLines <- suppressWarnings(readLines(output_filepath,encoding = encoding,...))
+  fdfLines <- suppressWarnings(readLines(output_filepath,encoding = encoding,skipNul = TRUE,...))
   return(fdfLines)
 }
 
+generate_fdf <- function(annotatedFDF){
+  # convert the file to latin1 raw for non field regions or
+  # button fields. I do not know if button fields can have non-unicode sections
+  # further investigation required
+  annotatedFDF$encoding[annotatedFDF$fields=='' | !grepl('\\(',annotatedFDF$fdfLines)] <-
+    iconv(annotatedFDF$fdfLines[annotatedFDF$fields==''|| !grepl('\\(',annotatedFDF$fdfLines)],
+          from = 'latin1',to='latin1',toRaw = TRUE)
+
+  # convert the mixed encoded lines
+  toEncode = annotatedFDF$fdfLines[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)]
+
+  annotatedFDF$encoding[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)] <-
+    lapply(annotatedFDF$fdfLines[annotatedFDF$fields!='' & grepl('\\(',annotatedFDF$fdfLines)],function(x){
+
+    })
+
+}
 
 #' Set fields of a pdf form
 #'
@@ -342,9 +408,7 @@ get_fdf_lines <- function(input_filepath,
 #'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
                       overwrite = TRUE,
-                      convert_field_names = FALSE,
-                      encoding = "latin1",
-                      useBytes = TRUE){
+                      convert_field_names = FALSE){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -372,11 +436,19 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
   }
 
   # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
-browser()
   newFDF <- tempfile()
-  f = file(newFDF,open = "w",encoding = encoding)
-  writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
-  close(f)
+  # add the line endings to the end of files
+  annotatedFDF$raw = lapply(annotatedFDF$raw,function(x){
+    c(x,as.raw(10))
+  })
+  # combine it all
+  fdfRaw = do.call(c,annotatedFDF$raw)
+
+  writeBin(fdfRaw,con = newFDF)
+
+  # f = file(newFDF,open = "w",encoding = encoding)
+  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
+  # close(f)
   # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
 
   system_command <-
