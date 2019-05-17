@@ -5,7 +5,8 @@
 \title{Identify text form fields}
 \usage{
 idenfity_form_fields(input_filepath = NULL, output_filepath = NULL,
-  overwrite = TRUE)
+  overwrite = TRUE, convert_field_names = FALSE,
+  encoding_warning = TRUE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -15,6 +16,19 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.}
 NULL. IF NULL, it  prompt the user to select the folder interactively.}
 
 \item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
+
+\item{convert_field_names}{By default \code{pdftk} will encode certain characters
+of the field names in plain text UTF-8 so if using a non-latin alphabet, your
+field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
+characters. However this process it not guaranteed to be perfect as pdftk does
+not differentiate between encoded text and regular text using escape characters.
+If you have field names that intentionally include components that look like encoded characters
+this will attempt to fix them. Use this option only when necessary. If TRUE,
+remember to set it to TRUE when using \code{\link{set_fields}} as well.}
+
+\item{encoding_warning}{If field names include strings that look like plain text UTF-8
+codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
+If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.}
 }
 \description{
 Helps identification of text forum fields by creating a file that is filled

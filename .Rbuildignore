@@ -6,6 +6,5 @@
 ^logo\.png$
 ^\.travis\.yml$
 ^docs
-^inst/testForm\.odt$
-^inst/testFormWithHierarchies\.odt$
+.odt$
 ^tests

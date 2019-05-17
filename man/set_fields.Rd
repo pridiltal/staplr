@@ -5,7 +5,7 @@
 \title{Set fields of a pdf form}
 \usage{
 set_fields(input_filepath = NULL, output_filepath = NULL, fields,
-  overwrite = TRUE)
+  overwrite = TRUE, convert_field_names = FALSE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -19,6 +19,9 @@ changes in a PDF, edit the \code{values} component of an element within
 this list}
 
 \item{overwrite}{If a file exists in \code{output_filepath}, should it be overwritten.}
+
+\item{convert_field_names}{If you set convert_field_names when using \code{\link{get_fields}}
+you should set this to TRUE as well so the fields can be matched correctly.}
 }
 \description{
 If the toolkit Pdftk is available in the
