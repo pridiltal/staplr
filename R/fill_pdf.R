@@ -113,7 +113,6 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
     annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] <- paste0('/V (',fieldToFill$value,')')
 
 
-    fieldRaw <- iconv(fieldToFill$value,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
 
 
     # need to manually change the escaped characters into UTF-8 encoding...
@@ -124,23 +123,30 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 
     # i don't actually need to use iconv here for the escaped characters
     # those are there to make the code more transparent.
+    needEscape = grepl('\\(|\\)|\\\\',originalValue)
 
-    charactersToEscape <- strsplit(originalValue,'')[[1]] %in% c("(",")","\\")
+    if(needEscape){
+      utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
+        if(x == '('){
+          out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                   iconv('(',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+        } else if(x == ')'){
+          out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                   iconv(')',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+        } else if(x =='\\'){
+          out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
+                   iconv('\\',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
+        } else{
+          out <- iconv(x,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+        }
+      }))
+    } else{
+      # if no escape is needed, just convert everthing
+      utf16Value <- iconv(fieldToFill$value,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+    }
 
-    utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
-      if(x == '('){
-        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
-                 iconv('(',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
-      } else if(x == ')'){
-        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
-                 iconv(')',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
-      } else if(x =='\\'){
-        out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
-                 iconv('\\',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
-      } else{
-        out <- iconv(x,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
-      }
-    }))
+
+
 
     annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
        c(iconv("/V (",from = 'latin1',to='latin1',toRaw = TRUE)[[1]], # the encapsulating part is encoded in latin1
