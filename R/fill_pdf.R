@@ -88,6 +88,7 @@ fdfAnnotate <- function(fdfLines){
 }
 
 # this is an internal function that edits an fdf string
+# it also deals with creating the binary for the output file
 fdfEdit <- function(fieldToFill,annotatedFDF){
   if(is.na(fieldToFill$value)){
     fieldToFill$value <- ''
@@ -177,9 +178,9 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' If you have field names that intentionally include components that look like encoded characters
 #' this will attempt to fix them. Use this option only when necessary. If TRUE,
 #' remember to set it to TRUE when using \code{\link{set_fields}} as well.
-#' @param encoding_warnings If field names include strings that look like plain text UTF-8
+#' @param encoding_warning If field names include strings that look like plain text UTF-8
 #' codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
-#' If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.
+#' If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.
 #' @inheritParams overwrite
 #'
 #' @export
@@ -191,7 +192,7 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' }
 idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
                                  overwrite = TRUE,convert_field_names = FALSE,
-                                 encoding_warnings = TRUE){
+                                 encoding_warning = TRUE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -203,7 +204,7 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 
   fields = get_fields(input_filepath,
                       convert_field_names = convert_field_names,
-                      encoding_warnings = encoding_warnings)
+                      encoding_warning = encoding_warning)
 
   fields = lapply(fields,function(field){
     if(field$type == 'Text'){
@@ -238,9 +239,9 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 #' If you have field names that intentionally include components that look like encoded characters
 #' this will attempt to fix them. Use this option only when necessary. If TRUE,
 #' remember to set it to TRUE when using \code{\link{set_fields}} as well.
-#' @param encoding_warnings If field names include strings that look like plain text UTF-8
+#' @param encoding_warning If field names include strings that look like plain text UTF-8
 #' codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
-#' If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.
+#' If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.
 #'
 #' @return A list of fields. With type, name and value components. To use with
 #'   \code{\link{set_fields}} edit the value element of the fields you want to
@@ -258,7 +259,7 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 #'
-get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encoding_warnings = TRUE){
+get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encoding_warning = TRUE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -321,7 +322,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
 
     if(convert_field_names){
       name = encodeUTF8(name)
-    } else if(encoding_warnings && name != encodeUTF8(name)){
+    } else if(encoding_warning && name != encodeUTF8(name)){
       assign("badFields",c(badFields,name),envir = parent.frame(n = 2))
     }
 

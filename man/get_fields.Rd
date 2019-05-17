@@ -5,7 +5,7 @@
 \title{Get form fields from a pdf form}
 \usage{
 get_fields(input_filepath = NULL, convert_field_names = FALSE,
-  encoding_warnings = TRUE)
+  encoding_warning = TRUE)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
@@ -20,9 +20,9 @@ If you have field names that intentionally include components that look like enc
 this will attempt to fix them. Use this option only when necessary. If TRUE,
 remember to set it to TRUE when using \code{\link{set_fields}} as well.}
 
-\item{encoding_warnings}{If field names include strings that look like plain text UTF-8
+\item{encoding_warning}{If field names include strings that look like plain text UTF-8
 codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
-If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.}
+If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.}
 }
 \value{
 A list of fields. With type, name and value components. To use with

@@ -5,6 +5,11 @@ test_that('fill_pdf',{
   tempFile <- tempfile(fileext = '.pdf')
 
   pdfFile <- system.file('simpleForm.pdf',package = 'staplr')
+
+  idenfity_form_fields(pdfFile,tempFile)
+  pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
+
   fields = get_fields(pdfFile)
 
   fields$TextField$value = 'normal text'
@@ -12,11 +17,6 @@ test_that('fill_pdf',{
   set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('normal text', pdfText))
-
-
-  idenfity_form_fields(pdfFile,tempFile)
-  pdfText = pdftools::pdf_text(tempFile)
-  expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
 
 
   fields$TextField$value = 'Ñ, ñ, É, Í, Ó'
@@ -88,6 +88,11 @@ test_that('fill_pdf',{
 
   # see if you are getting warnings when field names that look like they are encoded
   expect_warning(get_fields(pdfFile),regexp = "some fields seems to include plain text UTF-8")
+
+
+  idenfity_form_fields(pdfFile,tempFile,encoding_warning = FALSE)
+  pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
 })
 
 
