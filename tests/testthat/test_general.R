@@ -85,14 +85,25 @@ test_that('fill_pdf',{
   expect_true(grepl('paranthesis', pdfText[1],perl = TRUE))
   expect_true(grepl('characters', pdfText[1],perl = TRUE))
 
+  # check to see if buttons really changed
+  tempFields =  get_fields(tempFile,convert_field_names = TRUE)
+  expect_true(tempFields$checkBox$value == 'Yes')
+  expect_true(fields$RadioGroup$value == 2)
 
-  # see if you are getting warnings when field names that look like they are encoded
+
+  # see if you are getting a warning when field names that look like they are encoded
   expect_warning(get_fields(pdfFile),regexp = "some fields seems to include plain text UTF-8")
 
 
-  idenfity_form_fields(pdfFile,tempFile,encoding_warning = FALSE)
+  idenfity_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
   pdfText = pdftools::pdf_text(tempFile)
-  expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
+  expect_true(grepl('TextFieldPage3', pdfText[[3]]))
+
+
+  idenfity_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
+  expect_error(set_fields(pdfFile,tempFile,fields,convert_field_names = FALSE),'')
+
+
 })
 
 

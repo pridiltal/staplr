@@ -90,6 +90,13 @@ fdfAnnotate <- function(fdfLines){
 # this is an internal function that edits an fdf string
 # it also deals with creating the binary for the output file
 fdfEdit <- function(fieldToFill,annotatedFDF){
+  fdfLine = which(annotatedFDF$fields == fieldToFill$name)
+
+  if(length(fdfLine)==0){
+    stop('Field "',fieldToFill$name,'" could not be found in the pdf. You may be using the wrong fields object or forgot to set convert_field_names correctly.')
+  }
+
+
   if(is.na(fieldToFill$value)){
     fieldToFill$value <- ''
   }
@@ -135,7 +142,6 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
       }
     }))
 
-
     annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
        c(iconv("/V (",from = 'latin1',to='latin1',toRaw = TRUE)[[1]], # the encapsulating part is encoded in latin1
         as.raw(c(254,255)), # this is fe ff, the byte order mark for UTF-16BE
@@ -145,11 +151,11 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 
     fieldToFill$value <-  paste0('(',fieldToFill$value,')')
   } else if(fieldToFill$type == 'Button'){
-    annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'] = paste0('/V /',fieldToFill$value)
+    annotatedFDF[fdfLine,'fdfLines'] = paste0('/V /',fieldToFill$value)
 
-    # just encode the button with the regulat latin1
-    annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
-      iconv(annotatedFDF[annotatedFDF$fields == fieldToFill$name,'fdfLines'],from='latin1',"latin1",toRaw = TRUE)[[1]]
+    # just encode the button with the regular latin1
+    annotatedFDF[['raw']][[fdfLine]] <-
+      iconv(annotatedFDF[fdfLine,'fdfLines'],from='latin1',"latin1",toRaw = TRUE)[[1]]
 
 
   } else{
