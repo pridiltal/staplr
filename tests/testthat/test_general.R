@@ -24,8 +24,8 @@ test_that('fill_pdf',{
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('Ñ, ñ, É, Í, Ó', pdfText))
 
-
-  fields$TextField$value = '½ ¾ ‘ → ’ ” “ •'
+  # Having the → here was problematic because pdftools can't seem to read it
+  fields$TextField$value = '½ ¾ ‘ ’ ” “ •'
   set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
   # there is a proplem with pdftools. It removed spaces between the special characters
