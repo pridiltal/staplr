@@ -114,6 +114,9 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
     # characters group up should make this more efficient
     # need to evaluate how badly it impacts performance
 
+    # i don't actually need to use iconv here for the escaped characters
+    # those are there to make the code more transparent.
+
     charactersToEscape <- strsplit(originalValue,'')[[1]] %in% c("(",")","\\")
 
     utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
@@ -166,7 +169,19 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #'
 #' @inheritParams input_filepath
 #' @inheritParams output_filepath
+#' @param convert_field_names By default \code{pdftk} will encode certain characters
+#' of the field names in plain text UTF-8 so if using a non-latin alphabet, your
+#' field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
+#' characters. However this process it not guaranteed to be perfect as pdftk does
+#' not differentiate between encoded text and regular text using escape characters.
+#' If you have field names that intentionally include components that look like encoded characters
+#' this will attempt to fix them. Use this option only when necessary. If TRUE,
+#' remember to set it to TRUE when using \code{\link{set_fields}} as well.
+#' @param encoding_warnings If field names include strings that look like plain text UTF-8
+#' codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
+#' If \code{encoding_warnings} is \code{FALSE}, these warnings will be silenced.
 #' @inheritParams overwrite
+#'
 #' @export
 #'
 #' @examples
@@ -174,7 +189,9 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
 #' idenfity_form_fields(pdfFile, 'testOutput.pdf')
 #' }
-idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,overwrite = TRUE){
+idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
+                                 overwrite = TRUE,convert_field_names = FALSE,
+                                 encoding_warnings = TRUE){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -184,7 +201,9 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
     output_filepath <-  tcltk::tclvalue(tcltk::tkgetSaveFile(filetypes = '{Pdf {.pdf}}'))
   }
 
-  fields = get_fields(input_filepath)
+  fields = get_fields(input_filepath,
+                      convert_field_names = convert_field_names,
+                      encoding_warnings = encoding_warnings)
 
   fields = lapply(fields,function(field){
     if(field$type == 'Text'){
@@ -196,6 +215,7 @@ idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,o
   set_fields(input_filepath = input_filepath,
              output_filepath = output_filepath,
              fields = fields,
+             convert_field_names = convert_field_names,
              overwrite = overwrite)
 
 }
@@ -266,6 +286,9 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   fields <- strsplit(fields, '---')[[1]][-1]
 
   # parse the fields
+
+  badFields = c()
+
   fields <- lapply(fields,function(x){
     type <- stringr::str_extract(x,'(?<=FieldType: ).*?(?=\n|$)')
     name <- stringr::str_extract(x,'(?<=FieldName: ).*?(?=\n|$)')
@@ -299,13 +322,17 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
     if(convert_field_names){
       name = encodeUTF8(name)
     } else if(encoding_warnings && name != encodeUTF8(name)){
-      warning(paste(name,'field seems to include plain text UTF-8. Setting convert_field_names = TRUE might help.'))
+      assign("badFields",c(badFields,name),envir = parent.frame(n = 2))
     }
 
     return(list(type = type,
                 name = name,
                 value = sub_decimal(value)))
   })
+
+  if(length(badFields)>0){
+    warning(paste('some fields seems to include plain text UTF-8. Setting convert_field_names = TRUE might help. These fields have problematic names: \n', paste(badFields,collapse=', ')))
+  }
 
   names(fields) <- sapply(fields,function(x){x$name})
 

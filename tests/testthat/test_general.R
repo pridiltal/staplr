@@ -13,13 +13,19 @@ test_that('fill_pdf',{
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('normal text', pdfText))
 
+
+  idenfity_form_fields(pdfFile,tempFile)
+  pdfText = pdftools::pdf_text(tempFile)
+  expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
+
+
   fields$TextField$value = 'Ñ, ñ, É, Í, Ó'
   set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('Ñ, ñ, É, Í, Ó', pdfText))
 
 
-  fields$TextField$value = '½ ¾ ‘ ’ ” “ •'
+  fields$TextField$value = '½ ¾ ‘ → ’ ” “ •'
   set_fields(pdfFile,tempFile,fields)
   pdfText = pdftools::pdf_text(tempFile)
   # there is a proplem with pdftools. It removed spaces between the special characters
@@ -80,7 +86,8 @@ test_that('fill_pdf',{
   expect_true(grepl('characters', pdfText[1],perl = TRUE))
 
 
-  expect_warning(get_fields(tempFile),regexp = "field seems to include plain text UTF-8")
+  # see if you are getting warnings when field names that look like they are encoded
+  expect_warning(get_fields(pdfFile),regexp = "some fields seems to include plain text UTF-8")
 })
 
 
