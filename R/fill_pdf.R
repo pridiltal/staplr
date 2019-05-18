@@ -295,7 +295,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # https://stackoverflow.com/questions/5060076/convert-html-character-entity-encoding-in-r
   fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE),
                        "//body//text()",
-                       xmlValue)[[1]]
+                       XML::xmlValue)[[1]]
 
   # fields <- stringr::str_replace_all(fields,'&lt;','<')
   # fields <- stringr::str_replace_all(fields,'&gt;','>')
