@@ -280,7 +280,6 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   input_filepath <- normalizePath(input_filepath,mustWork = TRUE)
 
   fieldsTemp <- tempfile()
-
   # generate the data field dump in a temporary file
   # theoratically, using dump_data_fields_utf8 can get rid of the need to use sub_demical
   # but this fails to process inputs containing stuff like emoji
@@ -292,10 +291,17 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # here encoding isn't important because any unusual character is in numeric character references
   fields <- paste0(readLines(fieldsTemp),
                    collapse = '\n')
-  fields <- stringr::str_replace_all(fields,'&lt;','<')
-  fields <- stringr::str_replace_all(fields,'&gt;','>')
-  fields <- stringr::str_replace_all(fields,'&quot;','"')
-  fields <- stringr::str_replace_all(fields,'&amp;','&')
+
+  # https://stackoverflow.com/questions/5060076/convert-html-character-entity-encoding-in-r
+  fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE),
+                       "//body//text()",
+                       xmlValue)[[1]]
+
+  # fields <- stringr::str_replace_all(fields,'&lt;','<')
+  # fields <- stringr::str_replace_all(fields,'&gt;','>')
+  # fields <- stringr::str_replace_all(fields,'&quot;','"')
+  # fields <- stringr::str_replace_all(fields,'&amp;','&')
+
   fields <- strsplit(fields, '---')[[1]][-1]
 
   # parse the fields
@@ -347,6 +353,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
     warning(paste('some fields seems to include plain text UTF-8. Setting convert_field_names = TRUE might help. These fields have problematic names: \n', paste(badFields,collapse=', ')))
   }
 
+
   names(fields) <- sapply(fields,function(x){x$name})
 
   # remove typeless fields. it seems like nested hierarchies generate these typeless
@@ -356,6 +363,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # remove fields that don't appear on the FDF
   fdfLines <- get_fdf_lines(input_filepath)
   annotatedFDF <- fdfAnnotate(fdfLines)
+
   if(convert_field_names){
     annotatedFDF$fields <- sapply(annotatedFDF$fields,encodeUTF8)
   }

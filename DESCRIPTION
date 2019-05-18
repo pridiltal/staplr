@@ -27,7 +27,8 @@ Imports:
   tcltk,
   stringr,
   assertthat,
-  glue
+  glue,
+  XML
 Suggests: 
   lattice,
   testthat,
