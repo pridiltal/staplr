@@ -360,7 +360,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   fields = fields[sapply(fields,function(x){x$type})!='']
 
   # remove fields that don't appear on the FDF
-  fdfLines <- get_fdf_lines(input_filepath,output_filepath = 'fields.fdf')
+  fdfLines <- get_fdf_lines(input_filepath)
   annotatedFDF <- fdfAnnotate(fdfLines)
 
   if(convert_field_names){
