@@ -124,7 +124,10 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
     # i don't actually need to use iconv here for the escaped characters
     # those are there to make the code more transparent.
     needEscape = grepl('\\(|\\)|\\\\',originalValue)
-
+    originalEncoding = Encoding(originalValue)
+    if (originalEncoding=='unknown'){
+      originalEncoding = ''
+    }
     if(needEscape){
       utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
         if(x == '('){
@@ -137,19 +140,20 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
           out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
                    iconv('\\',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
         } else{
-          out <- iconv(x,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+          out <- iconv(x,from=originalEncoding,"UTF-16BE",toRaw = TRUE)[[1]]
         }
       }))
     } else{
       # if no escape is needed, just convert everthing
-      utf16Value <- iconv(fieldToFill$value,from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]]
+      utf16Value <- iconv(fieldToFill$value,from=originalEncoding,
+                          "UTF-16BE",toRaw = TRUE)[[1]]
     }
 
 
 
 
     annotatedFDF[['raw']][[which(annotatedFDF$fields == fieldToFill$name)]] <-
-       c(iconv("/V (",from = 'latin1',to='latin1',toRaw = TRUE)[[1]], # the encapsulating part is encoded in latin1
+      c(iconv("/V (",from = 'latin1',to='latin1',toRaw = TRUE)[[1]], # the encapsulating part is encoded in latin1
         as.raw(c(254,255)), # this is fe ff, the byte order mark for UTF-16BE
         utf16Value, # the actual field is converted from UTF-8 to UTF-16
         iconv(")",from = 'latin1',to='latin1',toRaw = TRUE)[[1]]) # close with a final paranthesis
@@ -289,13 +293,13 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
                           shQuote(fieldsTemp))
   system(system_command)
   # here encoding isn't important because any unusual character is in numeric character references
-  fields <- paste0(readLines(fieldsTemp),
+  fields <- paste0(readLines(fieldsTemp,encoding = 'UTF-8'),
                    collapse = '\n')
 
   # https://stackoverflow.com/questions/5060076/convert-html-character-entity-encoding-in-r
-  fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE),
-                       "//body//text()",
-                       XML::xmlValue)[[1]]
+  fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE,encoding = "UTF-8"),
+                            "//body//text()",
+                            XML::xmlValue)[[1]]
 
   # fields <- stringr::str_replace_all(fields,'&lt;','<')
   # fields <- stringr::str_replace_all(fields,'&gt;','>')
@@ -448,21 +452,33 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
   input_filepath <- normalizePath(input_filepath,mustWork = TRUE)
   output_filepath <- normalizePath(output_filepath,mustWork = FALSE)
 
+  # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
+  newFDF <- tempfile()
+
+  fields_to_fdf(input_filepath, newFDF, fields, convert_field_names)
+
+  # f = file(newFDF,open = "w",encoding = encoding)
+  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
+  # close(f)
+  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
+
+  fill_from_fdf(input_filepath, output_filepath, newFDF, overwrite)
+
+
+}
+
+# internal function to create a new FDF file based on the given fields
+fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_names){
   fdfLines <- get_fdf_lines(input_filepath)
-
   annotatedFDF = fdfAnnotate(fdfLines)
-
   if(convert_field_names){
     annotatedFDF$fields <- sapply(annotatedFDF$fields,encodeUTF8)
   }
-
   for(i in seq_along(fields)){
     fieldToFill <- fields[[i]]
     annotatedFDF <- fdfEdit(fieldToFill,annotatedFDF)
   }
 
-  # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
-  newFDF <- tempfile()
   # add the line endings to the end of files
   annotatedFDF$raw = lapply(annotatedFDF$raw,function(x){
     c(x,as.raw(10))
@@ -470,18 +486,17 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
   # combine it all
   fdfRaw = do.call(c,annotatedFDF$raw)
 
-  writeBin(fdfRaw,con = newFDF)
+  writeBin(fdfRaw,con = fdf_filepath)
+}
 
-  # f = file(newFDF,open = "w",encoding = encoding)
-  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
-  # close(f)
-  # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
+# internal function to take in an FDF-PDF pair to return the filled output
+fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE){
 
   system_command <-
     paste("pdftk",
           shQuote(input_filepath),
           "fill_form",
-          shQuote(newFDF),
+          shQuote(fdf_filepath),
           "output",
           "{shQuote(output_filepath)}")
 
@@ -490,4 +505,4 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
          output_filepath = output_filepath,
          overwrite = overwrite,
          system_command = system_command)
-  }
+}
