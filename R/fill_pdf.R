@@ -124,6 +124,10 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
     # i don't actually need to use iconv here for the escaped characters
     # those are there to make the code more transparent.
     needEscape = grepl('\\(|\\)|\\\\',originalValue)
+    originalEncoding = Encoding(originalValue)
+    if (originalEncoding=='unknown'){
+      originalEncoding = ''
+    }
     if(needEscape){
       utf16Value = unlist(lapply(strsplit(originalValue,'')[[1]],function(x){
         if(x == '('){
@@ -136,12 +140,13 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
           out <- c(iconv('\\',from='UTF-8',"UTF-16BE",toRaw = TRUE)[[1]],
                    iconv('\\',from='UTF-8',"UTF-8",toRaw = TRUE)[[1]])
         } else{
-          out <- iconv(x,from='',"UTF-16BE",toRaw = TRUE)[[1]]
+          out <- iconv(x,from=originalEncoding,"UTF-16BE",toRaw = TRUE)[[1]]
         }
       }))
     } else{
       # if no escape is needed, just convert everthing
-      utf16Value <- iconv(fieldToFill$value,from='',"UTF-16BE",toRaw = TRUE)[[1]]
+      utf16Value <- iconv(fieldToFill$value,from=originalEncoding,
+                          "UTF-16BE",toRaw = TRUE)[[1]]
     }
 
 
