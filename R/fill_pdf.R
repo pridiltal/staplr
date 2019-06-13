@@ -498,7 +498,8 @@ fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrit
           "fill_form",
           shQuote(fdf_filepath),
           "output",
-          "{shQuote(output_filepath)}")
+          "{shQuote(output_filepath)}",
+          "need_appearances")
 
 
   fileIO(input_filepath = input_filepath,
