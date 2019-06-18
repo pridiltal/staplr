@@ -47,7 +47,40 @@ fdfAnnotate <- function(fdfLines){
       if(grepl("^/V",fdfLines[i-1])){
         # if the line before the naming line starts with /V
         # there is no hierarhcy, just name the line
-        fields[i-1] <-  name
+        if(fields[i-1] == ''){
+          fields[i-1] <-  name
+        } else{
+          fields[i-1] <- paste0(fields[i-1], '.', name)
+        }
+      } else if (grepl("^/V",fdfLines[i+1])){
+        if(fields[i+1] == ''){
+          fields[i+1] <-  name
+        } else{
+          fields[i+1] <-  paste0(fields[i+1], '.', name)
+        }
+      } else if(grepl("^/Kids \\[",fdfLines[i+1])){
+        z <- i+4
+        nest <-  1
+        while(nest!=0){
+          if(grepl("^/V",fdfLines[z])){
+            # if a field is found, append the name of the root to the left
+            # separated by a "."
+            if(fields[z] == ''){
+              fields[z] = name
+            } else{
+              fields[z] <- paste0(fields[z],".",name)
+            }
+          } else if(grepl("^>>\\]",fdfLines[z])){
+            # if another nest stops, that means we are inside another root
+            nest <-  nest - 1
+          } else if(grepl("^/Kids \\[",fdfLines[z])){
+            # every time a root closes reduce the nest. if you reach 0
+            # it means its over
+            nest <-  nest + 1
+          }
+          # go back one line in the file.
+          z = z + 1
+        }
       } else if(grepl("^>>\\]",fdfLines[i-1])){
         # if the line above the name is >>] the name represents a root
         # start reading from the line above
@@ -86,6 +119,7 @@ fdfAnnotate <- function(fdfLines){
   return(annotatedFDF)
 
 }
+
 
 # this is an internal function that edits an fdf string
 # it also deals with creating the binary for the output file
