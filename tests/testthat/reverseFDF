@@ -1,0 +1,160 @@
+%FDF-1.2
+%\E2\E3\CF\D3
+1 0 obj
+<<
+/FDF
+<<
+/Fields [
+<<
+/T (#E2#80#94weird#E2#80#94 long dash)
+/V ()
+>>
+<<
+/T (#C2#BD #C2#BE #E2#86#92 #E2#80#98 #E2#80#99 #E2#80#9D #E2#80#9C #E2#80#A2 characters #E2#86#92nospace)
+/V ()
+>>
+<<
+/T (RadioGroup)
+/V /Off
+>>
+<<
+/T (TextField2)
+/V ()
+>>
+<<
+/T (TextField1)
+/V ()
+>>
+<<
+/T (#E2#80#93weird#E2#80#93 dash)
+/V ()
+>>
+<<
+/T (&weird& and)
+/V ()
+>>
+<<
+/T (weird #C3#91 characters)
+/V ()
+>>
+<<
+/T ({weird} things)
+/V ()
+>>
+<<
+/T (\(weird\) paranthesis)
+/V ()
+>>
+<<
+/T (InterstingChar2)
+/V (\FE\FF\00\BD\00 \00\BE\00 !\92\00  ???\00  ???\00  ???\00  ???\00  ")
+>>
+<<
+/T (TextFieldPage2)
+/V ()
+>>
+<<
+/T (InterstingChar1)
+/V (\D1, \F1, \C9, \CD, \D3)
+>>
+<<
+/T (TextFieldPage3)
+/V ()
+>>
+<<
+/T (hierarchy2)
+/Kids [
+<<
+/T (child2)
+/Kids [
+<<
+/T (node2)
+/V ()
+>>
+<<
+/T (node1)
+/V ()
+>>]
+>>
+<<
+/T (child)
+/Kids [
+<<
+/T (node2)
+/V ()
+>>
+<<
+/T (node3)
+/V ()
+>>
+<<
+/T (node1)
+/V ()
+>>]
+>>]
+>>
+<<
+/T (hierarchy)
+/Kids [
+<<
+/T (node4)
+/V ()
+>>
+<<
+/T (node2)
+/V ()
+>>
+<<
+/T (node3)
+/V ()
+>>
+<<
+/T (node1)
+/V ()
+>>]
+>>
+<<
+/T ([weird] brackets)
+/V ()
+>>
+<<
+/T (node1)
+/V ()
+>>
+<<
+/T (InterstingChar3)
+/V (\FE\FF\00t\00h\00e\00r\00e\00 \00b\00e\00 \00e\00m\00o\00j\00i\00:\00 \D8=\DC???\00 \00a\00n\00d\00 \00s\00o\00m\00e\00 \00w\00i\00s\00e\00 \00m\00o\00n\00k\00e\00y\00 \D8=\DEH\D8=\DEI\D8=\DEJ)
+>>
+<<
+/T (betweenHierarch)
+/V ()
+>>
+<<
+/T (TextFieldForMoreWeirdChars)
+/V ()
+>>
+<<
+/T ("weird" quotes)
+/V ()
+>>
+<<
+/T (checkBox)
+/V /Off
+>>
+<<
+/T (<weird> tags)
+/V ()
+>>
+<<
+/T (List Box)
+/V ()
+>>]
+>>
+>>
+endobj
+trailer
+
+<<
+/Root 1 0 R
+>>
+%%EOF
