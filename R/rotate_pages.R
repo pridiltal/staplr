@@ -64,7 +64,7 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
   metadataTemp <- tempfile()
 
   # Construct a system command to pdftk to get number of pages
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "dump_data",
                           "output",
@@ -101,7 +101,7 @@ rotate_pages <- function(rotatepages, page_rotation = c(0,90,180,270), input_fil
     rotate[!(index[order(index)] %in% rotatepages)] <- degree_0
 
     # Construct a system command to pdftk
-    system_command <- paste("pdftk", shQuote(input_filepath),
+    system_command <- paste(pdftk_cmd(), shQuote(input_filepath),
                             "cat",
                             paste(rotate,collapse=' '),
                             "output",

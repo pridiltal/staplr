@@ -27,7 +27,7 @@ NULL
 NULL
 
 
-fileIO = function(input_filepath,
+fileIO <- function(input_filepath,
                   output_filepath,
                   overwrite,
                   system_command){
@@ -38,7 +38,7 @@ fileIO = function(input_filepath,
   }
   if(input_filepath == output_filepath){
     true_out_path = output_filepath
-    output_filepath = tempfile()
+    output_filepath <- tempfile()
     collision <- TRUE
   } else{
     collision <- FALSE
@@ -51,4 +51,18 @@ fileIO = function(input_filepath,
     file.copy(output_filepath,true_out_path,overwrite = overwrite)
   }
 
-  }
+}
+
+.onLoad <- function(libname, pkgname) {
+  rJava::.jpackage(pkgname, lib.loc=libname)
+}
+
+
+pdftk_cmd <- function(){
+  path <- system.file('inst/pdftk-java/pdftk-all.jar',package = 'staplr')
+  javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
+  javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
+  java <- javaFiles[grepl('/java($|\\.exe)',javaFiles)]
+  pdftk <- glue::glue('{shQuote(java)} -jar {shQuote(path)}')
+  return(pdftk)
+}

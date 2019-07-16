@@ -57,7 +57,7 @@ select_pages <- function(selpages, input_filepath = NULL, output_filepath = NULL
   metadataTemp <- tempfile()
 
   # Construct a system command to pdftk to get number of pages
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "dump_data",
                           "output",
@@ -77,7 +77,7 @@ select_pages <- function(selpages, input_filepath = NULL, output_filepath = NULL
   selected_pages <- lapply(selected_pages,f)
 
   # Construct a system command to pdftk
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "cat",
                           paste(unlist(selected_pages),collapse=" "),

@@ -28,7 +28,8 @@ Imports:
   stringr,
   assertthat,
   glue,
-  XML
+  XML,
+  rJava
 Suggests: 
   lattice,
   testthat,

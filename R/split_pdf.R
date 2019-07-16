@@ -48,7 +48,7 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL, prefix = '
   # Getting the page count to add the correct amout of zeroes to make it scalable
   metadataTemp <- tempfile()
   # Construct a system command to pdftk to get number of pages
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "dump_data",
                           "output",
@@ -62,7 +62,7 @@ split_pdf <- function(input_filepath = NULL, output_directory = NULL, prefix = '
   # Take the filepath arguments and format them for use in a system command
   output_filepath <- shQuote(paste0(output_directory, "/", prefix, "%0",digits,"d.pdf"))
   # Construct a system command to pdftk
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "burst",
                           "output",
