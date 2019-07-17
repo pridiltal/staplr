@@ -59,7 +59,7 @@ fileIO <- function(input_filepath,
 
 
 pdftk_cmd <- function(){
-  path <- system.file('inst/pdftk-java/pdftk-all.jar',package = 'staplr',mustWork = TRUE)
+  path <- system.file('pdftk-java/pdftk-all.jar',package = 'staplr',mustWork = TRUE)
   javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
   javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
   java <- javaFiles[grepl('/java($|\\.exe)',javaFiles)]
