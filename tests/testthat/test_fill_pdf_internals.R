@@ -1,11 +1,5 @@
 context('fill pdf internals')
 
-test_that('locating pdftk',{
-  path <- system.file('inst/pdftk-java/pdftk-all.jar',
-                      package = 'staplr',
-                      mustWork = TRUE)
-  testthat::expect_true(grepl('pdftk-all.jar',path))
-})
 
 test_that('fdf manipulation',{
 
