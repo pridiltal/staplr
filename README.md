@@ -15,7 +15,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--03--25-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--07--16-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -38,36 +38,6 @@ This package is still under development and this repository contains a
 development version of the R package *staplr*.
 
 ## Installation
-
-#### First Install pdftk
-
-download and install
-[pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). This is
-not an R package\!
-
-NB: pdftk is known to hang indefinitely on macOS High Sierra. If this
-happens to you, [this
-version](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
-should work for macOS El Capitan (10.11), it also works on Sierra
-(10.12) and High Sierra (10.13).
-
-Installation instructions for Red Hat or CentOS distributions can be
-found here:
-<https://www.pdflabs.com/docs/install-pdftk-on-redhat-or-centos/>
-
-Packaged versions can be found for
-[Arch](https://aur.archlinux.org/packages/pdftk/) and
-[Ubuntu](https://packages.ubuntu.com/search?keywords=pdftk). On Ubuntu,
-for example, this means pdftk can be installed with the following
-command on
-[most](https://askubuntu.com/questions/1028522/how-can-i-install-pdftk-in-ubuntu-18-04-bionic)
-versions:
-
-``` bash
-sudo apt install pdftk
-```
-
-#### Then Install staplr
 
 You can install the stable version from CRAN.
 
