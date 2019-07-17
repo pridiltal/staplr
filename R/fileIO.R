@@ -53,12 +53,10 @@ fileIO <- function(input_filepath,
 
 }
 
-.onLoad <- function(libname, pkgname) {
-  rJava::.jpackage(pkgname, lib.loc=libname)
-}
 
 
 pdftk_cmd <- function(){
+  rJava::.jinit()
   path <- system.file('pdftk-java/pdftk.jar',package = 'staplr',mustWork = TRUE)
   javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
   javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
