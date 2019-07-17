@@ -1,0 +1,17 @@
+ * crt1.c
+ * This file has no copyright assigned and is placed in the Public Domain.
+ * This file is a part of the mingw-runtime package.
+ * No warranty is given; refer to the file DISCLAIMER within the package.
+ *
+ * Source code for the startup proceedures used by all programs. This code
+ * is compiled to make crt1.o, which should be located in the library path.
+
+ * init.c
+ * This file has no copyright assigned and is placed in the Public Domain.
+ * This file is a part of the mingw-runtime package.
+ * No warranty is given; refer to the file DISCLAIMER within the package.
+ *
+ * Code to initialize standard file handles and command line arguments.
+ * This file is #included in both crt1.c and dllcrt1.c.
+
+(pdftk note: crt2.o is built from crt1.c and init.c in mingwrt 3.18)

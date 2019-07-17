@@ -1,0 +1,18 @@
+---
+FieldType: Button
+FieldName: form1[0].#subform[0].Button1[0]
+FieldNameAlt: Button
+FieldFlags: 65536
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: form1[0].#subform[0].ImageField1[0]
+FieldNameAlt: Image Field
+FieldFlags: 65536
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: form1[0].#subform[0].TextField1[0]
+FieldNameAlt: Text field
+FieldFlags: 0
+FieldJustification: Left
