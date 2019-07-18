@@ -53,14 +53,17 @@ fileIO <- function(input_filepath,
 
 }
 
-
+.onLoad <- function(libname, pkgname){
+  options(staplr_java_options = '')
+}
 
 pdftk_cmd <- function(){
   rJava::.jinit()
+  jOptions = getOption('staplr_java_options')
   path <- system.file('pdftk-java/pdftk.jar',package = 'staplr',mustWork = TRUE)
   javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
   javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
   java <- javaFiles[grepl('/java($|\\.exe)',javaFiles)]
-  pdftk <- glue::glue('{shQuote(java)} -jar {shQuote(path)}')
+  pdftk <- glue::glue('{shQuote(java)} {jOptions} -jar {shQuote(path)}')
   return(pdftk)
 }
