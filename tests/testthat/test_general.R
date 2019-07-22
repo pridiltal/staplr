@@ -1,3 +1,5 @@
+# this file is written in UTF-8 encoding
+
 context('basic functionality')
 
 test_that('fill_pdf',{
