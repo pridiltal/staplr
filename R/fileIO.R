@@ -54,12 +54,20 @@ fileIO <- function(input_filepath,
 }
 
 .onLoad <- function(libname, pkgname){
-  options(staplr_java_options = '')
 }
 
+
 pdftk_cmd <- function(){
+  custom_pdftk = getOption('staplr_custom_pdftk')
+  if(!is.null(custom_pdftk)){
+    return(custom_pdftk)
+  }
+
   rJava::.jinit()
   jOptions = getOption('staplr_java_options')
+  if(is.null(jOptions)){
+    jOptions = ''
+  }
   path <- system.file('pdftk-java/pdftk.jar',package = 'staplr',mustWork = TRUE)
   javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
   javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
