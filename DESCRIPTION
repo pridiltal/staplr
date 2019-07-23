@@ -1,7 +1,7 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 2.10.0
+Version: 2.11.0
 Depends: R (>= 3.4.0)
 Maintainer: Priyanga Dilini Talagala <dilini.talagala@monash.edu>
 Authors@R: c(
@@ -28,7 +28,8 @@ Imports:
   stringr,
   assertthat,
   glue,
-  XML
+  XML,
+  rJava
 Suggests: 
   lattice,
   testthat,

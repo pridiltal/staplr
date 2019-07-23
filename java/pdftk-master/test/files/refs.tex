@@ -1,0 +1,27 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{pgffor}
+\usepackage{graphicx}
+
+\begin{document}
+
+\foreach \x in {1,...,8} {
+  \section {Section \x}
+  \label{sec:\x}
+  This is Section \x.
+  Here are references to all sections.
+  \foreach \y in {1,...,8} {
+    \subsection {A reference to Section \y}
+    A reference to Section \ref{sec:\y}.
+  }
+
+  Let us conclude the section with a duck in vector form
+  \includegraphics{duck.pdf}
+  and a duck in raster form
+  \includegraphics{duck.png}.
+
+  \clearpage
+}
+
+\end{document}

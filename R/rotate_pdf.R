@@ -58,7 +58,7 @@ rotate_pdf <- function(page_rotation = c(0, 90, 180, 270),  input_filepath = NUL
   rotation <- c("1-endnorth", "1-endeast", "1-endsouth", "1-endwest" )[match(page_rotation,c(0,90,180,270))]
 
   # Construct a system command to pdftk
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "cat",
                           rotation,

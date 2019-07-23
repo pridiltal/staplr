@@ -15,7 +15,7 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 -----
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2019--03--25-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2019--07--22-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -39,35 +39,9 @@ development version of the R package *staplr*.
 
 ## Installation
 
-#### First Install pdftk
-
-download and install
-[pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). This is
-not an R package\!
-
-NB: pdftk is known to hang indefinitely on macOS High Sierra. If this
-happens to you, [this
-version](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
-should work for macOS El Capitan (10.11), it also works on Sierra
-(10.12) and High Sierra (10.13).
-
-Installation instructions for Red Hat or CentOS distributions can be
-found here:
-<https://www.pdflabs.com/docs/install-pdftk-on-redhat-or-centos/>
-
-Packaged versions can be found for
-[Arch](https://aur.archlinux.org/packages/pdftk/) and
-[Ubuntu](https://packages.ubuntu.com/search?keywords=pdftk). On Ubuntu,
-for example, this means pdftk can be installed with the following
-command on
-[most](https://askubuntu.com/questions/1028522/how-can-i-install-pdftk-in-ubuntu-18-04-bionic)
-versions:
-
-``` bash
-sudo apt install pdftk
-```
-
-#### Then Install staplr
+staplr requires a Java installation on your system. You can get the
+latest version of java from [here](https://www.java.com/en/download/).
+[OpenJDK](https://openjdk.java.net/) also works.
 
 You can install the stable version from CRAN.
 
@@ -111,7 +85,7 @@ set_fields()
 # This is what the example file looks like
 ```
 
-![image](https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png)
+<img src="https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png" height="300" />
 
 ``` r
 # If you get path to this file by
@@ -129,7 +103,64 @@ set_fields(pdfFile, 'newFile.pdf', fields)
 # This will create a filled pdf file
 ```
 
-![image](https://user-images.githubusercontent.com/6352379/37745838-65986038-2d34-11e8-9d16-5d6514ef24ab.png)
+<img src="https://user-images.githubusercontent.com/6352379/37745838-65986038-2d34-11e8-9d16-5d6514ef24ab.png" height="300" />
+
+## Troubleshooting and 2.11.0 changes
+
+  - As of version 2.11.0, the package uses
+    [pdftk-java](https://gitlab.com/pdftk-java/pdftk) instead of using
+    the original
+    [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/).
+    `pdftk-java` is included with the package so if you have a working
+    java installation, you shouldn’t have any problems.
+
+  - While default java options should be enough for most use cases, if
+    you need to, you can change java options that is used to run pdftk
+    by doing
+
+<!-- end list -->
+
+``` r
+options('staplr_java_options' = '-Xmx512m') 
+```
+
+This option is not affected by `rJava` settings.
+
+  - If you don’t have a working java installation, your installation
+    will fail since you can’t install rJava. Make sure you follow the
+    proper instructions for java installation. For openJDK on linux make
+    sure you get both jdk and jre and run javareconf.
+
+<!-- end list -->
+
+    sudo apt update -y
+    sudo apt install -y openjdk-8-jdk openjdk-8-jre
+    sudo R CMD javareconf
+
+Also restart your R session after `javareconf`
+
+  - `pdftk-java` is built as a faithful representation of the original
+    `pdftk` so there shouldn’t be any major differences between the
+    outputs. However, for any reason you’d prefer to run a local
+    installation of pdftk rather than using the version that is shipped
+    with the package, do
+
+<!-- end list -->
+
+``` r
+# set staplr_custom_pdftk to the path to local installation
+# just setting to pdftk will do if it's already in your path
+ options('staplr_custom_pdftk' = 'pdftk') 
+```
+
+If you want to do this, you can get the original version of pdftk from
+[here](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). Note that
+MacOS users with a version higher than “High Sierra” should use
+[this](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/pdftk_server-2.02-mac_osx-10.11-setup.pkg)
+version instead.
+
+Make sure to set the option back to `NULL` if you want to use the built
+in pdftk later.
 
 ## References
 

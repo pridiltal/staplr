@@ -57,7 +57,7 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL,
   metadataTemp <- tempfile()
 
   # Construct a system command to pdftk to get number of pages
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           "dump_data",
                           "output",
@@ -78,7 +78,7 @@ remove_pages <- function(rmpages, input_filepath = NULL, output_filepath = NULL,
 
   # Construct a system command to pdftk
   system_command <-
-    paste("pdftk",
+    paste(pdftk_cmd(),
           shQuote(input_filepath),
           "cat",
           paste(unlist(selected_pages),collapse=' '), "output",

@@ -7,4 +7,3 @@
 ^\.travis\.yml$
 ^docs
 .odt$
-^tests

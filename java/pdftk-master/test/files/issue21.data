@@ -1,0 +1,103 @@
+---
+FieldType: Text
+FieldName: Text1
+FieldNameAlt: &#196;&#223;@&#8364;&#214;&#252;&#322;&#216;&#181;&#273;&#230;&#8482;
+FieldFlags: 0
+FieldValue: Text1
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Text2
+FieldFlags: 4096
+FieldValue: Text2
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Radio Button3
+FieldFlags: 49152
+FieldValue: Radio Button3
+FieldJustification: Left
+FieldStateOption: Choice 3
+FieldStateOption: Choice 1
+FieldStateOption: Choice 2
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Radio Button4
+FieldFlags: 49152
+FieldValue: Radio Button4
+FieldJustification: Left
+FieldStateOption: Other Choice 2
+FieldStateOption: Other Choice 1
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Check Box4
+FieldFlags: 0
+FieldValue: Check Box4
+FieldJustification: Left
+FieldStateOption: Yes
+FieldStateOption: Off
+---
+FieldType: Button
+FieldName: Check Box5
+FieldFlags: 0
+FieldValue: Check Box5
+FieldJustification: Left
+FieldStateOption: Yes
+FieldStateOption: Off
+---
+FieldType: Choice
+FieldName: List Box6
+FieldFlags: 0
+FieldValue: List Box6
+FieldValueDefault: ListItem3
+FieldJustification: Left
+FieldStateOption: ListItem1
+FieldStateOptionDisplay: ListItem1
+FieldStateOption: ListItem2
+FieldStateOptionDisplay: ListItem2
+FieldStateOption: ListItem3
+FieldStateOptionDisplay: ListItem3
+---
+FieldType: Choice
+FieldName: List Box7
+FieldFlags: 2097152
+FieldValue: List Box7
+FieldValueDefault: MultiListItem3
+FieldJustification: Left
+FieldStateOption: MultiListItem1
+FieldStateOptionDisplay: MultiListItem1
+FieldStateOption: MultiListItem2
+FieldStateOptionDisplay: MultiListItem2
+FieldStateOption: MultiListItem3
+FieldStateOptionDisplay: MultiListItem3
+---
+FieldType: Choice
+FieldName: Combo Box8
+FieldFlags: 131072
+FieldValue: Combo Box8
+FieldValueDefault: Combo3
+FieldJustification: Left
+FieldStateOption: Combo1
+FieldStateOptionDisplay: Combo1
+FieldStateOption: Combo2
+FieldStateOptionDisplay: Combo2
+FieldStateOption: Combo3
+FieldStateOptionDisplay: Combo3
+---
+FieldType: Signature
+FieldName: Signature9
+FieldFlags: 0
+FieldJustification: Left
+---
+FieldType: Button
+FieldName: Button2
+FieldFlags: 65536
+FieldJustification: Left
+---
+FieldType: Text
+FieldName: Text&#196;&#223;&#244;
+FieldFlags: 0
+FieldValue: Text&#196;&#223;&#244;
+FieldJustification: Left

@@ -58,7 +58,7 @@ staple_pdf <- function(input_directory = NULL, input_files = NULL,
   }
 
   # Construct a system command to pdftk
-  system_command <- paste("pdftk",
+  system_command <- paste(pdftk_cmd(),
                           paste(shQuote(input_filepaths), collapse = " "),
                           "cat",
                           "output",

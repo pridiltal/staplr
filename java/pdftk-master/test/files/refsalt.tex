@@ -1,0 +1,28 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{pgffor}
+\usepackage{tgpagella}
+\usepackage{tikzducks}
+
+\begin{document}
+
+\foreach \x in {1,...,8} {
+  \section {Section \x}
+  \label{sec:\x}
+  This is Section \x.
+  Here are references to all sections.
+  \foreach \y in {1,...,8} {
+    \subsection {A reference to Section \y}
+    A reference to Section \ref{sec:\y}.
+  }
+
+  Let us conclude the section with a swimming duck
+  \begin{tikzpicture}
+    \duck[water=blue]
+  \end{tikzpicture}.
+
+  \clearpage
+}
+
+\end{document}

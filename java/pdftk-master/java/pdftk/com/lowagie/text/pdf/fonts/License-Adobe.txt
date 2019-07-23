@@ -1,0 +1,65 @@
+This file and the 14 PostScript(R) AFM files it accompanies may be
+used, copied, and distributed for any purpose and without charge, with
+or without modification, provided that all copyright notices are
+retained; that the AFM files are not distributed without this file;
+that all modifications to this file or any of the AFM files are
+prominently noted in the modified file(s); and that this paragraph is
+not modified. Adobe Systems has no responsibility or obligation to
+support the use of the AFM files.
+
+
+Courier-Bold.afm:
+Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Courier-BoldOblique.afm:
+Copyright (c) 1989, 1990, 1991, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Courier-Oblique.afm:
+Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.
+
+All Rights Reserved.
+Courier.afm:
+Copyright (c) 1989, 1990, 1991, 1992, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Helvetica-Bold.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Helvetica-BoldOblique.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Helvetica-Oblique.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Helvetica.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Symbol.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1997 Adobe Systems Incorporated.
+All rights reserved.
+
+Times-Bold.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Times-BoldItalic.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Times-Italic.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+Times-Roman.afm:
+Copyright (c) 1985, 1987, 1989, 1990, 1993, 1997 Adobe Systems Incorporated.
+All Rights Reserved.
+
+ZapfDingbats.afm:
+Copyright (c) 1985, 1987, 1988, 1989, 1997 Adobe Systems Incorporated.
+All Rights Reserved.

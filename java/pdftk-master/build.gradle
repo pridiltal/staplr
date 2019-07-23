@@ -1,0 +1,38 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.diffplug.gradle.spotless' version '3.17.0'
+    id 'com.github.johnrengelman.shadow' version '4.0.3'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['java']
+        }
+        resources {
+            srcDirs = ['java']
+            include "**/*.afm"
+        }
+    }
+}
+
+mainClassName = 'com.gitlab.pdftk_java.pdftk'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.bouncycastle:bcprov-jdk15on:1.51'
+    compile 'org.apache.commons:commons-lang3:3.7'
+}
+
+spotless {
+    java {
+        target 'java/com/gitlab/pdftk_java/**/*.java'
+        googleJavaFormat()
+        paddedCell()
+        removeUnusedImports()
+    }
+}

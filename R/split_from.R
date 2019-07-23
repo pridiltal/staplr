@@ -64,7 +64,7 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, p
       stop(paste(output_filepath,'already exists. Set overwrite = TRUE to overwrite'))
     }
 
-    system_command <- paste("pdftk",
+    system_command <- paste(pdftk_cmd(),
                             shQuote(input_filepath),
                             "cat",
                             paste(as.integer(splitPoints[i])+1,'-',splitPoints[i+1], sep = ""),

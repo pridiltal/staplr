@@ -321,7 +321,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # generate the data field dump in a temporary file
   # theoratically, using dump_data_fields_utf8 can get rid of the need to use sub_demical
   # but this fails to process inputs containing stuff like emoji
-  system_command <- paste('pdftk',
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           'dump_data_fields','output',
                           shQuote(fieldsTemp))
@@ -426,7 +426,7 @@ get_fdf_lines <- function(input_filepath,
   if(is.null(output_filepath)){
     output_filepath <- tempfile()
   }
-  system_command <- paste('pdftk',
+  system_command <- paste(pdftk_cmd(),
                           shQuote(input_filepath),
                           'generate_fdf','output',
                           shQuote(output_filepath))
@@ -527,7 +527,7 @@ fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_nam
 fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE){
 
   system_command <-
-    paste("pdftk",
+    paste(pdftk_cmd(),
           shQuote(input_filepath),
           "fill_form",
           shQuote(fdf_filepath),
