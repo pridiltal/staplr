@@ -91,7 +91,10 @@ set_fields()
 # and files to use as examples.
 # This is what the example file looks like
 ```
-![image](https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png)
+
+<img src="https://user-images.githubusercontent.com/6352379/37745585-bc7bb8e8-2d32-11e8-918c-e52a0a549118.png" height="300" />
+
+
 ```{r echo=TRUE,, eval=FALSE}
 # If you get path to this file by
 pdfFile = system.file('testForm.pdf',package = 'staplr')
@@ -107,9 +110,14 @@ set_fields(pdfFile, 'newFile.pdf', fields)
 
 # This will create a filled pdf file
 ```
-![image](https://user-images.githubusercontent.com/6352379/37745838-65986038-2d34-11e8-9d16-5d6514ef24ab.png)
 
-## Troubleshooting
+<img src="https://user-images.githubusercontent.com/6352379/37745838-65986038-2d34-11e8-9d16-5d6514ef24ab.png" height="300" />
+
+## Troubleshooting and 2.11.0 changes
+
+- As of version 2.11.0, the package uses [pdftk-java](https://gitlab.com/pdftk-java/pdftk) instead of using the original [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/). `pdftk-java`
+is included with the package so if you have a working java installation, you shouldn't
+have any problems.
 
 - While default java options should be enough for most use cases, if you need to,
 you can change java options that is used to run pdftk by doing
@@ -120,13 +128,18 @@ options('staplr_java_options' = '-Xmx512m')
 
 This option is not affected by `rJava` settings.
 
-- This package uses [pdtk-java](https://gitlab.com/pdftk-java/pdftk) which requires
-a working Java and rJava installation. If any problems arise it'll likely be because 
-rJava cannot locate your `JAVA_HOME`. Make sure your `JAVA_HOME` is configured correctly. You may have to do `sudo R CMD javareconf` on
-linux machines.
+- If you don't have a working java installation, your installation will fail since
+you can't install rJava. Make sure you follow the proper instructions for java installation. For openJDK on linux make sure you get both jdk and jre and run javareconf.
 
-- If for any reason you'd prefer to run a local installation of pdftk rather than using the version
-that is shipped with the package, do
+```
+sudo apt update -y
+sudo apt install -y openjdk-8-jdk openjdk-8-jre
+sudo R CMD javareconf
+```
+Also restart your R session after `javareconf`
+
+- `pdftk-java` is built as a faithful representation of the original `pdftk` so
+there shouldn't be any major differences between the outputs. However, for any reason you'd prefer to run a local installation of pdftk rather than using the version that is shipped with the package, do
 
 ```r
 # set staplr_custom_pdftk to the path to local installation
