@@ -54,6 +54,7 @@ fileIO <- function(input_filepath,
 }
 
 .onLoad <- function(libname, pkgname){
+  rJava::.jpackage(name = pkgname, jars = "*")
 }
 
 
@@ -68,10 +69,21 @@ pdftk_cmd <- function(){
   if(is.null(jOptions)){
     jOptions = ''
   }
-  path <- system.file('pdftk-java/pdftk.jar',package = 'staplr',mustWork = TRUE)
+  path <- system.file('java/pdftk.jar',package = 'staplr',mustWork = TRUE)
   javaPath <- rJava::.jcall( 'java/lang/System', 'S', 'getProperty', 'java.home' )
   javaFiles <- list.files(javaPath,recursive = TRUE,full.names = TRUE)
   java <- javaFiles[grepl('/java($|\\.exe)',javaFiles)]
+  if(length(java)==0){
+    stop('Java executable could not be located')
+  }
   pdftk <- glue::glue('{shQuote(java)} {jOptions} -jar {shQuote(path)}')
   return(pdftk)
+}
+
+
+pdftk_jar = function(){
+  path <- system.file('java/pdftk.jar',package = 'staplr',mustWork = TRUE)
+  rJava::.jaddClassPath(path)
+  pdftk = rJava::.jnew('com/gitlab/pdftk_java/pdftk')
+  .jcall(obj= pdftk,method = 'main')
 }
