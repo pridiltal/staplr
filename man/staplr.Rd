@@ -3,7 +3,6 @@
 \docType{package}
 \name{staplr}
 \alias{staplr}
-\alias{staplr-package}
 \title{staplr: A package containing a toolkit for PDF files}
 \description{
 This package provides function to manipulate PDF

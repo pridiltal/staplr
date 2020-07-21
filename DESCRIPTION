@@ -22,7 +22,7 @@ Description: Provides function to manipulate PDF files:
     splits single input PDF document into parts from given points.
 License: GPL-3
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Imports:
   tcltk,
   stringr,

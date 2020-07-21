@@ -4,8 +4,12 @@
 \alias{staple_pdf}
 \title{Merge multiple PDF files into one}
 \usage{
-staple_pdf(input_directory = NULL, input_files = NULL,
-  output_filepath = NULL, overwrite = TRUE)
+staple_pdf(
+  input_directory = NULL,
+  input_files = NULL,
+  output_filepath = NULL,
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{input_directory}{the path of the input PDF files.

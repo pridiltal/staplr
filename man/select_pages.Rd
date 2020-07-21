@@ -4,8 +4,12 @@
 \alias{select_pages}
 \title{Select pages from a file}
 \usage{
-select_pages(selpages, input_filepath = NULL, output_filepath = NULL,
-  overwrite = TRUE)
+select_pages(
+  selpages,
+  input_filepath = NULL,
+  output_filepath = NULL,
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{selpages}{a vector of page numbers to be selected}

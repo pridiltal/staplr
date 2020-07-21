@@ -4,8 +4,11 @@
 \alias{get_fields}
 \title{Get form fields from a pdf form}
 \usage{
-get_fields(input_filepath = NULL, convert_field_names = FALSE,
-  encoding_warning = TRUE)
+get_fields(
+  input_filepath = NULL,
+  convert_field_names = FALSE,
+  encoding_warning = TRUE
+)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to

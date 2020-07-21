@@ -4,8 +4,13 @@
 \alias{split_from}
 \title{Splits single input PDF document into parts from given points}
 \usage{
-split_from(pg_num, input_filepath = NULL, output_directory = NULL,
-  prefix = "part", overwrite = TRUE)
+split_from(
+  pg_num,
+  input_filepath = NULL,
+  output_directory = NULL,
+  prefix = "part",
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{pg_num}{A vector of non-negative integers. Split the pdf document into parts from the numbered pages.}

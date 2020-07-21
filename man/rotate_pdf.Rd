@@ -4,8 +4,12 @@
 \alias{rotate_pdf}
 \title{Rotate entire pdf document}
 \usage{
-rotate_pdf(page_rotation = c(0, 90, 180, 270), input_filepath = NULL,
-  output_filepath = NULL, overwrite = TRUE)
+rotate_pdf(
+  page_rotation = c(0, 90, 180, 270),
+  input_filepath = NULL,
+  output_filepath = NULL,
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{page_rotation}{An integer value from the vector c(0, 90, 180, 270).

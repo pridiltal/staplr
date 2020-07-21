@@ -4,8 +4,13 @@
 \alias{rotate_pages}
 \title{Rotate selected pages of a pdf file}
 \usage{
-rotate_pages(rotatepages, page_rotation = c(0, 90, 180, 270),
-  input_filepath = NULL, output_filepath = NULL, overwrite = TRUE)
+rotate_pages(
+  rotatepages,
+  page_rotation = c(0, 90, 180, 270),
+  input_filepath = NULL,
+  output_filepath = NULL,
+  overwrite = TRUE
+)
 }
 \arguments{
 \item{rotatepages}{a vector of page numbers to be rotated}

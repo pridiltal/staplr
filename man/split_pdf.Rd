@@ -4,8 +4,7 @@
 \alias{split_pdf}
 \title{Splits single input PDF document into individual pages.}
 \usage{
-split_pdf(input_filepath = NULL, output_directory = NULL,
-  prefix = "page_")
+split_pdf(input_filepath = NULL, output_directory = NULL, prefix = "page_")
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to

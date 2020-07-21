@@ -4,8 +4,13 @@
 \alias{set_fields}
 \title{Set fields of a pdf form}
 \usage{
-set_fields(input_filepath = NULL, output_filepath = NULL, fields,
-  overwrite = TRUE, convert_field_names = FALSE)
+set_fields(
+  input_filepath = NULL,
+  output_filepath = NULL,
+  fields,
+  overwrite = TRUE,
+  convert_field_names = FALSE
+)
 }
 \arguments{
 \item{input_filepath}{the path of the input PDF file. The default is set to
