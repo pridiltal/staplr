@@ -7,3 +7,6 @@
 ^\.travis\.yml$
 ^docs
 .odt$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
