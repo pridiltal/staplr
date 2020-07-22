@@ -20,7 +20,7 @@ Description: Provides function to manipulate PDF files:
     Select pages from a file;
     splits single input PDF document into individual pages;
     splits single input PDF document into parts from given points.
-    staplr requires a Java installation on your system.
+    'staplr' requires a Java installation on your system.
 License: GPL-3
 LazyData: true
 RoxygenNote: 7.1.0
