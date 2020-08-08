@@ -3,10 +3,11 @@
 ^README\.Rmd$
 ^README\.md$
 ^README-.*\.png$
-^logo\.png$
+^logo.png$
 ^\.travis\.yml$
 ^docs
 .odt$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^man/figures/logo\.png$
