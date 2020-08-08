@@ -3,7 +3,6 @@ Type: Package
 Title: A Toolkit for PDF Files
 Version: 3.0.0
 Depends: R (>= 3.4.0)
-Maintainer: Priyanga Dilini Talagala <pritalagala@gmail.com>
 Authors@R: c(
     person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre")),
     person("Ogan", "Mancarci", email="ogan.mancarci@gmail.com", role='aut'),
