@@ -1,7 +1,7 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 3.0.0
+Version: 3.1.0
 Depends: R (>= 3.4.0)
 Authors@R: c(
     person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre")),
