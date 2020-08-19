@@ -472,7 +472,8 @@ get_fdf_lines <- function(input_filepath,
 #'
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
                       overwrite = TRUE,
-                      convert_field_names = FALSE){
+                      convert_field_names = FALSE,
+                      flatten = FALSE){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -496,7 +497,7 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
   # close(f)
   # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
 
-  fill_from_fdf(input_filepath, output_filepath, newFDF, overwrite)
+  fill_from_fdf(input_filepath, output_filepath, newFDF, overwrite, flatten)
 
 
 }
@@ -524,7 +525,13 @@ fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_nam
 }
 
 # internal function to take in an FDF-PDF pair to return the filled output
-fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE){
+fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE, flatten = FALSE){
+
+  if(flatten){
+    tail = 'flatten need_appearances'
+  } else{
+    tail = 'need_appearances'
+  }
 
   system_command <-
     paste(pdftk_cmd(),
@@ -533,7 +540,7 @@ fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrit
           shQuote(fdf_filepath),
           "output",
           "{shQuote(output_filepath)}",
-          "need_appearances")
+          tail)
 
 
   fileIO(input_filepath = input_filepath,

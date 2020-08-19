@@ -26,6 +26,13 @@ test_that('fill_pdf',{
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('Ñ, ñ, É, Í, Ó', pdfText))
 
+  # test for flatten
+  set_fields(pdfFile,tempFile,fields,flatten = TRUE)
+  expect_error(get_fields(tempFile))
+
+
+
+
   # Having the → here was problematic because pdftools can't seem to read it
   fields$TextField$value = '½ ¾ ‘ ’ ” “ •'
   set_fields(pdfFile,tempFile,fields)
@@ -104,7 +111,6 @@ test_that('fill_pdf',{
 
   idenfity_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
   expect_error(set_fields(pdfFile,tempFile,fields,convert_field_names = FALSE),'')
-
 
 })
 
