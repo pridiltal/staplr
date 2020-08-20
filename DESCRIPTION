@@ -19,7 +19,7 @@ Description: Provides function to manipulate PDF files:
     Select pages from a file;
     splits single input PDF document into individual pages;
     splits single input PDF document into parts from given points.
-    'staplr' requires Java 8 installed on your system on your system.
+    'staplr' requires Java 8 installed on your system.
 SystemRequirements: Java 8 or higher
 License: GPL-3
 LazyData: true
