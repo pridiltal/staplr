@@ -17,15 +17,16 @@
 #' }
 #'
 #' \dontrun{
+#' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
-#' require(lattice)
 #' for(i in 1:3) {
 #' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
 #' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 #' split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),output_directory = dir )
+#' }
 #' }
 #' @export
 #' @import utils

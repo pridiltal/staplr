@@ -15,15 +15,16 @@
 #' rename_files(new_names = paste("file",1:3))
 #' }
 #' \dontshow{
+#' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
-#' require(lattice)
 #' for(i in 1:3) {
 #' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
 #' n <- length(Sys.glob(file.path(dir,"*.pdf")))
 #' rename_files(input_directory = dir, new_names = paste("file",1:n))
+#' }
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir

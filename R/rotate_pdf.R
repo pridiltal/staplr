@@ -22,11 +22,11 @@
 #' }
 #'
 #' \dontrun{
+#' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
-#' require(lattice)
 #' for(i in 1:3) {
 #' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
 #' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
@@ -34,6 +34,7 @@
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 #' output_path <-  file.path(dir, paste("rotated_pdf.pdf",  sep = ""))
 #' rotate_pdf( page_rotation = 90,  input_path, output_path)
+#' }
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

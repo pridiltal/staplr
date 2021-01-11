@@ -18,15 +18,16 @@
 #' }
 #'
 #' \dontrun{
+#' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
-#' require(lattice)
 #' for(i in 1:3) {
 #' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
 #' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
 #' staple_pdf(input_directory = dir, output_filepath = output_file)
+#' }
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir

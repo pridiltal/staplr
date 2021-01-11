@@ -20,18 +20,19 @@
 #' }
 #'
 #' \dontrun{
+#' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
-#' require(lattice)
 #' for(i in 1:3) {
 #' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-#' print(xyplot(iris[,1] ~ iris[,i], data = iris))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 #' dev.off()
 #' }
-#' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
-#' staple_pdf(input_directory = dir, output_file)
+#' output_file <- file.path(dir, paste('Full1_pdf.pdf',  sep = ""))
+#' staple_pdf(input_directory = dir,  output_filepath = output_file)
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 #' output_path <-  file.path(dir, paste("trimmed_pdf.pdf",  sep = ""))
 #' remove_pages(rmpages = 1, input_path, output_path)
+#' }
 #' }
 #' @export
 #' @import utils

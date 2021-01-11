@@ -48,11 +48,11 @@ rotate_pages(rotatepages = c(3,6), page_rotation = 90)
 }
 
 \dontrun{
+if (requireNamespace("lattice", quietly = TRUE)) {
 dir <- tempdir()
-require(lattice)
 for(i in 1:3) {
 pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-print(xyplot(iris[,1] ~ iris[,i], data = iris))
+print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
 output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
@@ -60,6 +60,7 @@ staple_pdf(input_directory = dir, output_file)
 input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 output_path <-  file.path(dir, paste("Rotated_pgs_pdf.pdf",  sep = ""))
 rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_path)
+}
 }
 }
 \references{

@@ -9,7 +9,8 @@ set_fields(
   output_filepath = NULL,
   fields,
   overwrite = TRUE,
-  convert_field_names = FALSE
+  convert_field_names = FALSE,
+  flatten = FALSE
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ this list}
 
 \item{convert_field_names}{If you set convert_field_names when using \code{\link{get_fields}}
 you should set this to TRUE as well so the fields can be matched correctly.}
+
+\item{flatten}{If TRUE, the form fields will be flattened and turned into plain text.}
 }
 \description{
 If the toolkit Pdftk is available in the

@@ -42,16 +42,17 @@ split_from(pg_num=10)
 }
 
 \dontrun{
+if (requireNamespace("lattice", quietly = TRUE)) {
 dir <- tempdir()
-require(lattice)
 for(i in 1:4) {
 pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
-print(xyplot(iris[,1] ~ iris[,i], data = iris))
+print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
 staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 input_path <- file.path(dir, "Full_pdf.pdf")
 split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
+}
 }
 }
 \references{
