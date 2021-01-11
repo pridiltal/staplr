@@ -1,4 +1,4 @@
-library(testthat)
+if (requireNamespace("testthat", quietly = TRUE)) {
 library(staplr)
-
-test_check("staplr")
+testthat::test_check("staplr")
+}
