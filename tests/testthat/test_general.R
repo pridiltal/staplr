@@ -1,5 +1,5 @@
 # this file is written in UTF-8 encoding
-
+if (requireNamespace("pdftools", quietly = TRUE)) {
 context('basic functionality')
 
 test_that('fill_pdf',{
@@ -274,3 +274,5 @@ test_that('overwrite',{
 
 
 })
+
+}

@@ -1,6 +1,8 @@
 # this file is written in UTF-8 encoding
 
+
 if (requireNamespace("testthat", quietly = TRUE)) {
+if (requireNamespace("pdftools", quietly = TRUE)) {
 context('fill pdf internals')
 
 
@@ -41,4 +43,5 @@ test_that('fdf manipulation',{
 
 })
 
+  }
 }
