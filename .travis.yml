@@ -4,10 +4,8 @@ language: r
 cache: packages
 warnings_are_errors: false
 sudo: required
-
 apt_packages:
   - r-cran-rjava
-
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y libpoppler-cpp-dev
