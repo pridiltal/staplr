@@ -321,14 +321,8 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # generate the data field dump in a temporary file
   # theoratically, using dump_data_fields_utf8 can get rid of the need to use sub_demical
   # but this fails to process inputs containing stuff like emoji
-  system_command <- paste(pdftk_cmd(),
-                          shQuote(input_filepath),
-                          'dump_data_fields','output',
-                          shQuote(fieldsTemp))
-  system(system_command)
   # here encoding isn't important because any unusual character is in numeric character references
-  fields <- paste0(readLines(fieldsTemp,encoding = 'UTF-8'),
-                   collapse = '\n')
+  fields <- rjava_get_fields(input_filepath)
 
   # https://stackoverflow.com/questions/5060076/convert-html-character-entity-encoding-in-r
   fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE,encoding = "UTF-8"),
@@ -411,6 +405,23 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
 
 
   return(fields)
+}
+
+rjava_get_fields = function(f) {
+  jar_path = system.file('pdftk-java/pdftk.jar', package = 'staplr', mustWork = TRUE)
+  rJava::.jaddClassPath(jar_path)
+  # instead of an output file, write the output to this byte array so we can
+  # send it directly back to R
+  out = rJava::.jnew('java/io/ByteArrayOutputStream')
+  ofs = rJava::.jnew('java/io/PrintStream',
+                     rJava::.jcast(out, 'java/io/OutputStream'))
+  input_reader = rJava::.jnew('pdftk/com/lowagie/text/pdf/PdfReader', f)
+  output_utf8_b = FALSE
+  # `report.ReportAcroFormFields` is the java function that actually prints the
+  # form fields
+  rJava::.jcall('com/gitlab/pdftk_java/report', 'V', 'ReportAcroFormFields',
+                ofs, input_reader, output_utf8_b)
+  rJava::.jcall(out, 'Ljava/lang/String;', 'toString')
 }
 
 
