@@ -65,7 +65,7 @@ pdf_combine <- function(vec_input, output = "output.pdf", start_pages = NA, end_
     )
 
   one_step <- function(x, y) {
-      extract(
+    pdf_subset(
         input = x,
         output = file_temp(),
         pages = start_pages[y]:end_pages[y]
@@ -78,5 +78,5 @@ pdf_combine <- function(vec_input, output = "output.pdf", start_pages = NA, end_
     .f = ~ one_step(.x, .y)
   )
 
-  join(input = files, output = output)
+  pdf_combine(input = files, output = output)
 }
