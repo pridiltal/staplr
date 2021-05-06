@@ -31,13 +31,6 @@
 
 pdf_combine <- function(vec_input, output = "output.pdf", start_pages = NA, end_pages = NA) {
 
-  box::use(
-    glue[glue],
-    pdftools[extract = pdf_subset, join = pdf_combine, pdf_length],
-    fs[...],
-    purrr[...]
-  )
-
   if(length(start_pages) != length(vec_input) || length(end_pages) != length(vec_input))
     stop("Start_pages and end_pages must be a vector of the same length as vec_input!")
 
