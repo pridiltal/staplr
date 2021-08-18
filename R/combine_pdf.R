@@ -2,7 +2,7 @@
 #' @description Combine multiple PDF files by delimiting the sequences of pages in each file.
 #' @importFrom glue glue
 #' @importFrom pdftools pdf_subset pdf_combine pdf_length
-#' @importFrom purrr map2_dbl walk2
+#' @importFrom purrr map2_dbl walk2 flatten_dbl map_if
 #' @importFrom fs file_temp file_temp_push
 #' @param vec_input Vector with paths of PDF files to be combined.
 #' @param output PDF file path result of the combination.
@@ -17,7 +17,7 @@
 #' @examples
 #'
 #' \dontrun{
-#' pdf_combine(
+#' combine_pdf(
 #'    vec_input =
 #'       c(
 #'         "file_1.pdf",
@@ -29,7 +29,7 @@
 #'  )
 #' }
 
-pdf_combine <- function(vec_input, output = "output.pdf", start_pages = NA, end_pages = NA) {
+combine_pdf <- function(vec_input, output = "output.pdf", start_pages = NA, end_pages = NA) {
 
   if(length(start_pages) != length(vec_input) || length(end_pages) != length(vec_input))
     stop("Start_pages and end_pages must be a vector of the same length as vec_input!")
