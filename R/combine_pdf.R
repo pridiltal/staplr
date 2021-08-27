@@ -3,7 +3,7 @@
 #' @importFrom glue glue
 #' @importFrom pdftools pdf_subset pdf_combine pdf_length
 #' @importFrom purrr map2_dbl walk2 flatten_dbl map_if
-#' @importFrom fs file_temp file_temp_push
+#' @importFrom fs file_temp file_temp_push path_ext_remove path_file
 #' @param vec_input Vector with paths of PDF files to be combined.
 #' @param output PDF file path result of the combination.
 #' @param start_pages Vector with the initial pages of each file. If \code{NA},
