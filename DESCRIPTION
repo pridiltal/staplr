@@ -1,13 +1,14 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 3.1.1
+Version: 3.2.0
 Depends: R (>= 3.4.0)
 Authors@R: c(
     person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre")),
     person("Ogan", "Mancarci", email="ogan.mancarci@gmail.com", role='aut'),
     person("Daniel", "Padfield", email= "d.padfield@exeter.ac.uk", role ='aut'),
-    person("Granville", "Matheson", email= "mathesong@gmail.com", role ='aut')
+    person("Granville", "Matheson", email= "mathesong@gmail.com", role ='aut'),
+    person("Pedro Rafael", "D. Marinho", email= "pedro.rafael.marinho@gmail.com", role ='ctb', comment = c(ORCID = "0000-0003-1591-8300"))
     )
 Description: Provides function to manipulate PDF files: 
     fill out PDF forms;
@@ -30,10 +31,12 @@ Imports:
   assertthat,
   glue,
   XML,
-  rJava
+  rJava,
+  fs,
+  purrr,
+  pdftools
 Suggests: 
   lattice,
-  testthat,
-  pdftools
+  testthat
 Encoding: UTF-8
 BugReports: https://github.com/pridiltal/staplr/issues
