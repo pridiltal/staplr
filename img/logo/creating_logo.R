@@ -12,7 +12,7 @@ font_add_google("Love Ya Like A Sister", "rock")
 ## Automatically use showtext to render text for future devices
 showtext_auto()
 
-img <- image_read(path(getwd(), "img", "logo", "staple_logo.png"))
+img <- image_read(path(getwd(), "img", "logo", "staple_logo_r.png"))
 logo <- image_ggplot(img, interpolate = TRUE)
 
 sticker(
@@ -29,7 +29,7 @@ sticker(
   p_family = "rock",
   h_size = 2.4,
   white_around_sticker = T,
-  filename = path(getwd(), "img", "logo", "logo.png"),
+  filename = path(getwd(), "img", "logo", "logo_r.png"),
   url = "https://pridiltal.github.io/staplr/",
   u_family = "rock",
   u_size = 4.7,
@@ -39,9 +39,10 @@ sticker(
   u_color = "#0F2536"
 )
 
-fs::file_delete(fs::path(getwd(), "logo.png"))
+fs::file_delete(fs::path(getwd(), "logo_r.png"))
 
 fs::file_copy(
-  path = path(getwd(), "img", "logo", "logo.png"),
-  new_path = path(getwd(), "logo.png")
+  path = path(getwd(), "img", "logo", "logo_r.png"),
+  new_path = path(getwd(), "logo_r.png"),
+  overwrite = TRUE
 )
