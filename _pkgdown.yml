@@ -1,1 +1,7 @@
 destination: docs
+opengraph:
+  image:
+    src: "logo.png"
+template:
+  params:
+    bootswatch: united

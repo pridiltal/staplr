@@ -23,8 +23,8 @@ the default, will be considered the first page.}
 default, will be considered the last page.}
 }
 \value{
-In the path informed in \code{output}, the PDF file resulting from the combination
-of multiple files passed to \code{vec_output} will be saved.
+In the path informed in \code{output_filepath}, the PDF file resulting from the combination
+of multiple files passed to \code{input_files} will be saved.
 }
 \description{
 Combine multiple PDF files by delimiting the sequences of pages in each file.
@@ -43,4 +43,7 @@ staple_pages(
    end_pages = c(NA, NA)
  )
 }
+}
+\author{
+Pedro Rafael D. Marinho
 }

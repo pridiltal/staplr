@@ -13,6 +13,7 @@
 #' @return
 #' In the path informed in \code{output_filepath}, the PDF file resulting from the combination
 #' of multiple files passed to \code{input_files} will be saved.
+#' @author Pedro Rafael D. Marinho
 #' @export
 #' @examples
 #'
