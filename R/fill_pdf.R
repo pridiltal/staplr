@@ -408,8 +408,6 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
 }
 
 rjava_get_fields = function(f) {
-  jar_path = system.file('pdftk-java/pdftk.jar', package = 'staplr', mustWork = TRUE)
-  rJava::.jaddClassPath(jar_path)
   # instead of an output file, write the output to this byte array so we can
   # send it directly back to R
   out = rJava::.jnew('java/io/ByteArrayOutputStream')
