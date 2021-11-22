@@ -238,9 +238,9 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' @examples
 #' \dontrun{
 #' pdfFile = system.file('testForm.pdf',package = 'staplr')
-#' idenfity_form_fields(pdfFile, 'testOutput.pdf')
+#' identify_form_fields(pdfFile, 'testOutput.pdf')
 #' }
-idenfity_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
+identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
                                  overwrite = TRUE,convert_field_names = FALSE,
                                  encoding_warning = TRUE){
   if(is.null(input_filepath)){
