@@ -2,7 +2,7 @@
 
 export(combine_pdf)
 export(get_fields)
-export(idenfity_form_fields)
+export(identify_form_fields)
 export(remove_pages)
 export(rename_files)
 export(rotate_pages)
