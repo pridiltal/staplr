@@ -8,7 +8,7 @@ test_that('fill_pdf',{
 
   pdfFile <- system.file('simpleForm.pdf',package = 'staplr')
 
-  idenfity_form_fields(pdfFile,tempFile)
+  identify_form_fields(pdfFile,tempFile)
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('TextField.*?TextField2.*?TextField3', pdfText))
 
