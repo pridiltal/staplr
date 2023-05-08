@@ -36,7 +36,7 @@ fileIO <- function(input_filepath,
   if(!overwrite & file.exists(output_filepath)){
     stop(paste(output_filepath,'already exists. Set overwrite = TRUE to overwrite'))
   }
-  if(input_filepath == output_filepath){
+  if(output_filepath %in% input_filepath){
     true_out_path = output_filepath
     output_filepath <- tempfile()
     collision <- TRUE

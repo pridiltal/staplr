@@ -58,13 +58,17 @@ staple_pdf <- function(input_directory = NULL, input_files = NULL,
     stop(paste(output_filepath,'already exists. Set overwrite = TRUE to overwrite'))
   }
 
+
   # Construct a system command to pdftk
   system_command <- paste(pdftk_cmd(),
                           paste(shQuote(input_filepaths), collapse = " "),
                           "cat",
                           "output",
-                          shQuote(output_filepath),
+                          "{shQuote(output_filepath)}",
                           sep = " ")
+  fileIO(input_filepath = input_filepaths,
+         output_filepath = output_filepath,
+         overwrite = overwrite,
+         system_command = system_command)
 
-  system(command = system_command)
 }

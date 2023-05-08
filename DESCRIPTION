@@ -1,7 +1,7 @@
 Package: staplr
 Type: Package
 Title: A Toolkit for PDF Files
-Version: 3.2.0
+Version: 3.2.1
 Depends: R (>= 3.4.0)
 Authors@R: c(
     person("Priyanga Dilini", "Talagala", email="pritalagala@gmail.com", role= c("aut","cre")),
@@ -24,7 +24,7 @@ Description: Provides function to manipulate PDF files:
 SystemRequirements: Java 8 or higher
 License: GPL-3
 LazyData: true
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Imports:
   tcltk,
   stringr,
