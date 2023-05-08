@@ -104,12 +104,12 @@ test_that('fill_pdf',{
   expect_warning(get_fields(pdfFile),regexp = "some fields seems to include plain text UTF-8")
 
 
-  idenfity_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
+  identify_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
   pdfText = pdftools::pdf_text(tempFile)
   expect_true(grepl('TextFieldPage3', pdfText[[3]]))
 
 
-  idenfity_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
+  identify_form_fields(pdfFile,tempFile,convert_field_names = TRUE)
   expect_error(set_fields(pdfFile,tempFile,fields,convert_field_names = FALSE),'')
 
 })
