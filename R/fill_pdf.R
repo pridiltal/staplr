@@ -347,10 +347,10 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   badFields = c()
 
   fields <- lapply(fields,function(x){
-    type <- stringr::str_extract(x,'(?<=FieldType: ).*?(?=\n|$)')
-    name <- stringr::str_extract(x,'(?<=FieldName: ).*?(?=\n|$)')
+    type <- stringr::str_extract(x,'(?<=\nFieldType: ).*?(?=\n|$)')
+    name <- stringr::str_extract(x,'(?<=\nFieldName: ).*?(?=\n|$)')
 
-    value <- stringr::str_extract_all(x,'(?<=FieldValue: ).*?(?=\n|$)')[[1]]
+    value <- stringr::str_extract_all(x,'(?<=\nFieldValue: )(.|\n)*?(?=(\nField)|(\n$))')[[1]]
     # sometimes there are multiple field values. It is currently unclear why this happens
     # but the example file I have only created the extra fieldValue when there was
     # an entry.
