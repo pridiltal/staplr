@@ -29,7 +29,7 @@ test_that('fdf manipulation',{
   fdfLines = get_fdf_lines(pdfFile,tempFDF)
   annotatedFDF = fdfAnnotate(fdfLines)
 
-  reverseFDFLines = readLines('reverseFDF')
+  reverseFDFLines =suppressWarnings(readLines('reverseFDF',encoding = 'latin1',skipNul = TRUE))
   reverseAnnotatedFDF = fdfAnnotate(reverseFDFLines)
 
   reverseExclusive = unique(reverseAnnotatedFDF$fields)[!unique(reverseAnnotatedFDF$fields) %in% unique(annotatedFDF$fields)]
