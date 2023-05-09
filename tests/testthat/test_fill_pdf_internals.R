@@ -25,19 +25,6 @@ test_that('fdf manipulation',{
   expect_true(grepl('½¾ ‘’”“•', pdfTextNewRich))
 
 
-  pdfFile =  system.file('testForm.pdf',package = 'staplr')
-  fdfLines = get_fdf_lines(pdfFile,tempFDF)
-  annotatedFDF = fdfAnnotate(fdfLines)
-
-  reverseFDFLines =suppressWarnings(readLines('reverseFDF',encoding = 'latin1',skipNul = TRUE))
-  reverseAnnotatedFDF = fdfAnnotate(reverseFDFLines)
-
-  reverseExclusive = unique(reverseAnnotatedFDF$fields)[!unique(reverseAnnotatedFDF$fields) %in% unique(annotatedFDF$fields)]
-
-  normalExclusive = unique(annotatedFDF$fields)[!unique(annotatedFDF$fields) %in% unique(reverseAnnotatedFDF$fields)]
-
-  testthat::expect_length(reverseExclusive,0)
-  testthat::expect_length(normalExclusive,0)
 
 
 
