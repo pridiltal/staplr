@@ -70,8 +70,8 @@ test_that('fill_pdf',{
   fields$hierarchy2.child.node1$value <- 'second hierarchy child 1 node 1'
   fields$hierarchy2.child2.node2$value <- 'second hierarchy child 2 node 2'
 
-  fields$InterstingChar1$value <- "this field had weird content"
-  fields$InterstingChar2$value <- "this field had weirder content"
+  fields$InterestingChar1$value <- "this field had weird content"
+  fields$InterestingChar2$value <- "this field had weirder content"
 
   fields$`(weird) paranthesis`$value <- 'paranthesis is weird'
   fields$`weird Ñ characters`$value <- 'characters are weird'
