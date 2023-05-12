@@ -53,8 +53,7 @@ fileIO <- function(input_filepath,
 
 }
 
-.onLoad <- function(libname, pkgname){
-}
+
 
 
 pdftk_cmd <- function(){
