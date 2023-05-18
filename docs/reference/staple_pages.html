@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Identify text form fields — idenfity_form_fields • staplr</title>
+<title>Combine multiple PDF files — staple_pages • staplr</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,10 +46,8 @@
 
 
 
-<meta property="og:title" content="Identify text form fields — idenfity_form_fields" />
-<meta property="og:description" content="Helps identification of text forum fields by creating a file that is filled
-with field names. Some pdf editors show field names when you mouse over the
-fields as well." />
+<meta property="og:title" content="Combine multiple PDF files — staple_pages" />
+<meta property="og:description" content="Combine multiple PDF files by delimiting the sequences of pages in each file." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -118,66 +116,66 @@ fields as well." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Identify text form fields</h1>
-    <small class="dont-index">Source: <a href='https://github.com/pridiltal/staplr/blob/master/R/fill_pdf.R'><code>R/fill_pdf.R</code></a></small>
-    <div class="hidden name"><code>idenfity_form_fields.Rd</code></div>
+    <h1>Combine multiple PDF files</h1>
+    <small class="dont-index">Source: <a href='https://github.com/pridiltal/staplr/blob/master/R/staple_pages.R'><code>R/staple_pages.R</code></a></small>
+    <div class="hidden name"><code>staple_pages.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Helps identification of text forum fields by creating a file that is filled
-with field names. Some pdf editors show field names when you mouse over the
-fields as well.</p>
+    <p>Combine multiple PDF files by delimiting the sequences of pages in each file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>idenfity_form_fields</span><span class='op'>(</span>
-  input_filepath <span class='op'>=</span> <span class='cn'>NULL</span>,
-  output_filepath <span class='op'>=</span> <span class='cn'>NULL</span>,
-  overwrite <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  convert_field_names <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  encoding_warning <span class='op'>=</span> <span class='cn'>TRUE</span>
+    <pre class="usage"><span class='fu'>staple_pages</span><span class='op'>(</span>
+  <span class='va'>input_files</span>,
+  output_filepath <span class='op'>=</span> <span class='st'>"output.pdf"</span>,
+  start_pages <span class='op'>=</span> <span class='cn'>NA</span>,
+  end_pages <span class='op'>=</span> <span class='cn'>NA</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>input_filepath</th>
-      <td><p>the path of the input PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
+      <th>input_files</th>
+      <td><p>Vector with paths of PDF files to be combined.</p></td>
     </tr>
     <tr>
       <th>output_filepath</th>
-      <td><p>the path of the output PDF file. The default is set to
-NULL. IF NULL, it  prompt the user to select the folder interactively.</p></td>
+      <td><p>PDF file path result of the combination.</p></td>
     </tr>
     <tr>
-      <th>overwrite</th>
-      <td><p>If a file exists in <code>output_filepath</code>, should it be overwritten.</p></td>
+      <th>start_pages</th>
+      <td><p>Vector with the initial pages of each file. If <code>NA</code>,
+the default, will be considered the first page.</p></td>
     </tr>
     <tr>
-      <th>convert_field_names</th>
-      <td><p>By default <code>pdftk</code> will encode certain characters
-of the field names in plain text UTF-8 so if using a non-latin alphabet, your
-field names might be illegible. Setting this to TRUE will turn the UFT-8 code into
-characters. However this process it not guaranteed to be perfect as pdftk does
-not differentiate between encoded text and regular text using escape characters.
-If you have field names that intentionally include components that look like encoded characters
-this will attempt to fix them. Use this option only when necessary. If TRUE,
-remember to set it to TRUE when using <code><a href='set_fields.html'>set_fields</a></code> as well.</p></td>
-    </tr>
-    <tr>
-      <th>encoding_warning</th>
-      <td><p>If field names include strings that look like plain text UTF-8
-codes, the function will return a warning by default, suggesting setting <code>convert_field_names</code> to codeTRUE.
-If <code>encoding_warning</code> is <code>FALSE</code>, these warnings will be silenced.</p></td>
+      <th>end_pages</th>
+      <td><p>Vector with the final pages of each file. If <code>NA</code>, the
+default, will be considered the last page.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>In the path informed in <code>output_filepath</code>, the PDF file resulting from the combination
+of multiple files passed to <code>input_files</code> will be saved.</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Pedro Rafael D. Marinho</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>pdfFile</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>'testForm.pdf'</span>,package <span class='op'>=</span> <span class='st'>'staplr'</span><span class='op'>)</span>
-<span class='fu'>idenfity_form_fields</span><span class='op'>(</span><span class='va'>pdfFile</span>, <span class='st'>'testOutput.pdf'</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='fu'>staple_pages</span><span class='op'>(</span>
+   input_files <span class='op'>=</span>
+      <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+        <span class='st'>"file_1.pdf"</span>,
+        <span class='st'>"file_2.pdf"</span>,
+      <span class='op'>)</span>,
+   output_filepath <span class='op'>=</span> <span class='st'>"output.pdf"</span>,
+   start_pages <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>,
+   end_pages <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='cn'>NA</span>, <span class='cn'>NA</span><span class='op'>)</span>
+ <span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

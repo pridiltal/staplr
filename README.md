@@ -1,5 +1,5 @@
 
-# staplr <img src="man/figures/logo.png" align="right" height="150"/>
+# staplr <img src="logo.png" align="right" height="210"/>
 
 [![Project Status: Active - The project has reached a stable, usable
 state and is being actively
@@ -8,14 +8,14 @@ developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repo
 [![Build
 Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travis-ci.org/pridiltal/staplr)
 
------
+------------------------------------------------------------------------
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/staplr)](https://cran.r-project.org/web/packages/staplr/index.html)
 [![](http://cranlogs.r-pkg.org/badges/staplr)](http://cran.rstudio.com/web/packages/staplr/index.html)
 
------
+------------------------------------------------------------------------
 
-[![Last-changedate](https://img.shields.io/badge/last%20change-2020--07--21-yellowgreen.svg)](/commits/master)
+[![Last-changedate](https://img.shields.io/badge/last%20change-2021--09--27-yellowgreen.svg)](/commits/master)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -23,16 +23,16 @@ Status](https://travis-ci.org/pridiltal/staplr.svg?branch=master)](https://travi
 
 This package provides functions to manipulate PDF files:
 
-  - fill out PDF forms: get\_fields() and set\_fields()
-  - merge multiple PDF files into one: staple\_pdf()
-  - remove selected pages from a file: remove\_pages()
-  - rename multiple files in a directory: rename\_files()
-  - rotate entire pdf document: rotate\_pdf()
-  - rotate selected pages of a pdf file: rotate\_pages()
-  - Select pages from a file: select\_pages()
-  - splits single input PDF document into individual pages: split\_pdf()
-  - splits single input PDF document into parts from given points:
-    split\_from()
+-   fill out PDF forms: get_fields() and set_fields()
+-   merge multiple PDF files into one: staple_pdf()
+-   remove selected pages from a file: remove_pages()
+-   rename multiple files in a directory: rename_files()
+-   rotate entire pdf document: rotate_pdf()
+-   rotate selected pages of a pdf file: rotate_pages()
+-   Select pages from a file: select_pages()
+-   splits single input PDF document into individual pages: split_pdf()
+-   splits single input PDF document into parts from given points:
+    split_from()
 
 This package is still under development and this repository contains a
 development version of the R package *staplr*.
@@ -107,18 +107,16 @@ set_fields(pdfFile, 'newFile.pdf', fields)
 
 ## Troubleshooting and 2.11.0 changes
 
-  - As of version 2.11.0, the package uses
+-   As of version 2.11.0, the package uses
     [pdftk-java](https://gitlab.com/pdftk-java/pdftk) instead of using
     the original
     [pdftk](https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/).
     `pdftk-java` is included with the package so if you have a working
     java installation, you shouldn’t have any problems.
 
-  - While default java options should be enough for most use cases, if
+-   While default java options should be enough for most use cases, if
     you need to, you can change java options that is used to run pdftk
     by doing
-
-<!-- end list -->
 
 ``` r
 options('staplr_java_options' = '-Xmx512m') 
@@ -126,12 +124,12 @@ options('staplr_java_options' = '-Xmx512m')
 
 This option is not affected by `rJava` settings.
 
-  - If you don’t have a working java installation, your installation
+-   If you don’t have a working java installation, your installation
     will fail since you can’t install rJava. Make sure you follow the
     proper instructions for java installation. For openJDK on linux make
     sure you get both jdk and jre and run javareconf.
 
-<!-- end list -->
+<!-- -->
 
     sudo apt update -y
     sudo apt install -y openjdk-8-jdk openjdk-8-jre
@@ -139,13 +137,11 @@ This option is not affected by `rJava` settings.
 
 Also restart your R session after `javareconf`
 
-  - `pdftk-java` is built as a faithful representation of the original
+-   `pdftk-java` is built as a faithful representation of the original
     `pdftk` so there shouldn’t be any major differences between the
     outputs. However, for any reason you’d prefer to run a local
     installation of pdftk rather than using the version that is shipped
     with the package, do
-
-<!-- end list -->
 
 ``` r
 # set staplr_custom_pdftk to the path to local installation
@@ -164,4 +160,4 @@ in pdftk later.
 
 ## References
 
-  - <https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/>
+-   <https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/>
