@@ -31,6 +31,9 @@ you should set this to TRUE as well so the fields can be matched correctly.}
 
 \item{flatten}{If TRUE, the form fields will be flattened and turned into plain text.}
 }
+\value{
+TRUE if the operation was succesfful. FALSE if the operation fails.
+}
 \description{
 If the toolkit Pdftk is available in the
 system, it will be called to fill a pdf form with given a list of fields.

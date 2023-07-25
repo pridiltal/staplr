@@ -9,8 +9,7 @@
 #' @inheritParams input_filepath
 #' @inheritParams output_filepath
 #' @inheritParams overwrite
-#' @return this function returns a PDF document with the
-#' remaining pages
+#' @inherit return return
 #' @author Granville Matheson, Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{

@@ -12,7 +12,7 @@
 #' @inheritParams input_filepath
 #' @inheritParams output_filepath
 #' @inheritParams overwrite
-#' @return this function returns a PDF document with the rotated pages
+#' @inherit return return
 #' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{

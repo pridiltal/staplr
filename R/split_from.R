@@ -10,8 +10,7 @@
 #' @param output_directory the path of the output directory
 #' @param prefix A string for output filename prefix
 #' @inheritParams overwrite
-#' @return this function splits a single input PDF document into
-#' individual pages
+#' @inherit return return
 #' @author Priyanga Dilini Talagala and Ogan Mancarci
 #' @examples
 #' \dontrun{
@@ -73,7 +72,13 @@ split_from <- function(pg_num, input_filepath = NULL, output_directory = NULL, p
                             shQuote(output_filepath),
                             sep = " ")
 
-    system(command = system_command)
+    sys_out <- system(command = system_command)
+  }
+
+  if(sys_out == 0){
+    return(TRUE)
+  } else{
+    return(FALSE)
   }
 
 }

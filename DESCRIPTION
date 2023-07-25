@@ -10,7 +10,7 @@ Authors@R: c(
     person("Granville", "Matheson", email= "mathesong@gmail.com", role ='aut'),
     person("Pedro Rafael", "D. Marinho", email= "pedro.rafael.marinho@gmail.com", role ='ctb', comment = c(ORCID = "0000-0003-1591-8300"))
     )
-Description: Provides function to manipulate PDF files: 
+Description: Provides functions to manipulate PDF files: 
     fill out PDF forms;
     merge multiple PDF files into one; 
     remove selected pages from a file;
@@ -20,7 +20,7 @@ Description: Provides function to manipulate PDF files:
     Select pages from a file;
     splits single input PDF document into individual pages;
     splits single input PDF document into parts from given points.
-    'staplr' requires Java 8 installed on your system.
+    'staplr' requires 'Java 8' installed on your system.
 SystemRequirements: Java (>= 8.0)
 License: GPL-3
 LazyData: true

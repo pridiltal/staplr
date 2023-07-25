@@ -15,8 +15,7 @@
 #' @inheritParams output_filepath
 #' @inheritParams overwrite
 #'
-#' @return this function returns a PDF document with the
-#' remaining pages
+#' @inherit return return
 #' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{

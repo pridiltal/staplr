@@ -34,6 +34,9 @@ remember to set it to TRUE when using \code{\link{set_fields}} as well.}
 codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
 If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.}
 }
+\value{
+TRUE if the operation was succesfful. FALSE if the operation fails.
+}
 \description{
 Helps identification of text forum fields by creating a file that is filled
 with field names. Some pdf editors show field names when you mouse over the

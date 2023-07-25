@@ -15,8 +15,7 @@ NULL. IF NULL, it  prompt the user to select the folder interactively.}
 \item{prefix}{A string for output filename prefix}
 }
 \value{
-this function splits a single input PDF document into
-individual pages
+TRUE if the operation was succesfful. FALSE if the operation fails.
 }
 \description{
 If the toolkit Pdftk is available in the

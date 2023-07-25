@@ -26,6 +26,12 @@ NULL
 #' @param overwrite If a file exists in \code{output_filepath}, should it be overwritten.
 NULL
 
+#' Return
+#'
+#' @keywords internal
+#' @name return
+#' @return TRUE if the operation was succesfful. FALSE if the operation fails.
+
 
 fileIO <- function(input_filepath,
                   output_filepath,
@@ -44,11 +50,17 @@ fileIO <- function(input_filepath,
     collision <- FALSE
   }
 
-  system(glue::glue(system_command))
+  sys_out <- system(glue::glue(system_command))
 
   if(collision){
     # this last overwrite is redundant but just in case...
     file.copy(output_filepath,true_out_path,overwrite = overwrite)
+  }
+
+  if(sys_out == 0){
+    return(TRUE)
+  } else{
+    return(FALSE)
   }
 
 }

@@ -42,10 +42,8 @@ system, it will be called to get form fields from a pdf file.
 See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
-\dontrun{
-pdfFile = system.file('testForm.pdf',package = 'staplr')
+pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 fields = get_fields(pdfFile)
-}
 }
 \references{
 \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}

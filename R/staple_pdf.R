@@ -10,14 +10,10 @@
 #' @param input_files a vector of input PDF files. The default is set to NULL. If NULL and \code{input_directory} is also NULL, the user is propted to select a folder interactively.
 #' @inheritParams output_filepath
 #' @inheritParams overwrite
-#' @return this function returns a combined PDF document
+#' @inherit return return
 #' @author Priyanga Dilini Talagala and Daniel Padfield
 #' @examples
-#' \dontrun{
-#' staple_pdf()
-#' }
 #'
-#' \dontrun{
 #' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
 #' for(i in 1:3) {
@@ -27,7 +23,6 @@
 #' }
 #' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
 #' staple_pdf(input_directory = dir, output_filepath = output_file)
-#' }
 #' }
 #' @export
 #' @importFrom tcltk tk_choose.dir

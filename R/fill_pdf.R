@@ -232,7 +232,7 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' codes, the function will return a warning by default, suggesting setting \code{convert_field_names} to code{TRUE}.
 #' If \code{encoding_warning} is \code{FALSE}, these warnings will be silenced.
 #' @inheritParams overwrite
-#'
+#' @inherit return return
 #' @export
 #'
 #' @examples
@@ -302,10 +302,8 @@ identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 #' @author Ogan Mancarci
 #' @seealso \code{link{set_fields}}
 #' @examples
-#' \dontrun{
-#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 #' fields = get_fields(pdfFile)
-#' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 #'
@@ -449,6 +447,7 @@ get_fdf_lines <- function(input_filepath,
 #'   changes in a PDF, edit the \code{values} component of an element within
 #'   this list
 #' @inheritParams overwrite
+#' @inherit return return
 #' @param convert_field_names If you set convert_field_names when using \code{\link{get_fields}}
 #' you should set this to TRUE as well so the fields can be matched correctly.
 #' @param flatten If TRUE, the form fields will be flattened and turned into plain text.

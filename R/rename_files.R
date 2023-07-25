@@ -7,7 +7,7 @@
 #' The default is set to NULL. IF NULL, it  prompt the user to
 #' select the folder interactively.
 #' @param new_names a vector of names for the output files.
-#' @return this function writes renamed files back to directory
+#' @return A logical vector indicating which files were successfully renamed.
 #' @author Priyanga Dilini Talagala
 #' @examples
 #' \dontrun{

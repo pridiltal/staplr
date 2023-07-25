@@ -14,7 +14,7 @@ select the folder interactively.}
 \item{new_names}{a vector of names for the output files.}
 }
 \value{
-this function writes renamed files back to directory
+A logical vector indicating which files were successfully renamed.
 }
 \description{
 Rename multiple files in a directory and
