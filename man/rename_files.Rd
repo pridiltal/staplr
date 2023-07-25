@@ -21,10 +21,6 @@ Rename multiple files in a directory and
 write renamed files back to directory
 }
 \examples{
-\dontrun{
-#if the directory contains 3 PDF files
-rename_files(new_names = paste("file",1:3))
-}
 \dontshow{
 if (requireNamespace("lattice", quietly = TRUE)) {
 dir <- tempdir()

@@ -16,18 +16,23 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{
+#'
+#' if (requireNamespace("lattice", quietly = TRUE)) {
+#' dir <- tempdir()
+#' for(i in 1:2) {
+#' pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+#' print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
+#' dev.off()
+#' }
+#'
 #' combine_pdf(
 #'    vec_input =
-#'       c(
-#'         "file_1.pdf",
-#'         "file_2.pdf",
-#'       ),
+#'       file.path(dir, paste("plot", 1:2, ".pdf", sep = "")),
 #'    output = "output.pdf",
 #'    start_pages = c(NA, NA),
 #'    end_pages = c(NA, NA)
 #'  )
-#' }
+#'  }
 
 combine_pdf <- function(vec_input, output = "output.pdf", start_pages = NA, end_pages = NA) {
 

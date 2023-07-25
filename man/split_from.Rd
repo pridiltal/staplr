@@ -35,12 +35,7 @@ into two parts from a given point
 See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
-\dontrun{
-# Split the pdf from page 10
-split_from(pg_num=10)
-}
 
-\dontrun{
 if (requireNamespace("lattice", quietly = TRUE)) {
 dir <- tempdir()
 for(i in 1:4) {
@@ -51,7 +46,6 @@ dev.off()
 staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 input_path <- file.path(dir, "Full_pdf.pdf")
 split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
-}
 }
 }
 \references{

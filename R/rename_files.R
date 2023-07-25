@@ -10,10 +10,6 @@
 #' @return A logical vector indicating which files were successfully renamed.
 #' @author Priyanga Dilini Talagala
 #' @examples
-#' \dontrun{
-#' #if the directory contains 3 PDF files
-#' rename_files(new_names = paste("file",1:3))
-#' }
 #' \dontshow{
 #' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()

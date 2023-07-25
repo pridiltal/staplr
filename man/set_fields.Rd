@@ -42,17 +42,14 @@ List of fields can be acquired by \code{\link{get_fields}} function.
 See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
-\dontrun{
-pdfFile = system.file('testForm.pdf',package = 'staplr')
+pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 fields = get_fields(pdfFile)
 
-fields$TextField1$value = 'this is text'
+fields$TextField$value = 'this is text'
 fields$TextField2$value = 'more text'
-fields$RadioGroup$value = 2
-fields$checkBox$value = 'Yes'
+fields$Checkbox$value = 'Yes'
 
 set_fields(pdfFile,'filledPdf.pdf',fields)
-}
 
 }
 \references{

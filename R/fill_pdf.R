@@ -236,10 +236,8 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 #' identify_form_fields(pdfFile, 'testOutput.pdf')
-#' }
 identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
                                  overwrite = TRUE,convert_field_names = FALSE,
                                  encoding_warning = TRUE){
@@ -455,17 +453,14 @@ get_fdf_lines <- function(input_filepath,
 #' @author Ogan Mancarci
 #' @seealso \code{\link{get_fields}}
 #' @examples
-#' \dontrun{
-#' pdfFile = system.file('testForm.pdf',package = 'staplr')
+#' pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 #' fields = get_fields(pdfFile)
 #'
-#' fields$TextField1$value = 'this is text'
+#' fields$TextField$value = 'this is text'
 #' fields$TextField2$value = 'more text'
-#' fields$RadioGroup$value = 2
-#' fields$checkBox$value = 'Yes'
+#' fields$Checkbox$value = 'Yes'
 #'
 #' set_fields(pdfFile,'filledPdf.pdf',fields)
-#' }
 #'
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 #'

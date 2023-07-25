@@ -11,11 +11,7 @@
 #' @inherit return return
 #' @author Priyanga Dilini Talagala and Ogan Mancarci
 #' @examples
-#' \dontrun{
-#' split_pdf()
-#' }
 #'
-#' \dontrun{
 #' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
 #' for(i in 1:3) {
@@ -25,7 +21,6 @@
 #' }
 #' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 #' split_pdf(input_filepath = file.path(dir, paste("Full_pdf.pdf",  sep = "")),output_directory = dir )
-#' }
 #' }
 #' @export
 #' @import utils

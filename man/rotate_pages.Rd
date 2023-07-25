@@ -40,13 +40,7 @@ the seleted PDF files
 See the reference for detailed usage of \code{pdftk}.
 }
 \examples{
-\dontrun{
-# This command prompts the user to select the file interactively.
-# Rotate page 2 and 6 to 90 degrees clockwise
-rotate_pages(rotatepages = c(3,6), page_rotation = 90)
-}
 
-\dontrun{
 if (requireNamespace("lattice", quietly = TRUE)) {
 dir <- tempdir()
 for(i in 1:3) {
@@ -55,11 +49,10 @@ print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
 output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
-staple_pdf(input_directory = dir, output_file)
+staple_pdf(input_directory = dir, output_filepath = output_file)
 input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 output_path <-  file.path(dir, paste("Rotated_pgs_pdf.pdf",  sep = ""))
 rotate_pages(rotatepages = c(2,3), page_rotation = 90,  input_path, output_path)
-}
 }
 }
 \references{

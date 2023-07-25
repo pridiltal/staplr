@@ -26,16 +26,21 @@ Combine multiple PDF files by delimiting the sequences of pages in each file.
 }
 \examples{
 
-\dontrun{
+
+if (requireNamespace("lattice", quietly = TRUE)) {
+dir <- tempdir()
+for(i in 1:2) {
+pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
+print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
+dev.off()
+}
+
 combine_pdf(
    vec_input =
-      c(
-        "file_1.pdf",
-        "file_2.pdf",
-      ),
+      file.path(dir, paste("plot", 1:2, ".pdf", sep = "")),
    output = "output.pdf",
    start_pages = c(NA, NA),
    end_pages = c(NA, NA)
  )
-}
+ }
 }

@@ -12,13 +12,7 @@
 #' @inherit return return
 #' @author Granville Matheson, Priyanga Dilini Talagala
 #' @examples
-#' \dontrun{
-#' # This command prompts the user to select the file interactively.
-#' # Select page 3 and 6 from the selected file.
-#' select_pages(selpages = c(3,6))
-#' }
 #'
-#' \dontrun{
 #' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
 #' for(i in 1:3) {
@@ -27,11 +21,10 @@
 #' dev.off()
 #' }
 #' output_file <- file.path(dir, paste('Full_pdf.pdf',  sep = ""))
-#' staple_pdf(input_directory = dir, output_file)
+#' staple_pdf(input_directory = dir, output_filepath = output_file)
 #' input_path <- file.path(dir, paste("Full_pdf.pdf",  sep = ""))
 #' output_path <-  file.path(dir, paste("trimmed_pdf.pdf",  sep = ""))
 #' select_pages(selpages = 1, input_path, output_path)
-#' }
 #' }
 #' @export
 #' @import utils

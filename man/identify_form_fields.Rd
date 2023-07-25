@@ -43,8 +43,6 @@ with field names. Some pdf editors show field names when you mouse over the
 fields as well.
 }
 \examples{
-\dontrun{
-pdfFile = system.file('testForm.pdf',package = 'staplr')
+pdfFile = system.file('simpleForm.pdf',package = 'staplr')
 identify_form_fields(pdfFile, 'testOutput.pdf')
-}
 }

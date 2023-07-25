@@ -13,12 +13,7 @@
 #' @inherit return return
 #' @author Priyanga Dilini Talagala and Ogan Mancarci
 #' @examples
-#' \dontrun{
-#' # Split the pdf from page 10
-#' split_from(pg_num=10)
-#' }
 #'
-#' \dontrun{
 #' if (requireNamespace("lattice", quietly = TRUE)) {
 #' dir <- tempdir()
 #' for(i in 1:4) {
@@ -29,7 +24,6 @@
 #' staple_pdf(input_directory = dir, output_filepath = file.path(dir, 'Full_pdf.pdf'))
 #' input_path <- file.path(dir, "Full_pdf.pdf")
 #' split_from(pg_num=2, input_filepath = input_path ,output_directory = dir )
-#' }
 #' }
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
