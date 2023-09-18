@@ -11,3 +11,4 @@
 ^docs$
 ^pkgdown$
 ^man/figures/logo\.png$
+^cran-comments\.md$
