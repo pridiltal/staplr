@@ -43,6 +43,7 @@ with field names. Some pdf editors show field names when you mouse over the
 fields as well.
 }
 \examples{
+output <- tempfile(fileext = '.pdf')
 pdfFile = system.file('simpleForm.pdf',package = 'staplr')
-identify_form_fields(pdfFile, 'testOutput.pdf')
+identify_form_fields(pdfFile, output)
 }

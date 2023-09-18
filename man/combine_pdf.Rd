@@ -35,10 +35,11 @@ print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
 dev.off()
 }
 
+output <- tempfile(fileext = '.pdf')
 combine_pdf(
    vec_input =
       file.path(dir, paste("plot", 1:2, ".pdf", sep = "")),
-   output = "output.pdf",
+   output = output,
    start_pages = c(NA, NA),
    end_pages = c(NA, NA)
  )

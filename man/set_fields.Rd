@@ -49,7 +49,9 @@ fields$TextField$value = 'this is text'
 fields$TextField2$value = 'more text'
 fields$Checkbox$value = 'Yes'
 
-set_fields(pdfFile,'filledPdf.pdf',fields)
+output <- tempfile(fileext = '.pdf')
+
+set_fields(pdfFile,output,fields)
 
 }
 \references{
