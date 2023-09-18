@@ -28,7 +28,8 @@ Combine multiple PDF files by delimiting the sequences of pages in each file.
 
 
 if (requireNamespace("lattice", quietly = TRUE)) {
-dir <- tempdir()
+dir <- tempfile()
+dir.create(dir)
 for(i in 1:2) {
 pdf(file.path(dir, paste("plot", i, ".pdf", sep = "")))
 print(lattice::xyplot(iris[,1] ~ iris[,i], data = iris))
