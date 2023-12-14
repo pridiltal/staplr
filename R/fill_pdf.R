@@ -129,15 +129,12 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
   if(length(fdfLine)==0){
     stop('Field "',fieldToFill$name,'" could not be found in the pdf. You may be using the wrong fields object or forgot to set convert_field_names correctly.')
   }
-  
+
   ##is.na below dies on character(0), this avoids that
-  if(length(fieldToFill$value)==0){
+  if(length(fieldToFill$value)==0 || is.na(fieldToFill$value)){
     fieldToFill$value <- ''
   }
-  
-  if(is.na(fieldToFill$value)){
-    fieldToFill$value <- ''
-  }
+
   if(fieldToFill$type %in%  c('Text','Choice')){
     # this is necesarry because FDF file uses () to mark the beginning and end of text fields
     # we need to escape them
