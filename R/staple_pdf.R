@@ -29,7 +29,7 @@
 #' @importFrom tcltk tk_choose.dir
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 staple_pdf <- function(input_directory = NULL, input_files = NULL,
-                       output_filepath = NULL, overwrite = TRUE)
+                       output_filepath = NULL, overwrite = TRUE,passwords = NULL)
 {
   # set error if neither input_directory of input_files are null
   if(!is.null(input_directory) & !is.null(input_files)){
@@ -62,6 +62,18 @@ staple_pdf <- function(input_directory = NULL, input_files = NULL,
                           "output",
                           "{shQuote(output_filepath)}",
                           sep = " ")
+  if (!is.null(passwords)){
+    if (length(passwords)==1){
+      passwords = rep(passwords,length(input_filepaths))
+    }
+    system_command <- paste(pdftk_cmd(),
+                            paste(shQuote(input_filepaths), collapse = " "),
+                            'input_pw', paste(passwords,collapse = " "),
+                            "cat",
+                            "output",
+                            "{shQuote(output_filepath)}",
+                            sep = " ")
+  }
   fileIO(input_filepath = input_filepaths,
          output_filepath = output_filepath,
          overwrite = overwrite,
