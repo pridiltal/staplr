@@ -242,7 +242,8 @@ fdfEdit <- function(fieldToFill,annotatedFDF){
 #' identify_form_fields(pdfFile, output)
 identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
                                  overwrite = TRUE,convert_field_names = FALSE,
-                                 encoding_warning = TRUE){
+                                 encoding_warning = TRUE,
+                                 password = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -254,7 +255,8 @@ identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 
   fields = get_fields(input_filepath,
                       convert_field_names = convert_field_names,
-                      encoding_warning = encoding_warning)
+                      encoding_warning = encoding_warning,
+                      password = password)
 
   fields = lapply(fields,function(field){
     if(field$type == 'Text'){
@@ -267,7 +269,8 @@ identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
              output_filepath = output_filepath,
              fields = fields,
              convert_field_names = convert_field_names,
-             overwrite = overwrite)
+             overwrite = overwrite,
+             password = password)
 
 }
 
@@ -307,7 +310,8 @@ identify_form_fields <- function(input_filepath = NULL, output_filepath = NULL,
 #' @export
 #' @references \url{https://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/}
 #'
-get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encoding_warning = TRUE){
+get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encoding_warning = TRUE,
+                       password = NULL){
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
     input_filepath <- file.choose(new = FALSE)
@@ -320,8 +324,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   # theoratically, using dump_data_fields_utf8 can get rid of the need to use sub_demical
   # but this fails to process inputs containing stuff like emoji
   # here encoding isn't important because any unusual character is in numeric character references
-  fields <- rjava_get_fields(input_filepath)
-
+  fields <- rjava_get_fields(input_filepath,password = password)
   # https://stackoverflow.com/questions/5060076/convert-html-character-entity-encoding-in-r
   fields <- XML::xpathApply(XML::htmlParse(fields, asText=TRUE,encoding = "UTF-8"),
                             "//body//text()",
@@ -391,7 +394,7 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   fields = fields[sapply(fields,function(x){x$type})!='']
 
   # remove fields that don't appear on the FDF
-  fdfLines <- get_fdf_lines(input_filepath)
+  fdfLines <- get_fdf_lines(input_filepath,password = password)
   annotatedFDF <- fdfAnnotate(fdfLines)
 
   if(convert_field_names){
@@ -405,13 +408,22 @@ get_fields <- function(input_filepath = NULL, convert_field_names = FALSE, encod
   return(fields)
 }
 
-rjava_get_fields = function(f) {
+rjava_get_fields = function(f,password = NULL) {
   # instead of an output file, write the output to this byte array so we can
   # send it directly back to R
   out = rJava::.jnew('java/io/ByteArrayOutputStream')
   ofs = rJava::.jnew('java/io/PrintStream',
                      rJava::.jcast(out, 'java/io/OutputStream'))
-  input_reader = rJava::.jnew('pdftk/com/lowagie/text/pdf/PdfReader', f)
+
+  if (is.null(password)){
+    input_reader = rJava::.jnew('pdftk/com/lowagie/text/pdf/PdfReader', f)
+  } else{
+    # tried to outsource password processing to pdftk but got a signature mismatch
+    # # error in all my attempts. this may cause inconsistencies if it has different
+    # # edge case behaviour.the method is pdftk/com/Passwords, utf8_password_to_pdfdoc
+    input_reader = rJava::.jnew('pdftk/com/lowagie/text/pdf/PdfReader',
+                                f,rJava::.jbyte(charToRaw(password)))
+  }
   output_utf8_b = FALSE
   # `report.ReportAcroFormFields` is the java function that actually prints the
   # form fields
@@ -429,7 +441,7 @@ rjava_get_fields = function(f) {
 # the input pdf
 get_fdf_lines <- function(input_filepath,
                           output_filepath = NULL,
-                          encoding = 'latin1',...){
+                          encoding = 'latin1',password = NULL,...){
   if(is.null(output_filepath)){
     output_filepath <- tempfile()
   }
@@ -437,6 +449,13 @@ get_fdf_lines <- function(input_filepath,
                           shQuote(input_filepath),
                           'generate_fdf','output',
                           shQuote(output_filepath))
+  if (!is.null(password)){
+    system_command = paste(pdftk_cmd(),
+                           shQuote(input_filepath),
+                           "input_pw",password,
+                           'generate_fdf','output',
+                           shQuote(output_filepath))
+  }
   system(system_command)
   fdfLines <- suppressWarnings(readLines(output_filepath,encoding = encoding,skipNul = TRUE,...))
   return(fdfLines)
@@ -480,7 +499,8 @@ get_fdf_lines <- function(input_filepath,
 set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
                       overwrite = TRUE,
                       convert_field_names = FALSE,
-                      flatten = FALSE){
+                      flatten = FALSE,
+                      password = NULL){
   assertthat::assert_that(is.list(fields))
   if(is.null(input_filepath)){
     #Choose the pdf file interactively
@@ -497,21 +517,21 @@ set_fields = function(input_filepath = NULL, output_filepath = NULL, fields,
   # fdf = paste(annotatedFDF$fdfLines,collapse='\n')
   newFDF <- tempfile()
 
-  fields_to_fdf(input_filepath, newFDF, fields, convert_field_names)
+  fields_to_fdf(input_filepath, newFDF, fields, convert_field_names,password = password)
 
   # f = file(newFDF,open = "w",encoding = encoding)
   # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), f,useBytes = FALSE)
   # close(f)
   # writeLines(paste0(annotatedFDF$fdfLines,collapse= '\n'), newFDF)
 
-  fill_from_fdf(input_filepath, output_filepath, newFDF, overwrite, flatten)
+  fill_from_fdf(input_filepath, output_filepath, newFDF, overwrite, flatten,password = password)
 
 
 }
 
 # internal function to create a new FDF file based on the given fields
-fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_names){
-  fdfLines <- get_fdf_lines(input_filepath)
+fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_names,password=NULL){
+  fdfLines <- get_fdf_lines(input_filepath,password = password)
   annotatedFDF = fdfAnnotate(fdfLines)
   if(convert_field_names){
     annotatedFDF$fields <- sapply(annotatedFDF$fields,encodeUTF8)
@@ -532,7 +552,7 @@ fields_to_fdf = function(input_filepath, fdf_filepath, fields, convert_field_nam
 }
 
 # internal function to take in an FDF-PDF pair to return the filled output
-fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE, flatten = FALSE){
+fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrite = TRUE, flatten = FALSE,password = NULL){
 
   if(flatten){
     tail = 'flatten'
@@ -548,6 +568,17 @@ fill_from_fdf = function(input_filepath, output_filepath, fdf_filepath, overwrit
           "output",
           "{shQuote(output_filepath)}",
           tail)
+  if(!is.null(password)){
+    system_command <-
+      paste(pdftk_cmd(),
+            shQuote(input_filepath),
+            "input_pw",password,
+            "fill_form",
+            shQuote(fdf_filepath),
+            "output",
+            "{shQuote(output_filepath)}",
+            tail)
+  }
 
 
   fileIO(input_filepath = input_filepath,
